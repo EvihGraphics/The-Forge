@@ -1,0 +1,7 @@
+﻿Target: 17_EntityComponentSystem
+Configuration: Release
+Platform: x64
+Result: PASS
+Error Category: NONE
+Log Source: Build/Full_Build_Log.txt plus named preserved build logs in Build/
+Notes: Executable produced in x64/Release.

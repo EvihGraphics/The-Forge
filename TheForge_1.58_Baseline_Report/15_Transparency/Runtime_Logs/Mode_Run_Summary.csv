@@ -1,0 +1,6 @@
+﻿"Mode","Script","Status","ExitCode","Capture","ExternalScreenshot","InternalScreenshot"
+"AlphaBlend","Test_AlphaBlend.lua","WINDOW_READY;CLOSED","","CAPTURED_WINDOW_PRINTWINDOW","D:\HTC\avboit\TheForge_1.58_Baseline_Report\15_Transparency\Screenshots\UT_15_Transparency_DX12_AlphaBlend_01.png",""
+"WeightedBlendedOIT","Test_WeightedBlendedOIT.lua","WINDOW_READY;CLOSED","","CAPTURED_WINDOW_PRINTWINDOW","D:\HTC\avboit\TheForge_1.58_Baseline_Report\15_Transparency\Screenshots\UT_15_Transparency_DX12_WeightedBlendedOIT_02.png",""
+"WeightedBlendedOITVolition","Test_WeightedBlendedOITVolition.lua","WINDOW_READY;CLOSED","","CAPTURED_WINDOW_PRINTWINDOW","D:\HTC\avboit\TheForge_1.58_Baseline_Report\15_Transparency\Screenshots\UT_15_Transparency_DX12_WeightedBlendedOITVolition_03.png",""
+"Phenomenological","Test_Phenomenological.lua","WINDOW_READY;CLOSED","","CAPTURED_WINDOW_PRINTWINDOW","D:\HTC\avboit\TheForge_1.58_Baseline_Report\15_Transparency\Screenshots\UT_15_Transparency_DX12_Phenomenological_04.png",""
+"AdaptiveOIT","Test_AdaptiveOIT.lua","WINDOW_READY;CLOSED","","CAPTURED_WINDOW_PRINTWINDOW","D:\HTC\avboit\TheForge_1.58_Baseline_Report\15_Transparency\Screenshots\UT_15_Transparency_DX12_AdaptiveOIT_05.png",""

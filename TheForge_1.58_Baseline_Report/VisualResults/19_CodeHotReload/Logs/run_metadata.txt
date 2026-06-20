@@ -1,0 +1,12 @@
+﻿ExePath=D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\19_CodeHotReload_Main\19_CodeHotReload_Main.exe
+Arguments=--no-auto-exit --d3d12
+WorkingDirectory=D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\19_CodeHotReload_Main
+Start=2026-06-20T01:07:37.9916519+08:00
+End=2026-06-20T01:07:44.8475610+08:00
+Status=WINDOW_READY;CLOSED
+ExitCode=
+WindowHandle=89393884
+WindowTitle=19_CodeHotReload_Main
+CaptureStatus=CAPTURED_WINDOW_PRINTWINDOW
+CapturePath=D:\HTC\avboit\TheForge_1.58_Baseline_Report\VisualResults\19_CodeHotReload\Screenshots\UT_19_CodeHotReload_DX12_Default_01.png
+CaptureError=

@@ -1,0 +1,37 @@
+2026-06-20 01:07:24 [MainThread     ]                   Log.c:195   INFO| Opened log file 16_Raytracing.log
+2026-06-20 01:07:24 [MainThread     ]         WindowsBase.cpp:422   INFO| Operating System: Windows PC. Version: 10.0 (Build: 26200). Device Name: Unknown.
+2026-06-20 01:07:24 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-20 01:07:24 [MainThread     ]       WindowsWindow.cpp:636   INFO| Created window app 16_Raytracing
+2026-06-20 01:07:24 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-20 01:07:24 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-20 01:07:24 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-20 01:07:24 [MainThread     ]      GraphicsConfig.cpp:419   INFO| Default GPU Data:
+2026-06-20 01:07:24 [MainThread     ]      GraphicsConfig.cpp:420   INFO|     DefaultGPUPresetLevel set to low
+2026-06-20 01:07:24 [MainThread     ]      GraphicsConfig.cpp:422   INFO| GPU vendors:
+2026-06-20 01:07:24 [MainThread     ]      GraphicsConfig.cpp:440   INFO|     intel: 0x8086
+2026-06-20 01:07:24 [MainThread     ]      GraphicsConfig.cpp:440   INFO|     amd: 0x1002
+2026-06-20 01:07:24 [MainThread     ]      GraphicsConfig.cpp:440   INFO|     nvidia: 0x10de
+2026-06-20 01:07:24 [MainThread     ]      GraphicsConfig.cpp:440   INFO|     qualcomm: 0x5143
+2026-06-20 01:07:24 [MainThread     ]      GraphicsConfig.cpp:898    DBG| Extended Config| GPU Config invalid Field name: 'isheadless'.
+2026-06-20 01:07:24 [MainThread     ]      GraphicsConfig.cpp:723    DBG| Invalid GPU Selection rule: 'isHeadLess != 1;'.
+2026-06-20 01:07:24 [MainThread     ]      GraphicsConfig.cpp:552   INFO| GPU selection settings:
+2026-06-20 01:07:24 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: graphicqueuesupported == 1
+2026-06-20 01:07:24 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: deviceid == 0
+2026-06-20 01:07:24 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: raytracingsupported
+2026-06-20 01:07:24 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: rayquerysupported
+2026-06-20 01:07:24 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: gpupresetlevel
+2026-06-20 01:07:24 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: vendorid != 32902 && vendorid != 32903 && vendorid != 5692
+2026-06-20 01:07:24 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: directxfeaturelevel
+2026-06-20 01:07:24 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: vram
+2026-06-20 01:07:24 [MainThread     ]      GraphicsConfig.cpp:561   INFO| Driver rejections:
+2026-06-20 01:07:24 [MainThread     ]      GraphicsConfig.cpp:579   INFO| GPU configuration settings:
+2026-06-20 01:07:24 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 4318: 64
+2026-06-20 01:07:24 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 4098: 13
+2026-06-20 01:07:24 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 4130: 13
+2026-06-20 01:07:24 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 5692: 64
+2026-06-20 01:07:24 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 32902: 64
+2026-06-20 01:07:24 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 32903: 64
+2026-06-20 01:07:24 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     dynamicrenderingenabled: vendorid == 5692: 0
+2026-06-20 01:07:24 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     dynamicrenderingenabled: vendorid == 32902: 0
+2026-06-20 01:07:24 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     dynamicrenderingenabled: vendorid == 32903: 0
+2026-06-20 01:07:24 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     tessell

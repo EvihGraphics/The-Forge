@@ -1,0 +1,6 @@
+﻿Start=2026-06-20T01:32:59.4174465+08:00
+End=2026-06-20T01:34:59.5836334+08:00
+Status=TIMEOUT_FORCE_KILLED
+ExitCode=
+Exe=D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\15_Transparency\15_Transparency.exe
+Arguments=--d3d12

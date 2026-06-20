@@ -1,0 +1,7 @@
+﻿Start=2026-06-20T01:18:39.0176121+08:00
+[2026-06-20T01:18:39.0261242+08:00] Copied D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\src\15_Transparency\Scripts\Test_AlphaBlend.lua to runtime Scripts\Test.lua for AlphaBlend
+[2026-06-20T01:18:52.0571288+08:00] Copied D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\src\15_Transparency\Scripts\Test_WeightedBlendedOIT.lua to runtime Scripts\Test.lua for WeightedBlendedOIT
+[2026-06-20T01:19:05.0431570+08:00] Copied D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\src\15_Transparency\Scripts\Test_WeightedBlendedOITVolition.lua to runtime Scripts\Test.lua for WeightedBlendedOITVolition
+[2026-06-20T01:19:18.0225597+08:00] Copied D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\src\15_Transparency\Scripts\Test_Phenomenological.lua to runtime Scripts\Test.lua for Phenomenological
+[2026-06-20T01:19:31.0292014+08:00] Copied D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\src\15_Transparency\Scripts\Test_AdaptiveOIT.lua to runtime Scripts\Test.lua for AdaptiveOIT
+End=2026-06-20T01:19:44.0389460+08:00

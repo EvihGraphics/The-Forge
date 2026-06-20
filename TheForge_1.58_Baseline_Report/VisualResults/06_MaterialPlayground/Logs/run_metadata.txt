@@ -1,0 +1,12 @@
+﻿ExePath=D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\06_MaterialPlayground\06_MaterialPlayground.exe
+Arguments=--no-auto-exit --d3d12
+WorkingDirectory=D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\06_MaterialPlayground
+Start=2026-06-20T01:06:21.2783936+08:00
+End=2026-06-20T01:06:27.9347752+08:00
+Status=EXITED_BEFORE_CAPTURE_AFTER_WAIT
+ExitCode=
+WindowHandle=16058634
+WindowTitle=06_MaterialPlayground
+CaptureStatus=NOT_CAPTURED
+CapturePath=D:\HTC\avboit\TheForge_1.58_Baseline_Report\VisualResults\06_MaterialPlayground\Screenshots\UT_06_MaterialPlayground_DX12_Default_01.png
+CaptureError=

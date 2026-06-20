@@ -1,0 +1,408 @@
+﻿Environment audit started: 2026-06-19T23:31:42.4085543+08:00
+
+===== Get-ComputerInfo =====
+
+
+OsName                : Microsoft Windows 11 专业版
+OsVersion             : 10.0.26200
+OsBuildNumber         : 26200
+CsTotalPhysicalMemory : 68523470848
+CsProcessors          : {Intel(R) Core(TM) i9-14900KF}
+
+
+
+
+
+===== CPU =====
+
+Name                         NumberOfCores NumberOfLogicalProcessors MaxClockSpeed
+----                         ------------- ------------------------- -------------
+Intel(R) Core(TM) i9-14900KF            24                        32          3200
+
+
+
+
+===== GPU =====
+
+
+Name                        : OrayIddDriver Device
+DriverVersion               : 17.50.19.949
+AdapterRAM                  : 
+VideoModeDescription        : 
+CurrentHorizontalResolution : 
+CurrentVerticalResolution   : 
+PNPDeviceID                 : ROOT\DISPLAY\0000
+
+Name                        : NVIDIA GeForce RTX 4060 Ti
+DriverVersion               : 32.0.15.9186
+AdapterRAM                  : 4293918720
+VideoModeDescription        : 2560 x 1440 x 4294967296 colors
+CurrentHorizontalResolution : 2560
+CurrentVerticalResolution   : 1440
+PNPDeviceID                 : PCI\VEN_10DE&DEV_2803&SUBSYS_88FB1043&REV_A1\4&256A0AA8&0&0008
+
+
+
+
+
+===== Memory =====
+
+
+Count    : 2
+Average  : 
+Sum      : 68719476736
+Maximum  : 
+Minimum  : 
+Property : Capacity
+
+
+
+
+
+===== Disks =====
+
+Name Root         Free         Used
+---- ----         ----         ----
+C    C:\  140328153088 395597987840
+D    D:\  123907768320 412963139584
+E    E:\   60904013824 912766955520
+
+
+
+
+===== Display via Windows Forms =====
+
+Device       Primary Bounds                               WorkingArea                         
+------       ------- ------                               -----------                         
+\\.\DISPLAY1   False {X=2048,Y=90,Width=2048,Height=1152} {X=2048,Y=90,Width=2048,Height=1104}
+\\.\DISPLAY2    True {X=0,Y=0,Width=2048,Height=1152}     {X=0,Y=0,Width=2048,Height=1104}    
+
+
+
+
+===== DPI registry =====
+
+LogPixels Win8DpiScaling
+--------- --------------
+                       0
+
+
+
+
+===== Session =====
+Console
+ SESSIONNAME               USERNAME                 ID  STATE   TYPE        DEVICE 
+ services                                            0  Disc                        
+>console                   Administrator             1  Active                      
+
+
+===== Git =====
+git version 2.48.1.windows.1
+git-lfs/3.6.1 (GitHub; windows amd64; go 1.23.3; git ea47a34b)
+
+
+===== CMake/Python/DXC/vulkaninfo paths =====
+
+Name           Source                                                                     
+----           ------                                                                     
+cmake.exe      C:\Users\Administrator\AppData\Local\Android\Sdk\cmake\3.30.5\bin\cmake.exe
+python.exe     C:\Users\Administrator\AppData\Local\Programs\Python\Python313\python.exe  
+vulkaninfo.exe C:\Windows\system32\vulkaninfo.exe                                         
+
+
+
+
+===== CMake version =====
+cmake version 3.30.5
+
+CMake suite maintained and supported by Kitware (kitware.com/cmake).
+
+
+===== Python version =====
+Python 3.13.2
+
+
+===== VSWhere all JSON =====
+[
+  {
+    "instanceId": "447c48e1",
+    "installDate": "2026-01-20T08:40:04Z",
+    "installationName": "VisualStudio/18.2.0+11408.102",
+    "installationPath": "E:\\tools\\Microsoft Visual Studio\\2026\\Community",
+    "installationVersion": "18.2.11408.102",
+    "productId": "Microsoft.VisualStudio.Product.Community",
+    "productPath": "E:\\tools\\Microsoft Visual Studio\\2026\\Community\\Common7\\IDE\\devenv.exe",
+    "state": 4294967295,
+    "isComplete": true,
+    "isLaunchable": true,
+    "isPrerelease": false,
+    "isRebootRequired": false,
+    "displayName": "Visual Studio Community 2026",
+    "description": "????????????? - ????,???????",
+    "channelId": "VisualStudio.18.Release",
+    "channelUri": "https://aka.ms/vs/stable/channel",
+    "enginePath": "C:\\Program Files (x86)\\Microsoft Visual Studio\\Installer\\resources\\app\\ServiceHub\\Services\\Microsoft.VisualStudio.Setup.Service",
+    "expirationDate": "2026-04-08T17:00:00+00:00",
+    "installedChannelId": "VisualStudio.18.Release",
+    "installedChannelUri": "https://aka.ms/vs/stable/channel",
+    "releaseNotes": "https://docs.microsoft.com/en-us/visualstudio/releases/18/release-notes-v18.2#18.2.0",
+    "resolvedInstallationPath": "E:\\tools\\Microsoft Visual Studio\\2026\\Community",
+    "retirementDate": "2026-07-07T17:00:00+00:00",
+    "thirdPartyNotices": "https://go.microsoft.com/fwlink/?LinkId=661480",
+    "updateDate": "2026-01-20T08:40:04.3208563Z",
+    "catalog": {
+      "buildBranch": "d18.0",
+      "buildVersion": "18.2.11408.102",
+      "featureReleaseMonth": "01",
+      "featureReleaseYear": "2026",
+      "id": "VisualStudio/18.2.0+11408.102",
+      "includeBuildVersionInDisplayVersion": "False",
+      "localBuild": "build-lab",
+      "manifestName": "VisualStudio",
+      "manifestType": "installer",
+      "productDisplayVersion": "18.2.0",
+      "productLine": "Dev18",
+      "productLineVersion": "18",
+      "productMilestone": "RTW",
+      "productMilestoneIsPreRelease": "False",
+      "productName": "Visual Studio",
+      "productPatchVersion": "0",
+      "productPreReleaseMilestoneSuffix": "1.0",
+      "productRelease": "RTW",
+      "productSemanticVersion": "18.2.0+11408.102",
+      "requiredEngineVersion": "4.0.2168.39045"
+    },
+    "properties": {
+      "appLocalWPF": "true",
+      "campaignId": "",
+      "channelManifestId": "VisualStudio.18.Release/18.2.0+11408.102",
+      "includeRecommended": "1",
+      "nickname": "",
+      "setupEngineFilePath": "C:\\Program Files (x86)\\Microsoft Visual Studio\\Installer\\setup.exe"
+    }
+  },
+  {
+    "instanceId": "67c9091a",
+    "installDate": "2025-02-14T06:29:07Z",
+    "installationName": "VisualStudio/17.13.0+35806.99",
+    "installationPath": "E:\\tools\\Microsoft Visual Studio\\2022\\Community",
+    "installationVersion": "17.13.35806.99",
+    "productId": "Microsoft.VisualStudio.Product.Community",
+    "productPath": "E:\\tools\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\devenv.exe",
+    "state": 4294967295,
+    "isComplete": true,
+    "isLaunchable": true,
+    "isPrerelease": false,
+    "isRebootRequired": false,
+    "displayName": "Visual Studio Community 2022",
+    "description": "????? IDE,???????????????????",
+    "channelId": "VisualStudio.17.Release",
+    "channelUri": "https://aka.ms/vs/17/release/channel",
+    "enginePath": "C:\\Program Files (x86)\\Microsoft Visual Studio\\Installer\\resources\\app\\ServiceHub\\Services\\Microsoft.VisualStudio.Setup.Service",
+    "installedChannelId": "VisualStudio.17.Release",
+    "installedChannelUri": "https://aka.ms/vs/17/release/channel",
+    "releaseNotes": "https://docs.microsoft.com/en-us/visualstudio/releases/2022/release-notes-v17.13#17.13.0",
+    "resolvedInstallationPath": "E:\\tools\\Microsoft Visual Studio\\2022\\Community",
+    "thirdPartyNotices": "https://go.microsoft.com/fwlink/?LinkId=661288",
+    "updateDate": "2025-02-14T06:29:07.9306573Z",
+    "catalog": {
+      "buildBranch": "d17.13",
+      "buildVersion": "17.13.35806.99",
+      "id": "VisualStudio/17.13.0+35806.99",
+      "localBuild": "build-lab",
+      "manifestName": "VisualStudio",
+      "manifestType": "installer",
+      "productDisplayVersion": "17.13.0",
+      "productLine": "Dev17",
+      "productLineVersion": "2022",
+      "productMilestone": "RTW",
+      "productMilestoneIsPreRelease": "False",
+      "productName": "Visual Studio",
+      "productPatchVersion": "0",
+      "productPreReleaseMilestoneSuffix": "6.0",
+      "productSemanticVersion": "17.13.0+35806.99",
+      "requiredEngineVersion": "3.13.2069.59209"
+    },
+    "properties": {
+      "campaignId": "2030:520911990c314a43b75acc737599dd0d",
+      "channelManifestId": "VisualStudio.17.Release/17.13.0+35806.99",
+      "includeRecommended": "1",
+      "nickname": "",
+      "setupEngineFilePath": "C:\\Program Files (x86)\\Microsoft Visual Studio\\Installer\\setup.exe"
+    }
+  },
+  {
+    "instanceId": "cf438d34",
+    "installDate": "2025-05-29T04:17:34Z",
+    "installationName": "VisualStudio/16.11.47+36107.64",
+    "installationPath": "E:\\tools\\Microsoft Visual Studio\\2019\\Community",
+    "installationVersion": "16.11.36107.64",
+    "productId": "Microsoft.VisualStudio.Product.Community",
+    "productPath": "E:\\tools\\Microsoft Visual Studio\\2019\\Community\\Common7\\IDE\\devenv.exe",
+    "state": 4294967295,
+    "isComplete": true,
+    "isLaunchable": true,
+    "isPrerelease": false,
+    "isRebootRequired": false,
+    "displayName": "Visual Studio Community 2019",
+    "description": "????? IDE,???????????????????",
+    "channelId": "VisualStudio.16.Release",
+    "channelUri": "https://aka.ms/vs/16/release/channel",
+    "enginePath": "C:\\Program Files (x86)\\Microsoft Visual Studio\\Installer\\resources\\app\\ServiceHub\\Services\\Microsoft.VisualStudio.Setup.Service",
+    "installedChannelId": "VisualStudio.16.Release",
+    "installedChannelUri": "https://aka.ms/vs/16/release/channel",
+    "releaseNotes": "https://docs.microsoft.com/en-us/visualstudio/releases/2019/release-notes-v16.11#16.11.47",
+    "resolvedInstallationPath": "E:\\tools\\Microsoft Visual Studio\\2019\\Community",
+    "thirdPartyNotices": "https://go.microsoft.com/fwlink/?LinkId=660909",
+    "updateDate": "2025-05-29T04:17:34.8943782Z",
+    "catalog": {
+      "buildBranch": "d16.11",
+      "buildVersion": "16.11.36107.64",
+      "id": "VisualStudio/16.11.47+36107.64",
+      "localBuild": "build-lab",
+      "manifestName": "VisualStudio",
+      "manifestType": "installer",
+      "productDisplayVersion": "16.11.47",
+      "productLine": "Dev16",
+      "productLineVersion": "2019",
+      "productMilestone": "RTW",
+      "productMilestoneIsPreRelease": "False",
+      "productName": "Visual Studio",
+      "productPatchVersion": "47",
+      "productPreReleaseMilestoneSuffix": "1.0",
+      "productSemanticVersion": "16.11.47+36107.64",
+      "requiredEngineVersion": "2.11.72.18200"
+    },
+    "properties": {
+      "campaignId": "",
+      "channelManifestId": "VisualStudio.16.Release/16.11.47+36107.64",
+      "includeRecommended": "0",
+      "nickname": "",
+      "setupEngineFilePath": "C:\\Program Files (x86)\\Microsoft Visual Studio\\Installer\\setup.exe"
+    }
+  }
+]
+
+
+===== MSBuild paths =====
+
+FullName                                                                             
+--------                                                                             
+E:\tools\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\MSBuild.exe      
+E:\tools\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\amd64\MSBuild.exe
+E:\tools\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe      
+E:\tools\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\amd64\MSBuild.exe
+E:\tools\Microsoft Visual Studio\2026\Community\MSBuild\Current\Bin\MSBuild.exe      
+E:\tools\Microsoft Visual Studio\2026\Community\MSBuild\Current\Bin\amd64\MSBuild.exe
+
+
+
+
+===== MSVC directories =====
+
+FullName                                                                  Name       
+--------                                                                  ----       
+E:\tools\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133 14.29.30133
+E:\tools\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130 14.38.33130
+E:\tools\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808 14.43.34808
+E:\tools\Microsoft Visual Studio\2026\Community\VC\Tools\MSVC\14.50.35717 14.50.35717
+
+
+
+
+===== Windows SDK include dirs =====
+
+Name         FullName                                                   
+----         --------                                                   
+10.0.22621.0 C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0
+10.0.26100.0 C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0
+
+
+
+
+===== Repo bundled VulkanSDK version =====
+1.3.275
+
+
+===== Repo bundled Direct3d12Agility version =====
+611.2
+
+
+===== Repo bundled DXC files =====
+
+Name             Length
+----             ------
+dxc.exe         1036224
+dxcompiler.dll 17107352
+dxil.dll        1370048
+
+
+
+
+===== vulkaninfo summary =====
+vulkaninfo : WARNING: [Loader Message] Code 0 : windows_read_data_files_in_registry: Registry lookup failed to get laye
+r manifest files.
+At line:31 char:32
++ Capture 'vulkaninfo summary' { vulkaninfo --summary }
++                                ~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (WARNING: [Loade...manifest files.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+==========
+VULKANINFO
+==========
+
+Vulkan Instance Version: 1.4.321
+
+
+Instance Extensions: count = 20
+-------------------------------
+VK_EXT_debug_report                    : extension revision 10
+VK_EXT_debug_utils                     : extension revision 2
+VK_EXT_direct_mode_display             : extension revision 1
+VK_EXT_surface_maintenance1            : extension revision 1
+VK_EXT_swapchain_colorspace            : extension revision 5
+VK_KHR_device_group_creation           : extension revision 1
+VK_KHR_display                         : extension revision 23
+VK_KHR_external_fence_capabilities     : extension revision 1
+VK_KHR_external_memory_capabilities    : extension revision 1
+VK_KHR_external_semaphore_capabilities : extension revision 1
+VK_KHR_get_display_properties2         : extension revision 1
+VK_KHR_get_physical_device_properties2 : extension revision 2
+VK_KHR_get_surface_capabilities2       : extension revision 1
+VK_KHR_portability_enumeration         : extension revision 1
+VK_KHR_surface                         : extension revision 25
+VK_KHR_surface_maintenance1            : extension revision 1
+VK_KHR_surface_protected_capabilities  : extension revision 1
+VK_KHR_win32_surface                   : extension revision 6
+VK_LUNARG_direct_driver_loading        : extension revision 1
+VK_NV_external_memory_capabilities     : extension revision 1
+
+Instance Layers: count = 6
+--------------------------
+VK_LAYER_EOS_Overlay           Vulkan overlay layer for Epic Online Services 1.2.136  version 1
+VK_LAYER_NV_optimus            NVIDIA Optimus layer                          1.4.325  version 1
+VK_LAYER_NV_present            NVIDIA Presentation Layer                     1.4.325  version 1
+VK_LAYER_RENDERDOC_Capture     Debugging capture layer for RenderDoc         1.4.324  version 40
+VK_LAYER_VALVE_steam_fossilize Steam Pipeline Caching Layer                  1.4.303  version 1
+VK_LAYER_VALVE_steam_overlay   Steam Overlay Layer                           1.3.207  version 1
+
+Devices:
+========
+GPU0:
+	apiVersion         = 1.4.325
+	driverVersion      = 591.86.0.0
+	vendorID           = 0x10de
+	deviceID           = 0x2803
+	deviceType         = PHYSICAL_DEVICE_TYPE_DISCRETE_GPU
+	deviceName         = NVIDIA GeForce RTX 4060 Ti
+	driverID           = DRIVER_ID_NVIDIA_PROPRIETARY
+	driverName         = NVIDIA
+	driverInfo         = 591.86
+	conformanceVersion = 1.4.3.0
+	deviceUUID         = adf13338-f6d4-6554-f24a-def57d7a3fc1
+	driverUUID         = ab24b0bb-7bd9-59fc-a310-4c2bdaba9b72
+
+
+===== DXDiag =====
+

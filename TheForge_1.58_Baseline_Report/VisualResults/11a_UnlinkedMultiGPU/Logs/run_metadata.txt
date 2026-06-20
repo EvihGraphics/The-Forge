@@ -1,0 +1,12 @@
+﻿ExePath=D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\11a_UnlinkedMultiGPU\11a_UnlinkedMultiGPU.exe
+Arguments=--no-auto-exit --d3d12
+WorkingDirectory=D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\11a_UnlinkedMultiGPU
+Start=2026-06-20T01:06:48.9684766+08:00
+End=2026-06-20T01:06:55.8790866+08:00
+Status=WINDOW_READY;CLOSED
+ExitCode=
+WindowHandle=4785450
+WindowTitle=11a_UnlinkedMultiGPU
+CaptureStatus=CAPTURED_WINDOW_PRINTWINDOW
+CapturePath=D:\HTC\avboit\TheForge_1.58_Baseline_Report\VisualResults\11a_UnlinkedMultiGPU\Screenshots\UT_11a_UnlinkedMultiGPU_DX12_Default_01.png
+CaptureError=

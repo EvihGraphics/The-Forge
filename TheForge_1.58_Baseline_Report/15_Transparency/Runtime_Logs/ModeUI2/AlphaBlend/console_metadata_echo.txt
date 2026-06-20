@@ -1,0 +1,13 @@
+﻿ExePath=D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\15_Transparency\15_Transparency.exe
+Arguments=--d3d12 --no-auto-exit
+WorkingDirectory=D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\15_Transparency
+ModeIndex=0
+Start=2026-06-20T01:23:03.3069577+08:00
+End=2026-06-20T01:23:16.9555311+08:00
+Status=WINDOW_READY;CLOSED
+ExitCode=
+WindowHandle=3016300
+WindowTitle=15_Transparency
+CaptureStatus=CAPTURED_WINDOW_PRINTWINDOW
+CapturePath=D:\HTC\avboit\TheForge_1.58_Baseline_Report\15_Transparency\Screenshots\UT_15_Transparency_DX12_AlphaBlend_UI_21.png
+CaptureError=

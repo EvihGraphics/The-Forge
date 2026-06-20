@@ -1,0 +1,12 @@
+﻿ExePath=D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\14_WaveIntrinsics\14_WaveIntrinsics.exe
+Arguments=--no-auto-exit --d3d12
+WorkingDirectory=D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\14_WaveIntrinsics
+Start=2026-06-20T01:07:03.1399995+08:00
+End=2026-06-20T01:07:09.9365765+08:00
+Status=WINDOW_READY;CLOSED
+ExitCode=
+WindowHandle=12651166
+WindowTitle=14_WaveIntrinsics
+CaptureStatus=CAPTURED_WINDOW_PRINTWINDOW
+CapturePath=D:\HTC\avboit\TheForge_1.58_Baseline_Report\VisualResults\14_WaveIntrinsics\Screenshots\UT_14_WaveIntrinsics_DX12_Default_01.png
+CaptureError=

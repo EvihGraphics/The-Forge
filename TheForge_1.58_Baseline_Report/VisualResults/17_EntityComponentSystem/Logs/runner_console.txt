@@ -1,0 +1,12 @@
+﻿ExePath=D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\17_EntityComponentSystem\17_EntityComponentSystem.exe
+Arguments=--no-auto-exit --d3d12
+WorkingDirectory=D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\17_EntityComponentSystem
+Start=2026-06-20T01:07:30.9118683+08:00
+End=2026-06-20T01:07:37.7596682+08:00
+Status=WINDOW_READY;CLOSED
+ExitCode=
+WindowHandle=5898428
+WindowTitle=17_EntityComponentSystem
+CaptureStatus=CAPTURED_WINDOW_PRINTWINDOW
+CapturePath=D:\HTC\avboit\TheForge_1.58_Baseline_Report\VisualResults\17_EntityComponentSystem\Screenshots\UT_17_EntityComponentSystem_DX12_Default_01.png
+CaptureError=

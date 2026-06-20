@@ -1,0 +1,8 @@
+2026-06-20 01:06:29 [MainThread     ]        ReloadClient.cpp:586    ERR| Error starting the ReloadServer process:
+ReloadServer [HOST]: server is already running on port 6543
+
+
+2026-06-20 01:06:29 [ResourceLoaderTask]   WindowsFileSystem.cpp:307    ERR| Error opening file: D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\09_LightShadowPlayground\Meshes\SanMiguel.bin -- rb (error: No such file or directory)
+2026-06-20 01:06:29 [ResourceLoaderTask]      ResourceLoader.cpp:1670   ERR| Failed to open bin file SanMiguel.bin
+2026-06-20 01:06:29 [ResourceLoaderTask]   WindowsFileSystem.cpp:307    ERR| Error opening file: D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\09_LightShadowPlayground\Textures\daytime_cube.tex -- rb (error: No such file or directory)
+2026-06-20 01:06:29 [ResourceLoaderTask]      ResourceLoader.cpp:1545   ERR| Failed to open texture file daytime_cube.tex

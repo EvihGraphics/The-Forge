@@ -1,0 +1,1 @@
+2026-06-20 01:16:08 [MainThread     ] 36_AlgorithmsAndContain:104    ERR| Bstring tests can't run without AUTOMATED_TESTING macro

@@ -1,0 +1,7 @@
+﻿Target: 39_ParticleSystem
+Configuration: Release
+Platform: x64
+Result: PASS_WITH_WARNINGS
+Error Category: MISSING_ASSET
+Log Source: Build/Full_Build_Log.txt plus named preserved build logs in Build/
+Notes: Executable produced, but post-build copy steps still returned errors for optional scripts/fonts/cameraPath resources.

@@ -1,0 +1,89 @@
+??????? 2026/6/20 1:03:33?
+???????????: Normal?
+??“D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\01_Transformations.vcxproj”??? 1 ?(Build ???)?
+PrepareForBuild:
+  ???????????????????????????????????,??? https://aka.ms/cpp/structured-output?
+InitializeBuildStatus:
+  ????“D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\\x64\Release\Intermediate\01_Transformations\01_Trans.5938554B.tlog\unsuccessfulbuild”,?????“AlwaysCreate”?
+  ???“D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\\x64\Release\Intermediate\01_Transformations\01_Trans.5938554B.tlog\unsuccessfulbuild”?? Touch ???
+ClCompile:
+  ?????????
+Link:
+  ?????????
+  01_Transformations.vcxproj -> D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\01_Transformations\01_Transformations.exe
+CustomBuildStep:
+??????“CustomBuildStep”,????????
+CustomBuildStep:
+??????“CustomBuildStep”,????????
+PostBuildEvent:
+  
+          xcopy "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\..\..\..\Common_3\Graphics\ThirdParty\OpenSource\VulkanSDK\bin\Win32\*.dll" "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\01_Transformations\" /S /Y /D
+          xcopy "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\..\..\..\Common_3\Graphics\ThirdParty\OpenSource\VulkanSDK\bin\Win32\*.json" "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\01_Transformations\" /S /Y /D
+          xcopy "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\..\..\..\Common_3\Graphics\ThirdParty\OpenSource\ags\ags_lib\lib\amd_ags_x64.dll" "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\01_Transformations\amd_ags_x64.dll"* /S /Y /D
+          xcopy "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\..\..\..\Common_3\Graphics\ThirdParty\OpenSource\DirectXShaderCompiler\bin\x64\dxcompiler.dll" "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\01_Transformations\dxcompiler.dll"* /S /Y /D
+          xcopy "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\..\..\..\Common_3\Graphics\ThirdParty\OpenSource\Direct3d12Agility\bin\x64\*.dll" "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\01_Transformations\"* /S /Y /D
+          xcopy "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\..\..\..\Common_3\OS\ThirdParty\OpenSource\winpixeventruntime\bin\WinPixEventRuntime.dll" "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\01_Transformations\WinPixEventRunTime.dll"* /S /Y /D
+          
+         set ART=D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\..\..\..\Art\
+  xcopy /Y /S /D "%ART%\UnitTestResources\Textures\dds\Skybox_*.tex" "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\01_Transformations\Textures\"
+  xcopy /Y /S /D "%ART%\UnitTestResources\Textures\dds\circlepad.tex" "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\01_Transformations\Textures\"
+  xcopy /Y /S /D "%ART%\UnitTestResources\Fonts\*.ttf" "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\01_Transformations\Fonts\"
+  xcopy /Y /S /D "%ART%\UnitTestResources\Fonts\*.otf" "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\01_Transformations\Fonts\"
+  
+  xcopy /Y /S /D /E "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\01_Transformations\..\OS\Shaders" "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\01_Transformations\Shaders"
+  xcopy /Y /S /D /E "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\01_Transformations\..\OS\CompiledShaders" "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\01_Transformations\CompiledShaders"
+  
+  xcopy /Y /S /D "%ART%\UnitTestResources\Scripts\*.lua" "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\01_Transformations\Scripts\"
+  
+  xcopy "D:\HTC\avboit\The-Forge\Common_3\OS\Windows\pc_gpu.data" "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\01_Transformations\GPUCfg\gpu.data*" /Y /D
+  xcopy "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\src\01_Transformations\GPUCfg\gpu.cfg" "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\01_Transformations\GPUCfg\gpu.cfg*" /Y /D
+  
+  
+  :VCEnd
+  0 File(s) copied
+  0 File(s) copied
+  0 File(s) copied
+  0 File(s) copied
+  0 File(s) copied
+  0 File(s) copied
+  D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\..\..\..\Art\\UnitTestResources\Textures\dds\Skybox_back6.tex
+  D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\..\..\..\Art\\UnitTestResources\Textures\dds\Skybox_bottom4.tex
+  D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\..\..\..\Art\\UnitTestResources\Textures\dds\Skybox_front5.tex
+  D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\..\..\..\Art\\UnitTestResources\Textures\dds\Skybox_left2.tex
+  D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\..\..\..\Art\\UnitTestResources\Textures\dds\Skybox_right1.tex
+  D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\..\..\..\Art\\UnitTestResources\Textures\dds\Skybox_top3.tex
+  6 File(s) copied
+  D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\..\..\..\Art\\UnitTestResources\Textures\dds\circlepad.tex
+  1 File(s) copied
+  D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\..\..\..\Art\\UnitTestResources\Fonts\ComicRelief\ComicRelief-Bold.ttf
+  D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\..\..\..\Art\\UnitTestResources\Fonts\ComicRelief\ComicRelief.ttf
+  D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\..\..\..\Art\\UnitTestResources\Fonts\Crimson\Crimson-Bold.ttf
+  D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\..\..\..\Art\\UnitTestResources\Fonts\Crimson\Crimson-BoldItalic.ttf
+  D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\..\..\..\Art\\UnitTestResources\Fonts\Crimson\Crimson-Italic.ttf
+  D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\..\..\..\Art\\UnitTestResources\Fonts\Crimson\Crimson-Roman.ttf
+  D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\..\..\..\Art\\UnitTestResources\Fonts\Crimson\Crimson-Semibold.ttf
+  D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\..\..\..\Art\\UnitTestResources\Fonts\Crimson\Crimson-SemiboldItalic.ttf
+  D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\..\..\..\Art\\UnitTestResources\Fonts\HermeneusOne\HermeneusOne.ttf
+  9 File(s) copied
+  D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\..\..\..\Art\\UnitTestResources\Fonts\InconsolataLGC\Inconsolata-LGC-Bold.otf
+  D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\..\..\..\Art\\UnitTestResources\Fonts\InconsolataLGC\Inconsolata-LGC-BoldItalic.otf
+  D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\..\..\..\Art\\UnitTestResources\Fonts\InconsolataLGC\Inconsolata-LGC-Italic.otf
+  D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\..\..\..\Art\\UnitTestResources\Fonts\InconsolataLGC\Inconsolata-LGC.otf
+  D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\..\..\..\Art\\UnitTestResources\Fonts\TitilliumText\TitilliumText-Bold.otf
+  5 File(s) copied
+  0 File(s) copied
+  0 File(s) copied
+  File not found - *.lua
+  0 File(s) copied
+  0 File(s) copied
+  0 File(s) copied
+FinalizeBuildStatus:
+  ??????“D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\\x64\Release\Intermediate\01_Transformations\01_Trans.5938554B.tlog\unsuccessfulbuild”?
+  ???“D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\\x64\Release\Intermediate\01_Transformations\01_Trans.5938554B.tlog\01_Transformations.lastbuildstate”?? Touch ???
+???????“D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\01_Transformations.vcxproj”(Build ???)????
+
+??????
+    0 ???
+    0 ???
+
+???? 00:00:00.85

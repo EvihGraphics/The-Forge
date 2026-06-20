@@ -1,0 +1,12 @@
+﻿ExePath=D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\10_ScreenSpaceReflections\10_ScreenSpaceReflections.exe
+Arguments=--no-auto-exit --d3d12
+WorkingDirectory=D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\10_ScreenSpaceReflections
+Start=2026-06-20T01:06:35.0246695+08:00
+End=2026-06-20T01:06:41.6829525+08:00
+Status=EXITED_BEFORE_CAPTURE_AFTER_WAIT
+ExitCode=
+WindowHandle=12389022
+WindowTitle=10_ScreenSpaceReflections
+CaptureStatus=NOT_CAPTURED
+CapturePath=D:\HTC\avboit\TheForge_1.58_Baseline_Report\VisualResults\10_ScreenSpaceReflections\Screenshots\UT_10_ScreenSpaceReflections_DX12_Default_01.png
+CaptureError=

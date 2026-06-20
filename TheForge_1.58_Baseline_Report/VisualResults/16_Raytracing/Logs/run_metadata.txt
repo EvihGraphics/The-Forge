@@ -1,0 +1,12 @@
+﻿ExePath=D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\16_Raytracing\16_Raytracing.exe
+Arguments=--no-auto-exit --d3d12
+WorkingDirectory=D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\16_Raytracing
+Start=2026-06-20T01:07:24.0525841+08:00
+End=2026-06-20T01:07:30.6931214+08:00
+Status=EXITED_BEFORE_CAPTURE_AFTER_WAIT
+ExitCode=
+WindowHandle=5832892
+WindowTitle=16_Raytracing
+CaptureStatus=NOT_CAPTURED
+CapturePath=D:\HTC\avboit\TheForge_1.58_Baseline_Report\VisualResults\16_Raytracing\Screenshots\UT_16_Raytracing_DX12_Default_01.png
+CaptureError=

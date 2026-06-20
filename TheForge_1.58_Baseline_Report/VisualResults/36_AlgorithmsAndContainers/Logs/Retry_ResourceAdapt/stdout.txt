@@ -1,0 +1,19 @@
+2026-06-20 01:16:08 [MainThread     ]                   Log.c:195   INFO| Opened log file 36_AlgorithmsAndContainers.log
+2026-06-20 01:16:08 [MainThread     ]         WindowsBase.cpp:422   INFO| Operating System: Windows PC. Version: 10.0 (Build: 26200). Device Name: Unknown.
+2026-06-20 01:16:08 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-20 01:16:08 [MainThread     ]       WindowsWindow.cpp:636   INFO| Created window app 36_AlgorithmsAndContainers
+2026-06-20 01:16:08 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-20 01:16:08 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-20 01:16:08 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-20 01:16:08 [MainThread     ] 36_AlgorithmsAndContain:73    INFO| Stable sort test success
+2026-06-20 01:16:08 [MainThread     ] 36_AlgorithmsAndContain:83    INFO| Matrices test success
+2026-06-20 01:16:09 [MainThread     ] 36_AlgorithmsAndContain:108   INFO| stbds test success.
+2026-06-20 01:16:09 [MainThread     ] 36_AlgorithmsAndContain:110   INFO| stbds bstring extension test success.
+2026-06-20 01:16:09 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-20 01:16:09 [MainThread     ]                  UI.cpp:2288  WARN| uiCreateComponent() uses an unknown font id (0).  Will fallback to default UI font.
+2026-06-20 01:16:09 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-20 01:16:09 [MainThread     ]                  UI.cpp:2288  WARN| uiCreateComponent() uses an unknown font id (0).  Will fallback to default UI font.
+2026-06-20 01:16:09 [MainThread     ]                  UI.cpp:2288  WARN| uiCreateComponent() uses an unknown font id (0).  Will fallback to default UI font.
+2026-06-20 01:16:09 [MainThread     ]                  UI.cpp:2288  WARN| uiCreateComponent() uses an unknown font id (0).  Will fallback to default UI font.
+2026-06-20 01:16:09 [MainThread     ]         WindowsBase.cpp:591   INFO| Application Init+Load+Reload 0.056000ms
+2026-06-20 01:16:09 [MainThread     ]                   Log.c:153   INFO| Shutting down log system.

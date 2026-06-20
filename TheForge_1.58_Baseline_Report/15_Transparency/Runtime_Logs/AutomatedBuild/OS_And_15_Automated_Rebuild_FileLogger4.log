@@ -1,0 +1,529 @@
+??????? 2026/6/20 1:35:57?
+???????????: Normal?
+??“D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\Libraries\OS\OS.vcxproj”??? 1 ?(Rebuild ???)?
+_PrepareForClean:
+  ??????“D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\OS.tlog\OS.lastbuildstate”?
+PrepareForBuild:
+  ???????????????????????????????????,??? https://aka.ms/cpp/structured-output?
+  ??????“D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019x64\Release\”?
+InitializeBuildStatus:
+  ????“D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\OS.tlog\unsuccessfulbuild”,?????“AlwaysCreate”?
+  ???“D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\OS.tlog\unsuccessfulbuild”?? Touch ???
+FSL:
+  Compiling 202700: DIRECT3D11 VERT 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/DIRECT3D11/textured_mesh.vert
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/DIRECT3D11/textured_mesh.vert
+  Compiling 207596: DIRECT3D11 VERT 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/DIRECT3D11/imgui.vert
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/DIRECT3D11/imgui.vert
+  Compiling 127232: VULKAN VERT 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/VULKAN/imgui.vert
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/VULKAN/imgui.vert
+  Compiling 197488: VULKAN VERT 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/VULKAN/textured_mesh.vert
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/VULKAN/textured_mesh.vert
+  Compiling 201880: DIRECT3D12 VERT 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/DIRECT3D12/imgui.vert
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/DIRECT3D12/imgui.vert
+  Compiling 200688: DIRECT3D12 VERT 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/DIRECT3D12/textured_mesh.vert
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/DIRECT3D12/textured_mesh.vert
+  Compiling 205988: DIRECT3D11 FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/DIRECT3D11/textured_mesh.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/DIRECT3D11/textured_mesh.frag
+  Compiling 198952: DIRECT3D11 FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/DIRECT3D11/imgui_SAMPLE_COUNT_2.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/DIRECT3D11/imgui_SAMPLE_COUNT_2.frag
+  Compiling 198952: DIRECT3D12 FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/DIRECT3D12/imgui_SAMPLE_COUNT_16.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/DIRECT3D12/imgui_SAMPLE_COUNT_16.frag
+  Compiling 192844: DIRECT3D12 FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/DIRECT3D12/imgui_SAMPLE_COUNT_1.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/DIRECT3D12/imgui_SAMPLE_COUNT_1.frag
+  Compiling 193372: DIRECT3D11 FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/DIRECT3D11/imgui_SAMPLE_COUNT_8.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/DIRECT3D11/imgui_SAMPLE_COUNT_8.frag
+  Compiling 193372: VULKAN FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/VULKAN/imgui_SAMPLE_COUNT_4.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/VULKAN/imgui_SAMPLE_COUNT_4.frag
+  Compiling 201676: DIRECT3D12 FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/DIRECT3D12/imgui_SAMPLE_COUNT_2.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/DIRECT3D12/imgui_SAMPLE_COUNT_2.frag
+  Compiling 206260: DIRECT3D12 FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/DIRECT3D12/imgui_SAMPLE_COUNT_4.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/DIRECT3D12/imgui_SAMPLE_COUNT_4.frag
+  Compiling 202268: VULKAN FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/VULKAN/imgui_SAMPLE_COUNT_2.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/VULKAN/imgui_SAMPLE_COUNT_2.frag
+  Compiling 192304: DIRECT3D11 FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/DIRECT3D11/imgui_SAMPLE_COUNT_16.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/DIRECT3D11/imgui_SAMPLE_COUNT_16.frag
+  Compiling 192304: VULKAN FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/VULKAN/imgui_SAMPLE_COUNT_8.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/VULKAN/imgui_SAMPLE_COUNT_8.frag
+  Compiling 204196: DIRECT3D11 FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/DIRECT3D11/imgui_SAMPLE_COUNT_4.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/DIRECT3D11/imgui_SAMPLE_COUNT_4.frag
+  Compiling 204196: DIRECT3D12 FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/DIRECT3D12/textured_mesh.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/DIRECT3D12/textured_mesh.frag
+  Compiling 207244: VULKAN FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/VULKAN/imgui_SAMPLE_COUNT_1.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/VULKAN/imgui_SAMPLE_COUNT_1.frag
+  Compiling 206368: DIRECT3D11 FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/DIRECT3D11/imgui_SAMPLE_COUNT_1.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/DIRECT3D11/imgui_SAMPLE_COUNT_1.frag
+  Compiling 206368: DIRECT3D12 FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/DIRECT3D12/imgui_SAMPLE_COUNT_8.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/DIRECT3D12/imgui_SAMPLE_COUNT_8.frag
+  Compiling 206160: VULKAN FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/VULKAN/imgui_SAMPLE_COUNT_16.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/VULKAN/imgui_SAMPLE_COUNT_16.frag
+  Compiling 195460: VULKAN FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/VULKAN/textured_mesh.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/VULKAN/textured_mesh.frag
+  FSL: Generating ['DIRECT3D11', 'DIRECT3D12', 'VULKAN'], from D:\HTC\avboit\The-Forge\Common_3\Application\UI\Shaders\FSL\UI_ShaderList.fsl
+  Compiling 207616: DIRECT3D11 VERT 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/DIRECT3D11/fontstash3D.vert
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/DIRECT3D11/fontstash3D.vert
+  Compiling 207748: DIRECT3D11 VERT 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/DIRECT3D11/fontstash2D.vert
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/DIRECT3D11/fontstash2D.vert
+  Compiling 207076: DIRECT3D12 VERT 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/DIRECT3D12/fontstash3D.vert
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/DIRECT3D12/fontstash3D.vert
+  Compiling 200188: DIRECT3D12 VERT 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/DIRECT3D12/fontstash2D.vert
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/DIRECT3D12/fontstash2D.vert
+  Compiling 203004: VULKAN VERT 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/VULKAN/fontstash2D.vert
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/VULKAN/fontstash2D.vert
+  Compiling 201000: VULKAN VERT 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/VULKAN/fontstash3D.vert
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/VULKAN/fontstash3D.vert
+  Compiling 199536: DIRECT3D11 FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/DIRECT3D11/fontstash.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/DIRECT3D11/fontstash.frag
+  Compiling 203008: VULKAN FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/VULKAN/fontstash.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/VULKAN/fontstash.frag
+  Compiling 200196: DIRECT3D12 FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/DIRECT3D12/fontstash.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/DIRECT3D12/fontstash.frag
+  FSL: Generating ['DIRECT3D11', 'DIRECT3D12', 'VULKAN'], from D:\HTC\avboit\The-Forge\Common_3\Application\Fonts\Shaders\FSL\Fonts_ShaderList.fsl
+  Compiling 203012: VULKAN VERT 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/VULKAN/bone.vert
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/VULKAN/bone.vert
+  Compiling 203496: VULKAN VERT 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/VULKAN/joint.vert
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/VULKAN/joint.vert
+  Compiling 195888: DIRECT3D12 VERT 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/DIRECT3D12/joint.vert
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/DIRECT3D12/joint.vert
+  Compiling 195148: DIRECT3D12 VERT 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/DIRECT3D12/bone.vert
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/DIRECT3D12/bone.vert
+  Compiling 202648: DIRECT3D11 VERT 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/DIRECT3D11/bone.vert
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/DIRECT3D11/bone.vert
+  Compiling 11116: DIRECT3D11 VERT 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/DIRECT3D11/joint.vert
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/DIRECT3D11/joint.vert
+  Compiling 200756: DIRECT3D11 FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/DIRECT3D11/bone.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/DIRECT3D11/bone.frag
+  Compiling 188772: DIRECT3D12 FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/DIRECT3D12/joint.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/DIRECT3D12/joint.frag
+  Compiling 202784: DIRECT3D12 FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/DIRECT3D12/bone.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/DIRECT3D12/bone.frag
+  Compiling 201204: VULKAN FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/VULKAN/joint.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/VULKAN/joint.frag
+  Compiling 198404: VULKAN FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/VULKAN/bone.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/VULKAN/bone.frag
+  Compiling 204208: DIRECT3D11 FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/DIRECT3D11/joint.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/DIRECT3D11/joint.frag
+  FSL: Generating ['DIRECT3D11', 'DIRECT3D12', 'VULKAN'], from D:\HTC\avboit\The-Forge\Common_3\Resources\AnimationSystem\Animation\Shaders\FSL\Animation_ShaderList.fsl
+  Compiling 203268: DIRECT3D11 VERT 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/DIRECT3D11/panini_projection.vert
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/DIRECT3D11/panini_projection.vert
+  Compiling 196144: VULKAN VERT 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/VULKAN/panini_projection.vert
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/VULKAN/panini_projection.vert
+  Compiling 207604: DIRECT3D12 VERT 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/DIRECT3D12/panini_projection.vert
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/DIRECT3D12/panini_projection.vert
+  Compiling 203536: DIRECT3D11 FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/DIRECT3D11/panini_projection.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/DIRECT3D11/panini_projection.frag
+  Compiling 5808: VULKAN FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/VULKAN/panini_projection.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/VULKAN/panini_projection.frag
+  Compiling 204296: DIRECT3D12 FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/Shaders/DIRECT3D12/panini_projection.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/OS/CompiledShaders/DIRECT3D12/panini_projection.frag
+  FSL: Generating ['DIRECT3D11', 'DIRECT3D12', 'VULKAN'], from D:\HTC\avboit\The-Forge\Middleware_3\PaniniProjection\Shaders\FSL\Panini_ShaderList.fsl
+ClCompile:
+  E:\tools\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\bin\HostX86\x64\CL.exe /c /I"D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\Libraries\OS\\..\..\..\..\..\Common_3\Resources\AnimationSystem\ThirdParty\OpenSource\ozz-animation\include" /Z7 /nologo /W4 /WX /diagnostics:column /MP /O2 /Oi /GL /D _CRT_SECURE_NO_WARNINGS /D _CRT_NONSTDC_NO_DEPRECATE /D D3D12_AGILITY_SDK=1 /D D3D12_AGILITY_SDK_VERSION=611 /D _HAS_EXCEPTIONS=0 /D _UNICODE /D UNICODE /Gm- /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR- /permissive- /Fo"D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\\" /Fd"D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019x64\Release\OS.pdb" /external:W4 /Gd /TP /wd4201 /wd4324 /wd4127 /FC /errorReport:queue ..\..\..\..\..\Common_3\Application\CameraController.cpp ..\..\..\..\..\Common_3\Application\InputSystem.cpp ..\..\..\..\..\Common_3\Application\Profiler\GpuProfiler.cpp ..\..\..\..\..\Common_3\Application\Profiler\ProfilerBase.cpp ..\..\..\..\..\Common_3\Application\RemoteControl.cpp ..\..\..\..\..\Common_3\Application\Screenshot.cpp ..\..\..\..\..\Common_3\Application\ThirdParty\OpenSource\imgui\imgui.cpp ..\..\..\..\..\Common_3\Application\ThirdParty\OpenSource\imgui\imgui_demo.cpp ..\..\..\..\..\Common_3\Application\ThirdParty\OpenSource\imgui\imgui_draw.cpp ..\..\..\..\..\Common_3\Application\ThirdParty\OpenSource\imgui\imgui_widgets.cpp ..\..\..\..\..\Common_3\Application\ThirdParty\OpenSource\imgui\imgui_tables.cpp ..\..\..\..\..\Common_3\Application\UI\UI.cpp ..\..\..\..\..\Common_3\Game\Scripting\LuaManager.cpp ..\..\..\..\..\Common_3\Game\Scripting\LuaManagerImpl.cpp ..\..\..\..\..\Common_3\Game\Scripting\LuaSystem.cpp ..\..\..\..\..\Common_3\Application\Fonts\FontSystem.cpp ..\..\..\..\..\Common_3\Application\Fonts\stbtt.cpp ..\..\..\..\..\Common_3\OS\CPUConfig.cpp ..\..\..\..\..\Common_3\OS\WindowSystem\WindowSystem.cpp ..\..\..\..\..\Common_3\Utilities\ThirdParty\OpenSource\rmem\src\rmem_get_module_info.cpp ..\..\..\..\..\Common_3\Utilities\ThirdParty\OpenSource\rmem\src\rmem_hook.cpp ..\..\..\..\..\Common_3\Utilities\ThirdParty\OpenSource\rmem\src\rmem_lib.cpp ..\..\..\..\..\Common_3\OS\Windows\WindowsBase.cpp ..\..\..\..\..\Common_3\OS\Windows\WindowsFileSystem.cpp ..\..\..\..\..\Common_3\OS\Windows\WindowsStackTraceDump.cpp ..\..\..\..\..\Common_3\OS\Windows\WindowsWindow.cpp ..\..\..\..\..\Common_3\Resources\AnimationSystem\Animation\AnimatedObject.cpp ..\..\..\..\..\Common_3\Resources\AnimationSystem\Animation\Animation.cpp ..\..\..\..\..\Common_3\Resources\AnimationSystem\Animation\Clip.cpp ..\..\..\..\..\Common_3\Resources\AnimationSystem\Animation\ClipController.cpp ..\..\..\..\..\Common_3\Resources\AnimationSystem\Animation\ClipMask.cpp ..\..\..\..\..\Common_3\Resources\AnimationSystem\Animation\Rig.cpp ..\..\..\..\..\Common_3\Resources\AnimationSystem\Animation\SkeletonBatcher.cpp
+  CameraController.cpp
+  InputSystem.cpp
+  GpuProfiler.cpp
+  ProfilerBase.cpp
+  RemoteControl.cpp
+  Screenshot.cpp
+  imgui.cpp
+  imgui_demo.cpp
+  imgui_draw.cpp
+  imgui_widgets.cpp
+  imgui_tables.cpp
+  UI.cpp
+  LuaManager.cpp
+  LuaManagerImpl.cpp
+  LuaSystem.cpp
+  FontSystem.cpp
+  stbtt.cpp
+  CPUConfig.cpp
+  WindowSystem.cpp
+  rmem_get_module_info.cpp
+  rmem_hook.cpp
+  rmem_lib.cpp
+  WindowsBase.cpp
+  WindowsFileSystem.cpp
+  WindowsStackTraceDump.cpp
+  WindowsWindow.cpp
+  AnimatedObject.cpp
+  Animation.cpp
+  Clip.cpp
+  ClipController.cpp
+  ClipMask.cpp
+  Rig.cpp
+  SkeletonBatcher.cpp
+  E:\tools\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\bin\HostX86\x64\CL.exe /c /I"D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\Libraries\OS\\..\..\..\..\..\Common_3\Resources\AnimationSystem\ThirdParty\OpenSource\ozz-animation\include" /Z7 /nologo /W4 /WX /diagnostics:column /MP /O2 /Oi /GL /D _CRT_SECURE_NO_WARNINGS /D _CRT_NONSTDC_NO_DEPRECATE /D D3D12_AGILITY_SDK=1 /D D3D12_AGILITY_SDK_VERSION=611 /D _HAS_EXCEPTIONS=0 /D _UNICODE /D UNICODE /Gm- /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR- /permissive- /Fo"D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\\" /Fd"D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019x64\Release\OS.pdb" /external:W4 /Gd /TC /wd4201 /wd4324 /wd4127 /FC /errorReport:queue "..\..\..\..\..\Common_3\Game\ThirdParty\OpenSource\lua-5.3.5\src\lapi.c" "..\..\..\..\..\Common_3\Game\ThirdParty\OpenSource\lua-5.3.5\src\lauxlib.c" "..\..\..\..\..\Common_3\Game\ThirdParty\OpenSource\lua-5.3.5\src\lbaselib.c" "..\..\..\..\..\Common_3\Game\ThirdParty\OpenSource\lua-5.3.5\src\lbitlib.c" "..\..\..\..\..\Common_3\Game\ThirdParty\OpenSource\lua-5.3.5\src\lcode.c" "..\..\..\..\..\Common_3\Game\ThirdParty\OpenSource\lua-5.3.5\src\lcorolib.c" "..\..\..\..\..\Common_3\Game\ThirdParty\OpenSource\lua-5.3.5\src\lctype.c" "..\..\..\..\..\Common_3\Game\ThirdParty\OpenSource\lua-5.3.5\src\ldblib.c" "..\..\..\..\..\Common_3\Game\ThirdParty\OpenSource\lua-5.3.5\src\ldebug.c" "..\..\..\..\..\Common_3\Game\ThirdParty\OpenSource\lua-5.3.5\src\ldo.c" "..\..\..\..\..\Common_3\Game\ThirdParty\OpenSource\lua-5.3.5\src\ldump.c" "..\..\..\..\..\Common_3\Game\ThirdParty\OpenSource\lua-5.3.5\src\lfunc.c" "..\..\..\..\..\Common_3\Game\ThirdParty\OpenSource\lua-5.3.5\src\lgc.c" "..\..\..\..\..\Common_3\Game\ThirdParty\OpenSource\lua-5.3.5\src\linit.c" "..\..\..\..\..\Common_3\Game\ThirdParty\OpenSource\lua-5.3.5\src\liolib.c" "..\..\..\..\..\Common_3\Game\ThirdParty\OpenSource\lua-5.3.5\src\llex.c" "..\..\..\..\..\Common_3\Game\ThirdParty\OpenSource\lua-5.3.5\src\lmathlib.c" "..\..\..\..\..\Common_3\Game\ThirdParty\OpenSource\lua-5.3.5\src\lmem.c" "..\..\..\..\..\Common_3\Game\ThirdParty\OpenSource\lua-5.3.5\src\loadlib.c" "..\..\..\..\..\Common_3\Game\ThirdParty\OpenSource\lua-5.3.5\src\lobject.c" "..\..\..\..\..\Common_3\Game\ThirdParty\OpenSource\lua-5.3.5\src\lopcodes.c" "..\..\..\..\..\Common_3\Game\ThirdParty\OpenSource\lua-5.3.5\src\loslib.c" "..\..\..\..\..\Common_3\Game\ThirdParty\OpenSource\lua-5.3.5\src\lparser.c" "..\..\..\..\..\Common_3\Game\ThirdParty\OpenSource\lua-5.3.5\src\lstate.c" "..\..\..\..\..\Common_3\Game\ThirdParty\OpenSource\lua-5.3.5\src\lstring.c" "..\..\..\..\..\Common_3\Game\ThirdParty\OpenSource\lua-5.3.5\src\lstrlib.c" "..\..\..\..\..\Common_3\Game\ThirdParty\OpenSource\lua-5.3.5\src\ltable.c" "..\..\..\..\..\Common_3\Game\ThirdParty\OpenSource\lua-5.3.5\src\ltablib.c" "..\..\..\..\..\Common_3\Game\ThirdParty\OpenSource\lua-5.3.5\src\ltm.c" "..\..\..\..\..\Common_3\Game\ThirdParty\OpenSource\lua-5.3.5\src\lundump.c" "..\..\..\..\..\Common_3\Game\ThirdParty\OpenSource\lua-5.3.5\src\lutf8lib.c" "..\..\..\..\..\Common_3\Game\ThirdParty\OpenSource\lua-5.3.5\src\lvm.c" "..\..\..\..\..\Common_3\Game\ThirdParty\OpenSource\lua-5.3.5\src\lzio.c" ..\..\..\..\..\Common_3\OS\ThirdParty\OpenSource\cpu_features\src\impl_x86_windows.c ..\..\..\..\..\Common_3\Utilities\FileSystem\FileSystem.c ..\..\..\..\..\Common_3\Utilities\FileSystem\SystemRun.c ..\..\..\..\..\Common_3\Utilities\Log\Log.c ..\..\..\..\..\Common_3\Utilities\Math\Algorithms.c ..\..\..\..\..\Common_3\Utilities\Math\StbDs.c ..\..\..\..\..\Common_3\Utilities\MemoryTracking\MemoryTracking.c ..\..\..\..\..\Common_3\Utilities\ThirdParty\OpenSource\bstrlib\bstrlib.c ..\..\..\..\..\Common_3\Utilities\ThirdParty\OpenSource\lz4\lz4.c ..\..\..\..\..\Common_3\Utilities\ThirdParty\OpenSource\zstd\common\debug.c ..\..\..\..\..\Common_3\Utilities\ThirdParty\OpenSource\zstd\common\entropy_common.c ..\..\..\..\..\Common_3\Utilities\ThirdParty\OpenSource\zstd\common\error_private.c ..\..\..\..\..\Common_3\Utilities\ThirdParty\OpenSource\zstd\common\fse_decompress.c ..\..\..\..\..\Common_3\Utilities\ThirdParty\OpenSource\zstd\common\pool.c ..\..\..\..\..\Common_3\Utilities\ThirdParty\OpenSource\zstd\common\threading.c ..\..\..\..\..\Common_3\Utilities\ThirdParty\OpenSource\zstd\common\xxhash.c ..\..\..\..\..\Common_3\Utilities\ThirdParty\OpenSource\zstd\common\zstd_common.c ..\..\..\..\..\Common_3\Utilities\ThirdParty\OpenSource\zstd\decompress\huf_decompress.c ..\..\..\..\..\Common_3\Utilities\ThirdParty\OpenSource\zstd\decompress\zstd_ddict.c ..\..\..\..\..\Common_3\Utilities\ThirdParty\OpenSource\zstd\decompress\zstd_decompress.c ..\..\..\..\..\Common_3\Utilities\ThirdParty\OpenSource\zstd\decompress\zstd_decompress_block.c ..\..\..\..\..\Common_3\Utilities\Threading\ThreadSystem.c ..\..\..\..\..\Common_3\Utilities\Timer.c ..\..\..\..\..\Common_3\OS\Windows\WindowsLog.c ..\..\..\..\..\Common_3\OS\Windows\WindowsThread.c ..\..\..\..\..\Common_3\OS\Windows\WindowsTime.c
+  lapi.c
+  lauxlib.c
+  lbaselib.c
+  lbitlib.c
+  lcode.c
+  lcorolib.c
+  lctype.c
+  ldblib.c
+  ldebug.c
+  ldo.c
+  ldump.c
+  lfunc.c
+  lgc.c
+  linit.c
+  liolib.c
+  llex.c
+  lmathlib.c
+  lmem.c
+  loadlib.c
+  lobject.c
+  lopcodes.c
+  loslib.c
+  lparser.c
+  lstate.c
+  lstring.c
+  lstrlib.c
+  ltable.c
+  ltablib.c
+  ltm.c
+  lundump.c
+  lutf8lib.c
+  lvm.c
+  lzio.c
+  impl_x86_windows.c
+  FileSystem.c
+  SystemRun.c
+  Log.c
+  Algorithms.c
+  StbDs.c
+  MemoryTracking.c
+  bstrlib.c
+  lz4.c
+  debug.c
+  entropy_common.c
+  error_private.c
+  fse_decompress.c
+  pool.c
+  threading.c
+  xxhash.c
+  zstd_common.c
+  huf_decompress.c
+  zstd_ddict.c
+  zstd_decompress.c
+  zstd_decompress_block.c
+  ThreadSystem.c
+  Timer.c
+  WindowsLog.c
+  WindowsThread.c
+  WindowsTime.c
+Lib:
+  E:\tools\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\bin\HostX86\x64\Lib.exe /OUT:"D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019x64\Release\OS.lib" /NOLOGO /MACHINE:X64 /LTCG /ignore:4099 "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\CameraController.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\InputSystem.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\GpuProfiler.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\ProfilerBase.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\RemoteControl.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\Screenshot.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\imgui.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\imgui_demo.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\imgui_draw.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\imgui_widgets.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\imgui_tables.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\UI.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\LuaManager.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\LuaManagerImpl.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\LuaSystem.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\lapi.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\lauxlib.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\lbaselib.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\lbitlib.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\lcode.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\lcorolib.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\lctype.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\ldblib.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\ldebug.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\ldo.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\ldump.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\lfunc.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\lgc.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\linit.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\liolib.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\llex.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\lmathlib.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\lmem.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\loadlib.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\lobject.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\lopcodes.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\loslib.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\lparser.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\lstate.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\lstring.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\lstrlib.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\ltable.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\ltablib.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\ltm.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\lundump.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\lutf8lib.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\lvm.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\lzio.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\FontSystem.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\stbtt.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\CPUConfig.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\impl_x86_windows.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\WindowSystem.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\FileSystem.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\SystemRun.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\Log.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\Algorithms.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\StbDs.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\MemoryTracking.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\bstrlib.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\lz4.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\rmem_get_module_info.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\rmem_hook.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\rmem_lib.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\debug.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\entropy_common.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\error_private.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\fse_decompress.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\pool.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\threading.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\xxhash.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\zstd_common.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\huf_decompress.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\zstd_ddict.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\zstd_decompress.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\zstd_decompress_block.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\ThreadSystem.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\Timer.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\WindowsBase.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\WindowsFileSystem.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\WindowsLog.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\WindowsStackTraceDump.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\WindowsThread.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\WindowsTime.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\WindowsWindow.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\AnimatedObject.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\Animation.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\Clip.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\ClipController.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\ClipMask.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\Rig.obj"
+  "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\SkeletonBatcher.obj"
+  OS.vcxproj -> D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019x64\Release\OS.lib
+PostBuildEvent:
+   
+        
+  :VCEnd
+FinalizeBuildStatus:
+  ??????“D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\OS.tlog\unsuccessfulbuild”?
+  ???“D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\OS\OS.tlog\OS.lastbuildstate”?? Touch ???
+???????“D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\Libraries\OS\OS.vcxproj”(Rebuild ???)????
+
+??????
+    0 ???
+    0 ???
+
+???? 00:00:09.11
+??????? 2026/6/20 1:36:07?
+???????????: Normal?
+??“D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\15_Transparency.vcxproj”??? 1 ?(Rebuild ???)?
+_PrepareForClean:
+  ??????“D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\15_Transparency\15_Transparency.tlog\15_Transparency.lastbuildstate”?
+PrepareForBuild:
+  ???????????????????????????????????,??? https://aka.ms/cpp/structured-output?
+  ??????“D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019x64\Release\15_Transparency\”?
+InitializeBuildStatus:
+  ????“D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\15_Transparency\15_Transparency.tlog\unsuccessfulbuild”,?????“AlwaysCreate”?
+  ???“D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\15_Transparency\15_Transparency.tlog\unsuccessfulbuild”?? Touch ???
+FSL:
+  Compiling 202232: VULKAN VERT 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/VULKAN/fullscreen.vert
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/VULKAN/fullscreen.vert
+  Compiling 200120: VULKAN VERT 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/VULKAN/shadow.vert
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/VULKAN/shadow.vert
+  Compiling 193200: VULKAN VERT 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/VULKAN/skybox.vert
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/VULKAN/skybox.vert
+  Compiling 202008: DIRECT3D12 VERT 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/DIRECT3D12/fullscreen.vert
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/DIRECT3D12/fullscreen.vert
+  Compiling 177696: VULKAN VERT 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/VULKAN/forward.vert
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/VULKAN/forward.vert
+  Compiling 11116: DIRECT3D12 VERT 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/DIRECT3D12/shadow.vert
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/DIRECT3D12/shadow.vert
+  Compiling 18928: DIRECT3D12 VERT 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/DIRECT3D12/skybox.vert
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/DIRECT3D12/skybox.vert
+  Compiling 201912: DIRECT3D12 VERT 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/DIRECT3D12/forward.vert
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/DIRECT3D12/forward.vert
+  Compiling 201576: VULKAN FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/VULKAN/downsample.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/VULKAN/downsample.frag
+  Compiling 206348: VULKAN FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/VULKAN/AdaptiveOITComposite.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/VULKAN/AdaptiveOITComposite.frag
+  Compiling 205352: VULKAN FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/VULKAN/AdaptiveOITClear.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/VULKAN/AdaptiveOITClear.frag
+  Compiling 29328: VULKAN FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/VULKAN/copy.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/VULKAN/copy.frag
+  Compiling 201224: VULKAN FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/VULKAN/gaussianBlur.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/VULKAN/gaussianBlur.frag
+  Compiling 205496: VULKAN FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/VULKAN/phenomenologicalTransparencyComposite.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/VULKAN/phenomenologicalTransparencyComposite.frag
+  Compiling 203408: VULKAN FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/VULKAN/shadow.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/VULKAN/shadow.frag
+  Compiling 203812: VULKAN FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/VULKAN/skybox.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/VULKAN/skybox.frag
+  Compiling 205580: VULKAN FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/VULKAN/weightedBlendedOITVolitionComposite.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/VULKAN/weightedBlendedOITVolitionComposite.frag
+  Compiling 201724: VULKAN FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/VULKAN/weightedBlendedOITComposite.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/VULKAN/weightedBlendedOITComposite.frag
+  Compiling 190796: DIRECT3D12 FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/DIRECT3D12/downsample.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/DIRECT3D12/downsample.frag
+  Compiling 197820: DIRECT3D12 FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/DIRECT3D12/copy.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/DIRECT3D12/copy.frag
+  Compiling 193356: DIRECT3D12 FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/DIRECT3D12/forward.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/DIRECT3D12/forward.frag
+  Compiling 205548: DIRECT3D12 FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/DIRECT3D12/AdaptiveOITClear.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/DIRECT3D12/AdaptiveOITClear.frag
+  Compiling 206568: DIRECT3D12 FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/DIRECT3D12/gaussianBlur.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/DIRECT3D12/gaussianBlur.frag
+  Compiling 197748: DIRECT3D12 FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/DIRECT3D12/AdaptiveOITComposite.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/DIRECT3D12/AdaptiveOITComposite.frag
+  Compiling 131052: DIRECT3D12 FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/DIRECT3D12/shadow.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/DIRECT3D12/shadow.frag
+  Compiling 207292: DIRECT3D12 FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/DIRECT3D12/skybox.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/DIRECT3D12/skybox.frag
+  Compiling 207104: DIRECT3D12 FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/DIRECT3D12/weightedBlendedOITComposite.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/DIRECT3D12/weightedBlendedOITComposite.frag
+  Compiling 205060: DIRECT3D12 FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/DIRECT3D12/phenomenologicalTransparencyComposite.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/DIRECT3D12/phenomenologicalTransparencyComposite.frag
+  Compiling 204024: DIRECT3D12 FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/DIRECT3D12/weightedBlendedOITVolitionComposite.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/DIRECT3D12/weightedBlendedOITVolitionComposite.frag
+  Compiling 201744: DIRECT3D12 FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/DIRECT3D12/AdaptiveOIT.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/DIRECT3D12/AdaptiveOIT.frag
+  Compiling 206448: DIRECT3D12 FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/DIRECT3D12/phenomenologicalTransparency.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/DIRECT3D12/phenomenologicalTransparency.frag
+  Compiling 204864: DIRECT3D12 FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/DIRECT3D12/weightedBlendedOIT.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/DIRECT3D12/weightedBlendedOIT.frag
+  Compiling 205484: DIRECT3D12 FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/DIRECT3D12/weightedBlendedOITVolition.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/DIRECT3D12/weightedBlendedOITVolition.frag
+  Compiling 195120: DIRECT3D12 FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/DIRECT3D12/stochasticShadow.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/DIRECT3D12/stochasticShadow.frag
+  Compiling 126844: VULKAN FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/VULKAN/phenomenologicalTransparency.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/VULKAN/phenomenologicalTransparency.frag
+  Compiling 29360: VULKAN FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/VULKAN/forward.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/VULKAN/forward.frag
+  Compiling 200528: VULKAN FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/VULKAN/AdaptiveOIT.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/VULKAN/AdaptiveOIT.frag
+  Compiling 19076: VULKAN FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/VULKAN/weightedBlendedOIT.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/VULKAN/weightedBlendedOIT.frag
+  Compiling 199928: VULKAN FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/VULKAN/weightedBlendedOITVolition.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/VULKAN/weightedBlendedOITVolition.frag
+  Compiling 189344: VULKAN FRAG 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/VULKAN/stochasticShadow.frag
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/VULKAN/stochasticShadow.frag
+  Compiling 207324: DIRECT3D12 COMP 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/DIRECT3D12/generateMips.comp
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/DIRECT3D12/generateMips.comp
+  Compiling 206776: VULKAN COMP 
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/Shaders/VULKAN/generateMips.comp
+  	D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019x64/Release/15_Transparency/CompiledShaders/VULKAN/generateMips.comp
+  FSL: Generating ['VULKAN', 'DIRECT3D12'], from D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\src\15_Transparency\Shaders\FSL\ShaderList.fsl
+ClCompile:
+  E:\tools\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\bin\HostX86\x64\CL.exe /c /Z7 /nologo /W4 /WX /diagnostics:column /MP /O2 /Oi /GL /D D3D12_AGILITY_SDK=1 /D D3D12_AGILITY_SDK_VERSION=611 /D _HAS_EXCEPTIONS=0 /D _UNICODE /D UNICODE /Gm- /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR- /permissive- /Fo"D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\15_Transparency\\" /Fd"D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\15_Transparency\vc143.pdb" /external:W4 /Gd /TP /wd4201 /wd4324 /wd4127 /FC /errorReport:queue ..\src\15_Transparency\15_Transparency.cpp
+  15_Transparency.cpp
+Link:
+  E:\tools\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\bin\HostX86\x64\link.exe /ERRORREPORT:QUEUE /OUT:"D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019x64\Release\15_Transparency\15_Transparency.exe" /INCREMENTAL:NO /NOLOGO Xinput9_1_0.lib ws2_32.lib gainputstatic.lib Renderer.lib OS.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /manifestinput:"D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019dpi-aware.manifest" /DEBUG /PDB:"D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019x64\Release\15_Transparency\15_Transparency.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG:incremental /LTCGOUT:"D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\15_Transparency\15_Transparency.iobj" /TLBID:1 /ENTRY:"mainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019x64\Release\15_Transparency\15_Transparency.lib" /MACHINE:X64 /ignore:4099 "D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\Intermediate\15_Transparency\15_Transparency.obj"
+LINK : fatal error LNK1181: cannot open input file 'OS.lib' [D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\15_Transparency.vcxproj]
+???????“D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\15_Transparency.vcxproj”(Rebuild ???)??? - ???
+
+?????
+
+“D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\15_Transparency.vcxproj”(Rebuild ??) (1) ->
+(Link ??) -> 
+  LINK : fatal error LNK1181: cannot open input file 'OS.lib' [D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\15_Transparency.vcxproj]
+
+    0 ???
+    1 ???
+
+???? 00:00:04.42

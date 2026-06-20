@@ -1,0 +1,12 @@
+﻿ExePath=D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\01_Transformations\01_Transformations.exe
+Arguments=--no-auto-exit --d3d12
+WorkingDirectory=D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\01_Transformations
+Start=2026-06-20T01:06:07.1002798+08:00
+End=2026-06-20T01:06:13.8826725+08:00
+Status=WINDOW_READY;CLOSED
+ExitCode=
+WindowHandle=3606812
+WindowTitle=01_Transformations
+CaptureStatus=CAPTURED_WINDOW_PRINTWINDOW
+CapturePath=D:\HTC\avboit\TheForge_1.58_Baseline_Report\VisualResults\01_Transformations\Screenshots\UT_01_Transformations_DX12_Default_01.png
+CaptureError=

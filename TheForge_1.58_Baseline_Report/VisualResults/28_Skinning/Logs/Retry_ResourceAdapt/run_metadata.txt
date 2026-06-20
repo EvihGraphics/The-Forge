@@ -1,0 +1,12 @@
+﻿ExePath=D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\28_Skinning\28_Skinning.exe
+Arguments=--no-auto-exit --d3d12
+WorkingDirectory=D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\28_Skinning
+Start=2026-06-20T01:15:51.8291692+08:00
+End=2026-06-20T01:16:08.6129877+08:00
+Status=WINDOW_READY;CLOSED
+ExitCode=
+WindowHandle=12716994
+WindowTitle=28_Skinning
+CaptureStatus=CAPTURED_WINDOW_PRINTWINDOW
+CapturePath=D:\HTC\avboit\TheForge_1.58_Baseline_Report\VisualResults\28_Skinning\Screenshots\UT_28_28_Skinning_DX12_Default_02.png
+CaptureError=

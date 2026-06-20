@@ -1,0 +1,248 @@
+2026-06-20 01:14:27 [MainThread     ]                   Log.c:195   INFO| Opened log file 09_LightShadowPlayground.log
+2026-06-20 01:14:27 [MainThread     ]         WindowsBase.cpp:422   INFO| Operating System: Windows PC. Version: 10.0 (Build: 26200). Device Name: Unknown.
+2026-06-20 01:14:27 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-20 01:14:27 [MainThread     ]       WindowsWindow.cpp:636   INFO| Created window app 09_LightShadowPlayground
+2026-06-20 01:14:27 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-20 01:14:27 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-20 01:14:27 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-20 01:14:27 [MainThread     ]            FileSystem.c:1013  WARN| Resource directory {8} already set on:'D:/HTC/avboit/The-Forge/Examples_3/Unit_Tests/PC Visual Studio 2019/x64/Release/09_LightShadowPlayground/GPUCfg'
+2026-06-20 01:14:27 [MainThread     ]      GraphicsConfig.cpp:419   INFO| Default GPU Data:
+2026-06-20 01:14:27 [MainThread     ]      GraphicsConfig.cpp:420   INFO|     DefaultGPUPresetLevel set to low
+2026-06-20 01:14:27 [MainThread     ]      GraphicsConfig.cpp:422   INFO| GPU vendors:
+2026-06-20 01:14:27 [MainThread     ]      GraphicsConfig.cpp:440   INFO|     intel: 0x8086
+2026-06-20 01:14:27 [MainThread     ]      GraphicsConfig.cpp:440   INFO|     amd: 0x1002
+2026-06-20 01:14:27 [MainThread     ]      GraphicsConfig.cpp:440   INFO|     nvidia: 0x10de
+2026-06-20 01:14:27 [MainThread     ]      GraphicsConfig.cpp:440   INFO|     qualcomm: 0x5143
+2026-06-20 01:14:27 [MainThread     ]      GraphicsConfig.cpp:898    DBG| Extended Config| GPU Config invalid Field name: 'isheadless'.
+2026-06-20 01:14:27 [MainThread     ]      GraphicsConfig.cpp:723    DBG| Invalid GPU Selection rule: 'isHeadLess != 1;'.
+2026-06-20 01:14:27 [MainThread     ]      GraphicsConfig.cpp:552   INFO| GPU selection settings:
+2026-06-20 01:14:27 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: graphicqueuesupported == 1
+2026-06-20 01:14:27 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: deviceid == 0
+2026-06-20 01:14:27 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: gpupresetlevel
+2026-06-20 01:14:27 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: vendorid != 32902 && vendorid != 32903 && vendorid != 5692
+2026-06-20 01:14:27 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: directxfeaturelevel
+2026-06-20 01:14:27 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: vram
+2026-06-20 01:14:27 [MainThread     ]      GraphicsConfig.cpp:561   INFO| Driver rejections:
+2026-06-20 01:14:27 [MainThread     ]      GraphicsConfig.cpp:579   INFO| GPU configuration settings:
+2026-06-20 01:14:27 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 4318: 64
+2026-06-20 01:14:27 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 4098: 13
+2026-06-20 01:14:27 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 4130: 13
+2026-06-20 01:14:27 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 5692: 64
+2026-06-20 01:14:27 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 32902: 64
+2026-06-20 01:14:27 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 32903: 64
+2026-06-20 01:14:27 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     dynamicrenderingenabled: vendorid == 5692: 0
+2026-06-20 01:14:27 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     dynamicrenderingenabled: vendorid == 32902: 0
+2026-06-20 01:14:27 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     dynamicrenderingenabled: vendorid == 32903: 0
+2026-06-20 01:14:27 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     tessellationsupported: vendorid == 5045: 0
+2026-06-20 01:14:27 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     xclipsetransferqueueworkaroundenabled: deviceid == 29600: 1
+2026-06-20 01:14:27 [MainThread     ]      GraphicsConfig.cpp:592   INFO| User settings:
+2026-06-20 01:14:27 [MainThread     ]      GraphicsConfig.cpp:602   INFO|     MSAASampleCount: gpupresetlevel >= 2: 4
+2026-06-20 01:14:27 [MainThread     ]      GraphicsConfig.cpp:602   INFO|     BindlessSupported: maxboundtextures < 4610: 0
+2026-06-20 01:14:27 [MainThread     ]      GraphicsConfig.cpp:602   INFO|     AddGeometryPassThrough: deviceid == 5695: 1
+2026-06-20 01:14:27 [MainThread     ]          Direct3D12.cpp:1310  INFO| Loading d3d12.dll
+2026-06-20 01:14:27 [MainThread     ]          Direct3D12.cpp:1322  INFO| Loading dxgi.dll
+2026-06-20 01:14:27 [MainThread     ]           NvApiHelper.h:50    INFO| NVIDIA Display Driver Version 59186
+2026-06-20 01:14:27 [MainThread     ]           NvApiHelper.h:51    INFO| NVIDIA Build Branch r590_00
+2026-06-20 01:14:28 [MainThread     ]      GraphicsConfig.cpp:1091  INFO| GPU: NVIDIA GeForce RTX 4060 Ti, setting maxrootsignaturedwords to 64
+2026-06-20 01:14:28 [MainThread     ]          Direct3D12.cpp:2659  INFO| GPU[0] detected. Vendor ID: 0x10de, Model ID: 0x2803, Revision ID: 0xa1, Preset: high, GPU Name: NVIDIA GeForce RTX 4060 Ti
+2026-06-20 01:14:28 [MainThread     ]      GraphicsConfig.cpp:1091  INFO| GPU: NVIDIA GeForce RTX 4060 Ti, setting maxrootsignaturedwords to 64
+2026-06-20 01:14:28 [MainThread     ]          Direct3D12.cpp:2659  INFO| GPU[1] detected. Vendor ID: 0x10de, Model ID: 0x2803, Revision ID: 0xa1, Preset: high, GPU Name: NVIDIA GeForce RTX 4060 Ti
+2026-06-20 01:14:28 [MainThread     ]          Direct3D12.cpp:2332  INFO| GPU[0] is selected as default GPU
+2026-06-20 01:14:28 [MainThread     ]          Direct3D12.cpp:2333  INFO| Name of selected gpu: NVIDIA GeForce RTX 4060 Ti
+2026-06-20 01:14:28 [MainThread     ]          Direct3D12.cpp:2334  INFO| Vendor id of selected gpu: 0x10de
+2026-06-20 01:14:28 [MainThread     ]          Direct3D12.cpp:2335  INFO| Model id of selected gpu: 0x2803
+2026-06-20 01:14:28 [MainThread     ]          Direct3D12.cpp:2336  INFO| Revision id of selected gpu: 0xa1
+2026-06-20 01:14:28 [MainThread     ]          Direct3D12.cpp:2337  INFO| Preset of selected gpu: high
+2026-06-20 01:14:28 [MainThread     ]      GraphicsConfig.cpp:1122  INFO| Extended setting: setting MSAASampleCount to 4
+2026-06-20 01:14:28 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-20 01:14:28 [ThreadSystem 9 ] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for gargoyle_08 found & parsed
+2026-06-20 01:14:28 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_alphatested_smallLeaves04_beginstack0 found & parsed
+2026-06-20 01:14:28 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_superthin_innerfloor_01 found & parsed
+2026-06-20 01:14:28 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_triplethin_hugewall_02 found & parsed
+2026-06-20 01:14:28 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_alphatested_smallLeaves04_beginstack1 found & parsed
+2026-06-20 01:14:28 [ThreadSystem 9 ] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_superthin_forgeflags_01 found & parsed
+2026-06-20 01:14:28 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_triplethin_hugewall_01 found & parsed
+2026-06-20 01:14:28 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_alphatested_smallLeaves00_beginstack2 found & parsed
+2026-06-20 01:14:28 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for balcony_01 found & parsed
+2026-06-20 01:14:28 [ThreadSystem 9 ] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_superthin_forgeflags_02 found & parsed
+2026-06-20 01:14:28 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_alphatested_smallLeaves04_beginstack3 found & parsed
+2026-06-20 01:14:28 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for outerfloor_01 found & parsed
+2026-06-20 01:14:28 [ThreadSystem 9 ] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_superthin_forgeflags_04 found & parsed
+2026-06-20 01:14:28 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for curvepillar_05 found & parsed
+2026-06-20 01:14:28 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_alphatested_smallLeaves022_beginstack4 found & parsed
+2026-06-20 01:14:28 [ThreadSystem 9 ] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_superthin_forgeflags_03 found & parsed
+2026-06-20 01:14:28 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for curvepillar_06 found & parsed
+2026-06-20 01:14:28 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_alphatested_smallLeaves013_beginstack5 found & parsed
+2026-06-20 01:14:28 [ThreadSystem 9 ] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for gargoyle_01 found & parsed
+2026-06-20 01:14:28 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for curvepillar_07 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 9 ] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for gargoyle_07 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_alphatested_smallLeaves023_beginstack6 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for curvepillar_11 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_alphatested_smallLeaves014_beginstack7 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 9 ] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for gargoyle_03 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for curvepillar_10 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_alphatested_smallLeaves027_beginstack8 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for curvepillar_09 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_alphatested_smallLeaves0380_beginstack9 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for indoortable_03 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_alphatested_smallLeaves00_beginstack10 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for outertable_01 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_double_alphatested__group146_beginstack11 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for outdoortable_03 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for outertable_02 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_superthin_alphatested_double_treeLeaves04_beginstack12 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for outertable_04 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for outdoortable_07 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_superthin_alphatested_double_treeLeaves08_beginstack13 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for curvepillar_02 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for outertable_15 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_superthin_alphatested_double_treeLeaves03_beginstack14 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for outertable_14 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_alphatested_smallLeaves02_beginstack15 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for outertable_13 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_double_alphatested_smallLeaves019_beginstack16 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for outertable_12 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_alphatested_smallLeaves0380_beginstack17 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for outdoortable_08 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_alphatested_smallLeaves06_beginstack18 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for outertable_10 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for outertable_06 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_double_alphatested_smallLeaves00_beginstack19 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for outertable_05 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for outertable_09 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_alphatested_smallLeaves024_beginstack20 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for outertable_11 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_alphatested_smallLeaves010_beginstack21 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for uppertable_04 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for uppertable_03 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_alphatested_smallLeaves01_beginstack22 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for uppertable_01 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_alphatested_smallLeaves04_beginstack23 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for uppertable_02 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for opendoor_01 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_alphatested_smallLeaves024_beginstack24 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for opendoor_02 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_alphatested_smallLeaves00_beginstack25 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for indoortable_01 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_alphatested_smallLeaves00_beginstack26 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for indoortable_05 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for indoortable_04 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_double_alphatested_smallLeaves025_beginstack27 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for indoortable_02 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_alphatested_smallLeaves0377_beginstack28 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for curvepillar_01 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for waterpool_01 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_double_alphatested_smallLeaves00_beginstack29 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for longpillar_01 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_alphatested_smallLeaves027_beginstack30 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for longpillar_04 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_alphatested_smallLeaves013_beginstack31 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for longpillar_05 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for longpillar_06 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_alphatested_smallLeaves04_beginstack32 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for longpillar_10 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_alphatested_smallLeaves00_beginstack33 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for longpillar_09 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_alphatested_smallLeaves0381_beginstack34 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for longpillar_08 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_alphatested_smallLeaves0379_beginstack35 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for longpillar_07 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for longpillar_02 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 12] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_alphatested_smallLeaves021_beginstack36 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for longpillar_12 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for longpillar_03 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_leavesbasket_01 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_kinda_double_combinedoutdoorchairs_01 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for gargoyle_04 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for gargoyle_05 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for gargoyle_02 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for gargoyle_06 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_kinda_double_outdoorchairs_02 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_kinda_double_indoorchairs_02 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_double_indoorchairs_03 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_double_indoorchairs_04 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_kinda_double_indoorchairs_05 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_kinda_double_indoorchairs_06 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for double_upperchairs_01 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for longpillar_11 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_thin_leavesbasket_02 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_kinda_double_outdoorchairs_01 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_kinda_double_outdoorchairs_04 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for double_upperchairs_02 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for double_upperchairs_03 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for double_upperchairs_04 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for doorwall_01 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for doorwall_02 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for underledge_01 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for underceil_01 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for underceil_02 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_kinda_double_indoorchairs_07 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for hugewallfront_01 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_kinda_metalLedges_02 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_kinda_metalLedges_07 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_kinda_metalLedges_01 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_kinda_metalLedges_05 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_kinda_metalLedges_03 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_kinda_metalLedges_04 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_kinda_metalLedges_06 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_kinda_double_outdoorchairs_06 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_kinda_double_outdoorchairs_05 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_kinda_metalLedges_08 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_kinda_metalLedges_09 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_kinda_doorwall_03 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_kinda_doorwall_04 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for myinnerfloor_01 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_kinda_double_outdoorchairs_07 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_kinda_double_outdoorchairs_08 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for mywall_01 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_kinda_double_outdoorchairs_09 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_kinda_double_outdoorchairs_10 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_kinda_double_outdoorchairs_11 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_kinda_double_outdoorchairs_12 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_kinda_double_outdoorchairs_13 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_kinda_double_outdoorchairs_14 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_kinda_double_outdoorchairs_15 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_kinda_metalLedges_10 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for curvepillar_12 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for curvepillar_08 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_superthin_innerhall_01 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for doorwall_06 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for doorwall_05 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for double_doorwall_07 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for twosided_kinda_basketonly_01 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for backmuros_01 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for shortceil_01 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for shortceil_02 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for shortceil_03 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for cap03 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for cap01 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for cap02 found & parsed
+2026-06-20 01:14:29 [ThreadSystem 10] 09_LightShadowPlaygroun:1994  INFO| SDF binary data for cap04 found & parsed
+2026-06-20 01:14:30 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-20 01:14:30 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-20 01:14:30 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (skyboxSampler) : User specified Static Sampler
+2026-06-20 01:14:30 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (repeatBillinearSampler) : User specified Static Sampler
+2026-06-20 01:14:30 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (clampToEdgeNearSampler) : User specified Static Sampler
+2026-06-20 01:14:30 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (clampToEdgeNearSampler) : User specified Static Sampler
+2026-06-20 01:14:30 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (clampToEdgeNearSampler) : User specified Static Sampler
+2026-06-20 01:14:30 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (clampToEdgeNearSampler) : User specified Static Sampler
+2026-06-20 01:14:30 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (nearClampSampler) : User specified Static Sampler
+2026-06-20 01:14:30 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (ShadowCmpSampler) : User specified Static Sampler
+2026-06-20 01:14:30 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (clampBorderNearSampler) : User specified Static Sampler
+2026-06-20 01:14:30 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (clampMiplessLinearSampler) : User specified Static Sampler
+2026-06-20 01:14:30 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (textureSampler) : User specified Static Sampler
+2026-06-20 01:14:30 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (clampToEdgeTrillinearSampler) : User specified Static Sampler
+2026-06-20 01:14:30 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (clampToEdgeNearSampler) : User specified Static Sampler
+2026-06-20 01:14:30 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (clampToEdgeTrillinearSampler) : User specified Static Sampler
+2026-06-20 01:14:30 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (clampToEdgeNearSampler) : User specified Static Sampler
+2026-06-20 01:14:30 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (clampMiplessLinearSampler) : User specified Static Sampler
+2026-06-20 01:14:30 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (clampMiplessNearSampler) : User specified Static Sampler
+2026-06-20 01:14:30 [MainThread     ]          Direct3D12.cpp:3206  INFO| Adding D3D12 swapchain @ 1920x1080
+2026-06-20 01:14:31 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (uSampler) : User specified Static Sampler
+2026-06-20 01:14:31 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (uSampler0) : User specified Static Sampler
+2026-06-20 01:14:31 [MainThread     ]          Direct3D12.cpp:4553  INFO| Descriptor (uniformBlock_rootcbv) : User specified D3D12_ROOT_PARAMETER_TYPE_CBV
+2026-06-20 01:14:31 [MainThread     ]          Direct3D12.cpp:4700  INFO| Root constant (uRootConstants) has (6) 32 bit values. It is recommended to have root constant number <= 4
+2026-06-20 01:14:31 [MainThread     ]         WindowsBase.cpp:591   INFO| Application Init+Load+Reload 3.463000ms
+2026-06-20 01:14:48 [MainThread     ]          Direct3D12.cpp:1281  INFO| Unloading d3d12.dll
+2026-06-20 01:14:48 [MainThread     ]          Direct3D12.cpp:1292  INFO| Unloading dxgi.dll
+2026-06-20 01:14:48 [MainThread     ]                   Log.c:153   INFO| Shutting down log system.

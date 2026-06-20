@@ -1,0 +1,51 @@
+﻿Visual Studio Generation Log
+Generated: 2026-06-20T01:51:25+08:00
+
+Solution:
+D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\Unit_Tests.sln
+
+Generation Mode:
+Checked-in solution/project files from fixed commit; no generator was run.
+
+Available Solution Configurations:
+Debug|x64
+Release|x64
+
+Projects Discovered:
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{21A6980D-04AA-430D-BE3D-74F151226C8B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{6CF62059-3AC3-43CD-A29E-2F1E01EA4115}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "01_Transformations", "01_Transformations.vcxproj", "{5938554B-1112-4A6D-9CA0-EDEA01CB7F3F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SpirvTools", "Libraries\Tools\SpirvCross.vcxproj", "{F3C4507C-E714-4773-AF45-5FA9FB0BB4AF}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "03_MultiThread", "03_MultiThread.vcxproj", "{50434FC0-BDB1-4AC6-9A49-ABB92E7CBB13}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OS", "Libraries\OS\OS.vcxproj", "{30DD3D57-0026-48C8-BFD1-6392F319E23A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "11_LinkedMultiGPU", "11_LinkedMultiGPU.vcxproj", "{3C4D4A39-3CD2-4462-A655-8F18CF045F2B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "06_MaterialPlayground", "06_MaterialPlayground.vcxproj", "{611831C0-6301-4DB2-A61E-2596129C9239}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "10_ScreenSpaceReflections", "10_ScreenSpaceReflections.vcxproj", "{DA983663-04B7-47D2-8EFC-DD627FD14403}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "09_LightShadowPlayground", "09_LightShadowPlayground.vcxproj", "{57CC1131-660E-458B-A41F-29D60F3ECE41}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "15_Transparency", "15_Transparency.vcxproj", "{69CBDFA9-4368-4749-9417-08F68C856C94}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "14_WaveIntrinsics", "14_WaveIntrinsics.vcxproj", "{A0DFEBA1-D274-4421-AE87-ABB303CD2516}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "16_Raytracing", "16_Raytracing.vcxproj", "{FC4F42A0-3A4A-4C1D-887A-E09BFAF1C3A0}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "17_EntityComponentSystem", "17_EntityComponentSystem.vcxproj", "{A6E3EA66-19D5-46EE-B111-877DD965AB89}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ozz-animation", "ozz-animation", "{9ED95EE6-DA38-473E-9346-84061786CDDC}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples Animation", "Examples Animation", "{28423D1E-F232-4C3F-9872-F24CFC9D8493}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "28_Skinning", "28_Skinning.vcxproj", "{ADBCFAE4-6B8F-4B7B-B5FF-B256D687B365}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "12_ZipFileSystem", "12_ZipFileSystem.vcxproj", "{66C74525-1E43-483E-8DAE-A7C5836FDBDF}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "34_Input", "34_Input.vcxproj", "{356397B9-E848-4BAF-873C-7B9DB3FA36A9}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Renderer", "Libraries\Renderer\Renderer.vcxproj", "{DB6193E0-3C12-450F-B344-DC4DAED8C421}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A97A7741-26DD-48B8-95AB-410BBC40B7B5}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "11a_UnlinkedMultiGPU", "11a_UnlinkedMultiGPU.vcxproj", "{765FE836-821C-4AE9-8465-3640DD8FB33F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "15a_VisibilityBufferOIT", "15a_VisibilityBufferOIT.vcxproj", "{610C39FA-F02B-4237-BA8C-4EED56FA8D9F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "19_CodeHotReload_Main", "19_CodeHotReload_Main.vcxproj", "{28DEB3EA-DDBA-4F84-BF3E-D5A210989BE4}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "19a_CodeHotReload_Game", "19a_CodeHotReload_Game.vcxproj", "{EECCBF44-F208-4937-81D1-39049661A4A4}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AssetPipelineCmd", "..\..\..\Common_3\Tools\AssetPipeline\Win64\AssetPipelineCmd.vcxproj", "{9BB45EC2-8F3A-4D98-A235-40EBBB559F64}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Functional Tests", "Functional Tests", "{3657BCDC-8562-4433-849E-AF6AA7D7A529}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "36_AlgorithmsAndContainers", "36_AlgorithmsAndContainers.vcxproj", "{BD99E69F-7A68-4E06-9DB5-2D30E6192398}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "21_Animations", "21_Animations.vcxproj", "{BC5CC8A1-BB65-417C-BF93-07F789664873}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gainputstatic", "..\..\..\Common_3\Application\ThirdParty\OpenSource\gainput\Win64\lib\gainputstatic.vcxproj", "{339CF6F6-3272-49F6-BF3A-2CEC4685EB8A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ozz_base", "..\..\..\Common_3\Resources\AnimationSystem\ThirdParty\OpenSource\ozz-animation\Win64\src\base\ozz_base.vcxproj", "{EE1F0FC8-40F5-476A-8553-C8175B343BEE}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ozz_animation_offline", "..\..\..\Common_3\Resources\AnimationSystem\ThirdParty\OpenSource\ozz-animation\Win64\src\animation\offline\ozz_animation_offline.vcxproj", "{AC91B515-5B5E-399D-BF31-B6272AF9D139}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ozz_animation", "..\..\..\Common_3\Resources\AnimationSystem\ThirdParty\OpenSource\ozz-animation\Win64\src\animation\runtime\ozz_animation.vcxproj", "{E0CB3186-0614-4DF0-891B-848743572AB2}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ispc_texcomp", "..\..\..\Common_3\Tools\ThirdParty\OpenSource\ISPCTextureCompressor\ispc_texcomp\ispc_texcomp.vcxproj", "{9B44F7B9-A9AF-45A4-8695-96792A18B052}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BunyLib", "..\..\..\Common_3\Tools\BunyArchive\VisualStudio\BunyLib.vcxproj", "{F4BE7E97-8876-4A34-834F-4BC918020B57}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BunyTool", "..\..\..\Common_3\Tools\BunyArchive\VisualStudio\BunyTool.vcxproj", "{ADA72694-302E-45F5-AFCA-BB7C56751EEF}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "39_ParticleSystem", "39_ParticleSystem.vcxproj", "{C3E55E0E-9251-4FF0-8650-1A374CFDF657}"

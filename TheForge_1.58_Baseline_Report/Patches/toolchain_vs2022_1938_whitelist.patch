@@ -1,0 +1,20 @@
+﻿diff --git a/Common_3/Application/Config.h b/Common_3/Application/Config.h
+index 930cec4f..3e525927 100644
+--- a/Common_3/Application/Config.h
++++ b/Common_3/Application/Config.h
+@@ -221,7 +221,7 @@ COMPILE_ASSERT(sizeof(ssize_t) == sizeof(int64_t));
+ #define _WIN32_WINNT  _WIN32_WINNT_WIN7
+ 
+ // Whitelist of compiler versions
+-#if (_MSC_VER == 1929) // VS 2019 all VC++ compilers
++#if (_MSC_VER == 1929) || (_MSC_VER == 1938) // VS 2019 all VC++ compilers; local baseline toolchain adaptation for VS 2022 17.8
+ #else
+ #pragma message("Bad Visual Studio version: (" QUOTE(_MSC_VER) " " QUOTE(_MSC_FULL_VER) " " QUOTE(_MSC_BUILD) ").")
+ #error "Bad Visual Studio version"
+@@ -400,4 +400,4 @@ COMPILE_ASSERT(sizeof(ssize_t) == sizeof(int64_t));
+ #if defined(ANDROID) || defined(_WIN32) || defined(PROSPERO) || defined(XBOX) || defined(__APPLE__) || defined(ORBIS)
+ #define ENABLE_FORGE_REMOTE_UI
+ #endif
+-#endif
+\ No newline at end of file
++#endif

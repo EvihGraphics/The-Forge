@@ -1,0 +1,12 @@
+﻿ExePath=D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\39_ParticleSystem\39_ParticleSystem.exe
+Arguments=--no-auto-exit --d3d12
+WorkingDirectory=D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\39_ParticleSystem
+Start=2026-06-20T01:08:06.9103072+08:00
+End=2026-06-20T01:08:13.5617892+08:00
+Status=EXITED_BEFORE_CAPTURE_AFTER_WAIT
+ExitCode=
+WindowHandle=23988486
+WindowTitle=Particle_System
+CaptureStatus=NOT_CAPTURED
+CapturePath=D:\HTC\avboit\TheForge_1.58_Baseline_Report\VisualResults\39_ParticleSystem\Screenshots\UT_39_ParticleSystem_DX12_Default_01.png
+CaptureError=

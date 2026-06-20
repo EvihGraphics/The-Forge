@@ -1,0 +1,140 @@
+2026-06-20 01:07:38 [MainThread     ]                   Log.c:195   INFO| Opened log file 19_CodeHotReload_Main.log
+2026-06-20 01:07:38 [MainThread     ]         WindowsBase.cpp:422   INFO| Operating System: Windows PC. Version: 10.0 (Build: 26200). Device Name: Unknown.
+2026-06-20 01:07:38 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-20 01:07:38 [MainThread     ]       WindowsWindow.cpp:636   INFO| Created window app 19_CodeHotReload_Main
+2026-06-20 01:07:38 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-20 01:07:38 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-20 01:07:38 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-20 01:07:38 [MainThread     ]      GraphicsConfig.cpp:419   INFO| Default GPU Data:
+2026-06-20 01:07:38 [MainThread     ]      GraphicsConfig.cpp:420   INFO|     DefaultGPUPresetLevel set to low
+2026-06-20 01:07:38 [MainThread     ]      GraphicsConfig.cpp:422   INFO| GPU vendors:
+2026-06-20 01:07:38 [MainThread     ]      GraphicsConfig.cpp:440   INFO|     intel: 0x8086
+2026-06-20 01:07:38 [MainThread     ]      GraphicsConfig.cpp:440   INFO|     amd: 0x1002
+2026-06-20 01:07:38 [MainThread     ]      GraphicsConfig.cpp:440   INFO|     nvidia: 0x10de
+2026-06-20 01:07:38 [MainThread     ]      GraphicsConfig.cpp:440   INFO|     qualcomm: 0x5143
+2026-06-20 01:07:38 [MainThread     ]      GraphicsConfig.cpp:898    DBG| Extended Config| GPU Config invalid Field name: 'isheadless'.
+2026-06-20 01:07:38 [MainThread     ]      GraphicsConfig.cpp:723    DBG| Invalid GPU Selection rule: 'isHeadLess != 1;'.
+2026-06-20 01:07:38 [MainThread     ]      GraphicsConfig.cpp:552   INFO| GPU selection settings:
+2026-06-20 01:07:38 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: graphicqueuesupported == 1
+2026-06-20 01:07:38 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: deviceid == 0
+2026-06-20 01:07:38 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: gpupresetlevel
+2026-06-20 01:07:38 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: vendorid != 32902 && vendorid != 32903 && vendorid != 5692
+2026-06-20 01:07:38 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: directxfeaturelevel
+2026-06-20 01:07:38 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: vram
+2026-06-20 01:07:38 [MainThread     ]      GraphicsConfig.cpp:561   INFO| Driver rejections:
+2026-06-20 01:07:38 [MainThread     ]      GraphicsConfig.cpp:579   INFO| GPU configuration settings:
+2026-06-20 01:07:38 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 4318: 64
+2026-06-20 01:07:38 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 4098: 13
+2026-06-20 01:07:38 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 4130: 13
+2026-06-20 01:07:38 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 5692: 64
+2026-06-20 01:07:38 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 32902: 64
+2026-06-20 01:07:38 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 32903: 64
+2026-06-20 01:07:38 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     dynamicrenderingenabled: vendorid == 5692: 0
+2026-06-20 01:07:38 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     dynamicrenderingenabled: vendorid == 32902: 0
+2026-06-20 01:07:38 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     dynamicrenderingenabled: vendorid == 32903: 0
+2026-06-20 01:07:38 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     tessellationsupported: vendorid == 5045: 0
+2026-06-20 01:07:38 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     xclipsetransferqueueworkaroundenabled: deviceid == 29600: 1
+2026-06-20 01:07:38 [MainThread     ]      GraphicsConfig.cpp:592   INFO| User settings:
+2026-06-20 01:07:38 [MainThread     ]          Direct3D12.cpp:1310  INFO| Loading d3d12.dll
+2026-06-20 01:07:38 [MainThread     ]          Direct3D12.cpp:1322  INFO| Loading dxgi.dll
+2026-06-20 01:07:38 [MainThread     ]           NvApiHelper.h:50    INFO| NVIDIA Display Driver Version 59186
+2026-06-20 01:07:38 [MainThread     ]           NvApiHelper.h:51    INFO| NVIDIA Build Branch r590_00
+2026-06-20 01:07:38 [MainThread     ]      GraphicsConfig.cpp:1091  INFO| GPU: NVIDIA GeForce RTX 4060 Ti, setting maxrootsignaturedwords to 64
+2026-06-20 01:07:38 [MainThread     ]          Direct3D12.cpp:2659  INFO| GPU[0] detected. Vendor ID: 0x10de, Model ID: 0x2803, Revision ID: 0xa1, Preset: high, GPU Name: NVIDIA GeForce RTX 4060 Ti
+2026-06-20 01:07:39 [MainThread     ]      GraphicsConfig.cpp:1091  INFO| GPU: NVIDIA GeForce RTX 4060 Ti, setting maxrootsignaturedwords to 64
+2026-06-20 01:07:39 [MainThread     ]          Direct3D12.cpp:2659  INFO| GPU[1] detected. Vendor ID: 0x10de, Model ID: 0x2803, Revision ID: 0xa1, Preset: high, GPU Name: NVIDIA GeForce RTX 4060 Ti
+2026-06-20 01:07:39 [MainThread     ]          Direct3D12.cpp:2332  INFO| GPU[0] is selected as default GPU
+2026-06-20 01:07:39 [MainThread     ]          Direct3D12.cpp:2333  INFO| Name of selected gpu: NVIDIA GeForce RTX 4060 Ti
+2026-06-20 01:07:39 [MainThread     ]          Direct3D12.cpp:2334  INFO| Vendor id of selected gpu: 0x10de
+2026-06-20 01:07:39 [MainThread     ]          Direct3D12.cpp:2335  INFO| Model id of selected gpu: 0x2803
+2026-06-20 01:07:39 [MainThread     ]          Direct3D12.cpp:2336  INFO| Revision id of selected gpu: 0xa1
+2026-06-20 01:07:39 [MainThread     ]          Direct3D12.cpp:2337  INFO| Preset of selected gpu: high
+2026-06-20 01:07:39 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-20 01:07:39 [MainThread     ]                    cr.h:1787  INFO| unload 'D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\19_CodeHotReload_Main/19a_CodeHotReload_Game0.dll' with rollback: 0
+
+2026-06-20 01:07:39 [MainThread     ]                    cr.h:1852  INFO| loaded: D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\19_CodeHotReload_Main/19a_CodeHotReload_Game1.dll (version: 1)
+
+2026-06-20 01:07:39 [MainThread     ] 19_CodeHotReload_Main.c:725   INFO| Loading Game Plugin.
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:36321 INFO| #[bold]bootstrapping world
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:36324 INFO| tracing enabled, call ecs_log_set_level(-1) to disable
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:36239 INFO| addons included in build:
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:36245 INFO| FLECS_MODULE
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:36248 INFO| FLECS_PARSER
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:36254 INFO| FLECS_RULES
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:36257 INFO| FLECS_SNAPSHOT
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:36260 INFO| FLECS_STATS
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:36263 INFO| FLECS_MONITOR
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:36266 INFO| FLECS_SYSTEM
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:36269 INFO| FLECS_PIPELINE
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:36272 INFO| FLECS_TIMER
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:36275 INFO| FLECS_META
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:36278 INFO| FLECS_META_C
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:36281 INFO| FLECS_UNITS
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:36284 INFO| FLECS_EXPR
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:36290 INFO| FLECS_DOC
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:36293 INFO| FLECS_COREDOC
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:36296 INFO| FLECS_LOG
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:36347 INFO| #[green]release#[reset] build
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:36355 INFO| compiled with msvc 1938
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:36393 INFO| table store initialized
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:36397 INFO| world ready!
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:36407 INFO| #[bold]import addons
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:36409 INFO| use ecs_mini to create world without importing addons
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:23040 INFO| #[magenta]import#[reset] flecs.system
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:7138  INFO| #[green]component#[reset] System created
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:7138  INFO| #[green]component#[reset] TickSource created
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:40937 INFO| #[green]observer#[reset] EnableMonitor created
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:23040 INFO| #[magenta]import#[reset] flecs.pipeline
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:7138  INFO| #[green]component#[reset] PipelineQuery created
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:40937 INFO| #[green]observer#[reset] OnUpdatePipeline created
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:15653 INFO| #[green]pipeline#[reset] BuiltinPipeline created
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:23040 INFO| #[magenta]import#[reset] flecs.timer
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:7138  INFO| #[green]component#[reset] Timer created
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:7138  INFO| #[green]component#[reset] RateFilter created
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:29520 INFO| #[green]system#[reset] AddTickSource created
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:29520 INFO| #[green]system#[reset] ProgressTimers created
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:29520 INFO| #[green]system#[reset] ProgressRateFilters created
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:29520 INFO| #[green]system#[reset] ProgressTickSource created
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:23040 INFO| #[magenta]import#[reset] flecs.meta
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:7138  INFO| #[green]component#[reset] MetaType created
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:7138  INFO| #[green]component#[reset] MetaTypeSerialized created
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:7138  INFO| #[green]component#[reset] Primitive created
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:7138  INFO| #[green]component#[reset] Enum created
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:7138  INFO| #[green]component#[reset] Bitmask created
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:7138  INFO| #[green]component#[reset] Member created
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:7138  INFO| #[green]component#[reset] Struct created
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:7138  INFO| #[green]component#[reset] Array created
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:7138  INFO| #[green]component#[reset] Vector created
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:7138  INFO| #[green]component#[reset] Unit created
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:7138  INFO| #[green]component#[reset] UnitPrefix created
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:23040 INFO| #[magenta]import#[reset] flecs.doc
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:7138  INFO| #[green]component#[reset] Description created
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:23040 INFO| #[magenta]import#[reset] flecs.core.doc
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:36432 INFO| #[green]module#[reset] flecs.units is not automatically imported
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:36434 INFO| addons imported!
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:7138  INFO| #[green]component#[reset] AppDataComponent created
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:7138  INFO| #[green]component#[reset] SpriteComponent created
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:7138  INFO| #[green]component#[reset] MoveComponent created
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:7138  INFO| #[green]component#[reset] PositionComponent created
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:7138  INFO| #[green]component#[reset] WorldBoundsComponent created
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:7138  INFO| #[green]component#[reset] AvoidComponent created
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:29520 INFO| #[green]system#[reset] MoveSystem created
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:29520 INFO| #[green]system#[reset] AvoidanceSystem created
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:29520 INFO| #[green]system#[reset] SpriteSystem created
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:29520 INFO| #[green]system#[reset] FillRenderDataSpritesSystem created
+2026-06-20 01:07:39 [MainThread     ]                 flecs.c:29520 INFO| #[green]system#[reset] FillRenderDataAvoidersSystem created
+2026-06-20 01:07:39 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-20 01:07:39 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-20 01:07:39 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (uSampler0) : User specified Static Sampler
+2026-06-20 01:07:39 [MainThread     ]          Direct3D12.cpp:3206  INFO| Adding D3D12 swapchain @ 1920x1080
+2026-06-20 01:07:39 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (uSampler) : User specified Static Sampler
+2026-06-20 01:07:39 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (uSampler0) : User specified Static Sampler
+2026-06-20 01:07:39 [MainThread     ]          Direct3D12.cpp:4553  INFO| Descriptor (uniformBlock_rootcbv) : User specified D3D12_ROOT_PARAMETER_TYPE_CBV
+2026-06-20 01:07:39 [MainThread     ]          Direct3D12.cpp:4700  INFO| Root constant (uRootConstants) has (6) 32 bit values. It is recommended to have root constant number <= 4
+2026-06-20 01:07:39 [MainThread     ]         WindowsBase.cpp:591   INFO| Application Init+Load+Reload 1.227000ms
+2026-06-20 01:07:44 [MainThread     ]                 flecs.c:36873 INFO| #[bold]shutting down world
+2026-06-20 01:07:44 [MainThread     ]                 flecs.c:36907 INFO| table store deinitialized
+2026-06-20 01:07:44 [MainThread     ]                 flecs.c:36935 INFO| world destroyed, bye!
+2026-06-20 01:07:44 [MainThread     ]          Direct3D12.cpp:1281  INFO| Unloading d3d12.dll
+2026-06-20 01:07:44 [MainThread     ]          Direct3D12.cpp:1292  INFO| Unloading dxgi.dll
+2026-06-20 01:07:44 [MainThread     ]                   Log.c:153   INFO| Shutting down log system.

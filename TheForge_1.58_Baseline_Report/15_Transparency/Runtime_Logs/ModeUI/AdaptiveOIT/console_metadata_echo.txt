@@ -1,0 +1,13 @@
+﻿ExePath=D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\15_Transparency\15_Transparency.exe
+Arguments=--d3d12 --no-auto-exit
+WorkingDirectory=D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\15_Transparency
+ModeIndex=4
+Start=2026-06-20T01:22:09.3258363+08:00
+End=2026-06-20T01:22:17.7053584+08:00
+Status=EXCEPTION;CLOSED
+ExitCode=
+WindowHandle=2296794
+WindowTitle=15_Transparency
+CaptureStatus=NOT_CAPTURED
+CapturePath=D:\HTC\avboit\TheForge_1.58_Baseline_Report\15_Transparency\Screenshots\UT_15_Transparency_DX12_AdaptiveOIT_UI_15.png
+CaptureError=Exception calling "SendWait" with "1" argument(s): "Access is denied"

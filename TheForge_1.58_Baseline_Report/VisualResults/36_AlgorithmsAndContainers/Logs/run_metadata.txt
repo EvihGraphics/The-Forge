@@ -1,0 +1,12 @@
+﻿ExePath=D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\36_AlgorithmsAndContainers\36_AlgorithmsAndContainers.exe
+Arguments=--no-auto-exit --d3d12
+WorkingDirectory=D:\HTC\avboit\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\36_AlgorithmsAndContainers
+Start=2026-06-20T01:08:06.0595137+08:00
+End=2026-06-20T01:08:06.6941589+08:00
+Status=EXITED_BEFORE_CAPTURE
+ExitCode=
+WindowHandle=0
+WindowTitle=
+CaptureStatus=NOT_CAPTURED
+CapturePath=D:\HTC\avboit\TheForge_1.58_Baseline_Report\VisualResults\36_AlgorithmsAndContainers\Screenshots\UT_36_AlgorithmsAndContainers_DX12_Default_01.png
+CaptureError=
