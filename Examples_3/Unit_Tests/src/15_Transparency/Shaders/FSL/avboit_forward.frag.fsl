@@ -34,7 +34,10 @@ float4 PS_MAIN( VSOutput In )
     float linearDepth = Get(camClipInfo)[0] / (Get(camClipInfo)[1] * depth + Get(camClipInfo)[2]);
     float zFar = Get(camClipInfo)[2];
     float zNear = Get(camClipInfo)[0] / zFar;
-    float normalizedLinearDepth = (linearDepth - zNear) / (zFar - zNear);
+    
+    // Focus the 64 slices on the first 50 units where the transparent geometry lives
+    float volumeMaxZ = 50.0f;
+    float normalizedLinearDepth = clamp((linearDepth - zNear) / (volumeMaxZ - zNear), 0.0f, 1.0f);
     
     uint zIndex = clamp(uint(normalizedLinearDepth * volumeDepth), 0, volumeDepth - 1);
     
