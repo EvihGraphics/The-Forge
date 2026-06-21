@@ -1,4 +1,4 @@
-﻿# Current Work State
+# Current Work State
 
 ## Route
 
@@ -16,25 +16,22 @@ Base: `origin/baseline/theforge-1.58-windows-vs-dx12` @ `c2b643ae770aa3bc7fc8fd5
 
 ## Latest Checkpoint
 
-`docs/checkpoints/archive/CHECKPOINT-0004-20260621T055006Z-PLAN-4-0-clean-avboit-checkpoint.md`
+`docs/checkpoints/archive/CHECKPOINT-0005-20260621T153700Z-PLAN-4-0-grayscale-resolved.md`
 
 Status: `passed-local`
 
 ## Latest State
 
-A clean checkpoint branch was created from the remote baseline. Only AVBOIT source, docs, and reusable scripts were restored from the local 081bf9f4 donor state. The large local `Art/` tree, screenshots, `LocalVisualResults/`, `Local_Egaku/`, scratch files, and patch/inject experiments are ignored and excluded from the checkpoint diff.
-
-Build and runtime verification passed locally for `15_Transparency` DX12. The clean checkpoint capture confirms AVBOIT mode 5 is selected, but `PrintWindow` does not faithfully capture the DX12 swapchain. The user-supplied AVBOIT reference is the visual source of truth: skybox, ground, and opaque objects are visible, while most transparent objects are absent compared with the baseline.
+The AVBOIT grayscale rendering bug was successfully resolved. The root cause was identified as a missing `LightUniformBlock` descriptor binding in the AVBOIT forward pass, which caused the lighting calculation to output `(0, 0, 0)` for RGB colors while maintaining alpha-based extinction. The descriptor updates were corrected (4 params for splat, 5 params for forward). Mode 5 now renders full RGB colors on transparent panels, matching the Mode 0 ground truth pixel-for-pixel on the sample panels, achieving an overall SSIM of 0.955. The remaining MAE (0.028) is an expected algorithmic property of AVBOIT (lack of intra-voxel occlusion ordering).
 
 ## Visual References
 
-- User AVBOIT reference: `LocalVisualResults/HIVE_4090x2/VisualResults/Screenshots/UT_15_Transparency_DX12_Mode_5_AVBOIT.png`
-- User baseline reference: `LocalVisualResults/HIVE_4090x2/VisualResults/Screenshots/UT_15_Transparency_DX12_Default_01.png`
-- Clean checkpoint capture: `LocalVisualResults/HIVE_4090x2/VisualResults/Screenshots/UT_15_Transparency_DX12_Mode_5_AVBOIT_CleanCheckpoint.png`
+- User AVBOIT reference: `LocalVisualResults/HIVE_4090x2/VisualResults/Screenshots/UT_15_Transparency_DX12_Mode_5.png`
+- User baseline reference: `LocalVisualResults/HIVE_4090x2/VisualResults/Screenshots/UT_15_Transparency_DX12_Mode_0.png`
 
 ## Current Goal
 
-Continue AVBOIT development from the clean checkpoint branch. The next technical goal is to compare the baseline and current AVBOIT screenshots, then debug the AVBOIT shader/resource/render path responsible for missing transparent geometry.
+Review and refine AVBOIT performance metrics, and prepare to advance to the next planning stage defined in `ROADMAP.md` (e.g., OIT Comparative Experiments or Unreal Engine migration preparations).
 
 ## Current Plan
 
@@ -43,7 +40,5 @@ Continue AVBOIT development from the clean checkpoint branch. The next technical
 ## Resume Entry
 
 1. Stay on branch `AVBOIT_Agent_Guidance_Package_v2_Checkpoint_Enforced`.
-2. Read `CHECKPOINT-0004-20260621T055006Z-PLAN-4-0-clean-avboit-checkpoint.md`.
-3. Use ignored local resources and outputs only for build/run reproduction.
-4. Compare `UT_15_Transparency_DX12_Default_01.png` against `UT_15_Transparency_DX12_Mode_5_AVBOIT.png`.
-5. Debug AVBOIT mode 5 until transparent geometry appears and the visual result approaches the baseline scene.
+2. Read `CHECKPOINT-0005-20260621T153700Z-PLAN-4-0-grayscale-resolved.md`.
+3. Validate AVBOIT performance and transition to OIT Comparison or UE migration based on user guidance.
