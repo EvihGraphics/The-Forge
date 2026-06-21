@@ -7501,6 +7501,8 @@ void Draw() override
 
             avboitExtLoadDesc.mDesc.mStructStride = sizeof(uint32_t);
 
+            avboitExtLoadDesc.mDesc.mFormat = TinyImageFormat_R32_UINT;
+
             avboitExtLoadDesc.mDesc.mSize = avboitExtLoadDesc.mDesc.mElementCount * avboitExtLoadDesc.mDesc.mStructStride;
 
             avboitExtLoadDesc.mDesc.mStartState = RESOURCE_STATE_PIXEL_SHADER_RESOURCE;
