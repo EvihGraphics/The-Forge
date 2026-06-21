@@ -1,0 +1,31 @@
+#include "shaderDefs.h.fsl"
+#define AVBOIT_ORDERED_ACCESS
+#include "avboit.h.fsl"
+
+STRUCT(VSOutput)
+{
+    DATA(float4, Position, SV_Position);
+    DATA(float2, UV, TEXCOORD0);
+};
+
+float4 PS_MAIN( VSOutput In )
+{
+    INIT_MAIN;
+    
+    // Sample the background color from the screen
+    float4 bgColor = float4(0, 0, 0, 0); // we will blend it using the blend state
+    
+    // We get the total transmittance from the LUT by reading the furthest slice
+    uint3 coords = uint3(In.Position.xy, volumeDepth - 1);
+    float4 lutValue = LoadTex3D(Get(VolumeTransmittanceLutSRV), NO_SAMPLER, coords, 0);
+    
+    float3 totalTransmittance = lutValue.rgb;
+    
+    // Wait, the composite shader needs to composite the accumulated color.
+    // If we only have transmittance, we can only darken the background.
+    // Let's output a color that will blend.
+    // We will need to implement color integration later. For now, just test basic transmittance.
+    float4 outColor = float4(totalTransmittance, 1.0f); 
+    
+    RETURN(outColor);
+}

@@ -1,0 +1,13 @@
+﻿ExePath=D:\Users\l3d\Documents\AVBOIT\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\15_Transparency\15_Transparency.exe
+Arguments=--d3d12 --no-auto-exit
+WorkingDirectory=D:\Users\l3d\Documents\AVBOIT\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\15_Transparency
+ModeIndex=5
+Start=2026-06-21T15:56:12.3536071+08:00
+End=2026-06-21T15:56:29.6994638+08:00
+Status=WINDOW_READY;CLOSED
+ExitCode=
+WindowHandle=8258820
+WindowTitle=15_Transparency
+CaptureStatus=CAPTURED_CLIENT_PRINTWINDOW
+CapturePath=D:\Users\l3d\Documents\AVBOIT\The-Forge\LocalVisualResults\HIVE_4090x2\VisualResults\15_Transparency\Screenshots\UT_15_Transparency_DX12_Mode_5.png
+CaptureError=

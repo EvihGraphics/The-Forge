@@ -1,0 +1,12 @@
+﻿ExePath=D:\Users\l3d\Documents\AVBOIT\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\39_ParticleSystem\39_ParticleSystem.exe
+Arguments=
+WorkingDirectory=D:\Users\l3d\Documents\AVBOIT\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\39_ParticleSystem
+Start=2026-06-20T22:18:11.0014893+08:00
+End=2026-06-20T22:18:30.8469807+08:00
+Status=WINDOW_READY;CLOSED
+ExitCode=
+WindowHandle=1246058
+WindowTitle=Particle_System
+CaptureStatus=CAPTURED_WINDOW_PRINTWINDOW
+CapturePath=LocalVisualResults\HIVE_4090x2\VisualResults\\Screenshots\UT_39_ParticleSystem_DX12_Default_01.png
+CaptureError=

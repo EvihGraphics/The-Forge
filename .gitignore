@@ -249,3 +249,20 @@ Common_3/Application/ThirdParty/noesisgui/SDK/_build/**/build
 #clang-format
 Tools/clang-tools/clang-format-files.txt
 Tools/clang-tools/out-files.txt
+
+# Machine-local visual reproduction results
+/LocalVisualResults/
+
+# Machine-local restored resources and capture dumps
+/Art/
+/Screenshots/
+/Local_Egaku/
+
+# AVBOIT scratch files
+/temp.cpp
+/out.txt
+/aoit_lines.txt
+/Automation_Scripts/patch*.py
+/Automation_Scripts/inject*.py
+*.metaproj
+*.metaproj.tmp

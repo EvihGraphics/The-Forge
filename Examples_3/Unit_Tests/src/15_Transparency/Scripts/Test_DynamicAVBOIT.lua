@@ -1,0 +1,5 @@
+﻿loader.SetCounter(60)
+loader.SetTransparencyType(5)
+loader.SetCounter(10)
+loader.SetScreenshotName("Dynamic_AVBOIT")
+loader.TakeScreenshotOnEdited()

@@ -84,3 +84,27 @@
 #include "weightedBlendedOITVolitionComposite.frag.fsl"
 #end
 
+
+#frag AVBOIT.frag
+#include "AVBOIT.frag.fsl"
+#end
+
+#comp avboit_clear.comp
+#include "avboit_clear.comp.fsl"
+#end
+
+#comp avboit_integrate.comp
+#include "avboit_integrate.comp.fsl"
+#end
+
+
+
+#frag avboit_composite.frag
+#include "avboit_composite.frag.fsl"
+#end
+
+
+
+#frag avboit_forward.frag
+#include "avboit_forward.frag.fsl"
+#end

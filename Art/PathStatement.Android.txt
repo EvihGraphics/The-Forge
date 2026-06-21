@@ -1,0 +1,32 @@
+# ==================================
+# Bundled Resources
+# ==================================
+# these are bundled resources
+# relative to assets directory inside .apk bundle
+# for eg: RD_FONTS = Fonts/
+# will be XX_UT.apk/assets/Fonts
+
+bundled RD_COMPILED_MATERIALS = CompiledMaterials/
+bundled RD_ANIMATIONS = Animation/
+bundled RD_AUDIO = Audio/
+bundled RD_GPU_CONFIG = GPUCfg/
+bundled RD_MESHES = Meshes/
+bundled RD_FONTS = Fonts/
+bundled RD_TEXTURES = Textures/
+bundled RD_SCRIPTS = Scripts/
+bundled RD_SHADER_BINARIES = CompiledShaders/
+
+# this will be at the root of bundle 
+bundled RD_OTHER_FILES = 
+
+# ==================================
+# Not Bundled Resources
+# ==================================
+# These are all relative to the application data directory 
+# for Android it's Android/data/com.xxx.xxx/files/
+# for eg: RD_DEBUG = Debug/
+# will be Android/data/com.xxx.xxx/files/Debug/
+
+RD_PIPELINE_CACHE = PipelineCaches/
+RD_SCREENSHOTS = Screenshots/
+RD_DEBUG = Debug/

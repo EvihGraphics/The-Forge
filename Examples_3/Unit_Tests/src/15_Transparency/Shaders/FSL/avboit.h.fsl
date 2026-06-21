@@ -1,0 +1,41 @@
+
+#define AVBOIT_VOLUME_WIDTH 1920
+#define AVBOIT_VOLUME_HEIGHT 1080
+#define AVBOIT_VOLUME_DEPTH 64
+
+#ifdef AVBOIT_UNORDERED_ACCESS
+RES(RWBuffer(uint), VolumeExtinctionBufferUAV, UPDATE_FREQ_NONE, u1, binding = 5);
+RES(WTex3D(float4), VolumeTransmittanceLutUAV, UPDATE_FREQ_NONE, u2, binding = 6);
+RES(RWBuffer(uint), VolumeColorBufferUAV, UPDATE_FREQ_NONE, u3, binding = 7);
+#endif
+
+#ifdef AVBOIT_ORDERED_ACCESS
+RES(Buffer(uint), VolumeExtinctionBufferSRV, UPDATE_FREQ_NONE, t1, binding = 5);
+RES(Tex3D(float4), VolumeTransmittanceLutSRV, UPDATE_FREQ_NONE, t2, binding = 6);
+RES(Buffer(uint), VolumeColorBufferSRV, UPDATE_FREQ_NONE, t3, binding = 7);
+#endif
+
+CBUFFER(AVBOITUniforms, UPDATE_FREQ_PER_FRAME, b5, binding = 10)
+{
+    DATA(uint, volumeWidth, None);
+    DATA(uint, volumeHeight, None);
+    DATA(uint, volumeDepth, None);
+    DATA(float, pad, None);
+};
+
+uint PackExtinction(float ext)
+{
+    // Fixed-point scaling for AtomicAdd
+    return uint(ext * 10000.0f);
+}
+
+float UnpackExtinction(uint packed)
+{
+    return float(packed) / 10000.0f;
+}
+
+uint GetVolumeIndex(uint3 coords)
+{
+    return coords.z * volumeWidth * volumeHeight + coords.y * volumeWidth + coords.x;
+}
+

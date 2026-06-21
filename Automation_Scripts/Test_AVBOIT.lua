@@ -1,0 +1,6 @@
+﻿loader.SetTransparencyType(5)
+loader.SetSortObjects(0)
+loader.SetSortParticles(0)
+loader.SetCounter(10)
+loader.SetScreenshotName("AVBOIT_Test")
+loader.TakeScreenshotOnEdited()

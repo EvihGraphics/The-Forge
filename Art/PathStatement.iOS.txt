@@ -1,0 +1,32 @@
+# ==================================
+# Bundled Resources
+# ==================================
+# these are bundled resources
+# relative to bundle root directory inside .app bundle
+# for macos it's Contents/Resources
+# for eg: RD_FONTS = Fonts/
+# will be XX_UT.app/Contents/Resources/Fonts
+
+bundled RD_COMPILED_MATERIALS = CompiledMaterials/
+bundled RD_ANIMATIONS = Animation/
+bundled RD_AUDIO = Audio/
+bundled RD_GPU_CONFIG = GPUCfg/
+bundled RD_MESHES = Meshes/
+bundled RD_FONTS = Fonts/
+bundled RD_TEXTURES = Textures/
+bundled RD_SCRIPTS = Scripts/
+bundled RD_SHADER_BINARIES = CompiledShaders/
+
+# this will be at the root of bundle 
+bundled RD_OTHER_FILES = 
+
+# ==================================
+# Not Bundled Resources
+# ==================================
+# These are all relative to the working directory 
+# for UTs they're all set to same dir as the .app bundle
+# on iOS it's inside application documents directory
+
+RD_PIPELINE_CACHE = PipelineCaches/
+RD_SCREENSHOTS = Screenshots/
+RD_DEBUG = Debug/

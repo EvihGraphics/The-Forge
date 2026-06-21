@@ -1,0 +1,14 @@
+#define AVBOIT_UNORDERED_ACCESS
+#include "avboit.h.fsl"
+
+NUM_THREADS(8, 8, 8)
+void CS_MAIN( SV_DispatchThreadID(uint3) DTid )
+{
+    INIT_MAIN;
+
+    if(DTid.x < volumeWidth && DTid.y < volumeHeight && DTid.z < volumeDepth)
+    {
+        Get(VolumeExtinctionBufferUAV)[GetVolumeIndex(DTid)] = 0;
+        Write3D(Get(VolumeTransmittanceLutUAV), DTid, float4(1.0f, 1.0f, 1.0f, 1.0f));
+    }
+}

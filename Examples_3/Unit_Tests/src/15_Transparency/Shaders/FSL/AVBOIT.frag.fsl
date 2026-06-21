@@ -1,0 +1,56 @@
+#include "shaderDefs.h.fsl"
+#define AVBOIT_UNORDERED_ACCESS
+#include "avboit.h.fsl"
+#include "shading.h.fsl"
+
+STRUCT(VSOutput)
+{
+	DATA(float4, Position, SV_Position);
+	DATA(float4, WorldPosition, POSITION);
+	DATA(float4, Normal, NORMAL);
+	DATA(float4, UV, TEXCOORD0);
+	DATA(FLAT(uint), MatID, MAT_ID);
+#if FT_MULTIVIEW
+	DATA(FLAT(uint), ViewID, TEXCOORD1);
+#endif
+};
+
+void DrawTransparent(float4 position, float4 color)
+{
+    uint2 pixelAddr = uint2(position.xy);
+    float depth = position.z;
+
+    // Linearize Reverse-Z depth using camClipInfo
+    // clipInfo = (zNear * zFar, zNear - zFar, zFar, 0.0f)
+    float linearDepth = Get(camClipInfo)[0] / (Get(camClipInfo)[1] * depth + Get(camClipInfo)[2]);
+    float zFar = Get(camClipInfo)[2];
+    float zNear = Get(camClipInfo)[0] / zFar;
+    float normalizedLinearDepth = (linearDepth - zNear) / (zFar - zNear);
+
+    uint zIndex = clamp(uint(normalizedLinearDepth * volumeDepth), 0, volumeDepth - 1);
+
+    uint3 coords = uint3(pixelAddr.x, pixelAddr.y, zIndex);
+
+    // Physically correct extinction from alpha
+    float ext = -log(1.0f - min(color.w, 0.99f));
+    uint packedExt = PackExtinction(ext);
+
+    uint flatIdx = GetVolumeIndex(coords);
+    uint dummy;
+    AtomicAdd(Get(VolumeExtinctionBufferUAV)[flatIdx], packedExt, dummy);
+}
+
+EARLY_FRAGMENT_TESTS
+void PS_MAIN( VSOutput In )
+{
+    INIT_MAIN;
+    float4 finalColor = Shade(In.MatID, In.UV.xy, In.WorldPosition.xyz, normalize(In.Normal.xyz), VR_VIEW_ID(In.ViewID));
+
+    if (finalColor.a > 0.01f)
+    {
+        DrawTransparent(In.Position, finalColor);
+    }
+
+    clip(-1.0f);
+    RETURN();
+}
