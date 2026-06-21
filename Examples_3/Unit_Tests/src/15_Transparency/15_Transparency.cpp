@@ -6506,7 +6506,7 @@ void Draw() override
 
             {
 
-                DescriptorData avboitFrameParams[4] = {};
+                DescriptorData avboitFrameParams[5] = {};
 
                 avboitFrameParams[0].pName = "ObjectUniformBlock";
                 avboitFrameParams[0].ppBuffers = &pBufferTransparentObjectTransforms[i];
@@ -6521,7 +6521,11 @@ void Draw() override
                 avboitFrameParams[3].ppBuffers = &pBufferAVBOITUniform[i];
 
                 updateDescriptorSet(pRenderer, i, pDescriptorSetAVBOITSplat[1], 4, avboitFrameParams);
-                updateDescriptorSet(pRenderer, i, pDescriptorSetAVBOITForward[1], 4, avboitFrameParams);
+
+                avboitFrameParams[4].pName = "LightUniformBlock";
+                avboitFrameParams[4].ppBuffers = &pBufferLightUniform[i];
+
+                updateDescriptorSet(pRenderer, i, pDescriptorSetAVBOITForward[1], 5, avboitFrameParams);
 
                 DescriptorData avboitUniformParam[1] = {};
                 avboitUniformParam[0].pName = "AVBOITUniforms";

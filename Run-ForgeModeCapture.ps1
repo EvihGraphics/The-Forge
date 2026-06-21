@@ -137,8 +137,16 @@ try {
         [ForgeModeCaptureWin32]::SetForegroundWindow($p.MainWindowHandle) | Out-Null
         Start-Sleep -Seconds $StartupWaitSeconds
 
-        $activeHandle = Get-CaptureWindowHandle $p.MainWindowHandle
-        $bounds = Get-ClientBounds $activeHandle
+        $activeHandle = [IntPtr]::Zero
+        $bounds = $null
+        for ($retry = 0; $retry -lt 5; $retry++) {
+            $activeHandle = Get-CaptureWindowHandle $p.MainWindowHandle
+            $bounds = Get-ClientBounds $activeHandle
+            if ($bounds -ne $null) { break }
+            Start-Sleep -Seconds 2
+            $p.Refresh()
+            if ($p.HasExited) { break }
+        }
         if ($bounds -ne $null) {
             $windowHandle = $activeHandle.ToInt64()
             Start-Sleep -Seconds $StabilizeSeconds

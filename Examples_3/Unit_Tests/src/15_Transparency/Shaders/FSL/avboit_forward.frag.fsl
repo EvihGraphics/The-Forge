@@ -20,27 +20,24 @@ float4 PS_MAIN( VSOutput In )
 {
     INIT_MAIN;
     float4 baseColor = Shade(In.MatID, In.UV.xy, In.WorldPosition.xyz, normalize(In.Normal.xyz), VR_VIEW_ID(In.ViewID));
-    
+
     if (baseColor.a <= 0.01f)
     {
         clip(-1.0f);
         RETURN(float4(0, 0, 0, 0));
     }
-    
+
     uint2 pixelAddr = uint2(In.Position.xy);
     float depth = In.Position.z;
-    
+
     // Linearize Reverse-Z depth using camClipInfo
     float linearDepth = Get(camClipInfo)[0] / (Get(camClipInfo)[1] * depth + Get(camClipInfo)[2]);
     float zFar = Get(camClipInfo)[2];
     float zNear = Get(camClipInfo)[0] / zFar;
-    
-    // Focus the 64 slices on the first 50 units where the transparent geometry lives
-    float volumeMaxZ = 50.0f;
-    float normalizedLinearDepth = clamp((linearDepth - zNear) / (volumeMaxZ - zNear), 0.0f, 1.0f);
-    
+    float normalizedLinearDepth = clamp(log2(zFar / linearDepth) / log2(zFar / zNear), 0.0f, 1.0f);
+
     uint zIndex = clamp(uint(normalizedLinearDepth * volumeDepth), 0, volumeDepth - 1);
-    
+
     // Sample Transmittance from LUT at previous depth slice
     float3 transmittanceFront = float3(1.0f, 1.0f, 1.0f);
     if(zIndex > 0)
@@ -49,9 +46,9 @@ float4 PS_MAIN( VSOutput In )
         float4 lutValue = LoadTex3D(Get(VolumeTransmittanceLutSRV), NO_SAMPLER, prevCoords, 0);
         transmittanceFront = lutValue.rgb;
     }
-    
+
     // finalColor = baseColor.rgb * transmittanceFront * baseColor.a
     float3 finalLuminance = baseColor.rgb * transmittanceFront * baseColor.a;
-    
+
     RETURN(float4(finalLuminance, 1.0f));
 }

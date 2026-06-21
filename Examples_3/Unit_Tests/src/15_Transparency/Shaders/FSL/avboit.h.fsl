@@ -38,4 +38,3 @@ uint GetVolumeIndex(uint3 coords)
 {
     return coords.z * volumeWidth * volumeHeight + coords.y * volumeWidth + coords.x;
 }
-

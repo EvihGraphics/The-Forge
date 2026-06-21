@@ -8,17 +8,17 @@ void CS_MAIN( SV_DispatchThreadID(uint3) DTid )
     INIT_MAIN;
 
     if(DTid.x >= volumeWidth || DTid.y >= volumeHeight) return;
-    
+
     float3 transmittance = float3(1.0f, 1.0f, 1.0f);
-    
+
     for(uint z = 0; z < volumeDepth; ++z)
     {
         uint3 coords = uint3(DTid.x, DTid.y, z);
         uint packedExt = Get(VolumeExtinctionBufferSRV)[GetVolumeIndex(coords)];
         float ext = UnpackExtinction(packedExt);
-        
+
         transmittance *= exp(-float3(ext, ext, ext));
-        
+
         Write3D(Get(VolumeTransmittanceLutUAV), coords, float4(transmittance, 1.0f));
     }
 }

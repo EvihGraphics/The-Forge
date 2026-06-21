@@ -2,11 +2,11 @@
 Arguments=--d3d12 --no-auto-exit --transparency-mode=0
 WorkingDirectory=D:\Users\l3d\Documents\AVBOIT\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\15_Transparency
 ModeIndex=0
-Start=2026-06-21T20:44:44.0130652+08:00
-End=2026-06-21T20:44:59.9272434+08:00
+Start=2026-06-21T22:43:15.5878416+08:00
+End=2026-06-21T22:43:31.4828011+08:00
 Status=WINDOW_READY;CLOSED
 ExitCode=
-WindowHandle=6162482
+WindowHandle=2231326
 WindowTitle=15_Transparency
 CaptureStatus=CAPTURED_CLIENT_PRINTWINDOW
 CapturePath=D:\Users\l3d\Documents\AVBOIT\The-Forge\LocalVisualResults\HIVE_4090x2\VisualResults\15_Transparency\Screenshots\UT_15_Transparency_DX12_Mode_0.png
