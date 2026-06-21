@@ -15,5 +15,6 @@ for ($i = $FirstMode; $i -le $LastMode; $i++) {
     $outputDir = Join-Path $OutputRoot "Mode_$i"
     $screenshot = Join-Path $OutputRoot "Screenshots\UT_15_Transparency_DX12_Mode_$i.png"
     Write-Host "Running 15_Transparency Mode $i"
-    & (Join-Path $PSScriptRoot "Run-ForgeModeCapture.ps1") -ExePath $ExePath -OutputDir $outputDir -ScreenshotPath $screenshot -ModeIndex $i -Arguments $Arguments -StartupWaitSeconds $StartupWaitSeconds -StabilizeSeconds $StabilizeSeconds -CloseWaitSeconds $CloseWaitSeconds
+    $ModeArg = $Arguments + " --transparency-mode=$i"
+    & (Join-Path $PSScriptRoot "Run-ForgeModeCapture.ps1") -ExePath $ExePath -OutputDir $outputDir -ScreenshotPath $screenshot -ModeIndex $i -Arguments $ModeArg -StartupWaitSeconds $StartupWaitSeconds -StabilizeSeconds $StabilizeSeconds -CloseWaitSeconds $CloseWaitSeconds
 }

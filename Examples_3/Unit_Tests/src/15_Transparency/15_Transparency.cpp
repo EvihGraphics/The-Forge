@@ -1487,6 +1487,15 @@ public:
             gTransparencyType = TRANSPARENCY_TYPE_ADAPTIVE_VOXEL_BASED_OIT;
             LOGF(LogLevel::eINFO, "AVBOIT auto capture enabled.");
         }
+        if (pCommandLine)
+        {
+            const char* modeArg = strstr(pCommandLine, "--transparency-mode=");
+            if (modeArg && strlen(modeArg) > 20)
+            {
+                gTransparencyType = modeArg[20] - '0';
+                LOGF(LogLevel::eINFO, "Transparency mode set via command line to: %u", gTransparencyType);
+            }
+        }
 
 
 

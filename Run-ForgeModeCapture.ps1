@@ -141,20 +141,6 @@ try {
         $bounds = Get-ClientBounds $activeHandle
         if ($bounds -ne $null) {
             $windowHandle = $activeHandle.ToInt64()
-            $dropdownX = $bounds.Left + 345
-            $dropdownY = $bounds.Top + 468
-            Invoke-Click $dropdownX $dropdownY
-            Start-Sleep -Milliseconds 300
-            for ($k = 0; $k -lt 6; ++$k) {
-                Invoke-Key 0x26
-                Start-Sleep -Milliseconds 50
-            }
-            Start-Sleep -Milliseconds 100
-            for ($i = 0; $i -lt $ModeIndex; ++$i) {
-                Invoke-Key 0x28
-                Start-Sleep -Milliseconds 80
-            }
-            Invoke-Key 0x0D
             Start-Sleep -Seconds $StabilizeSeconds
 
             $p.Refresh()
