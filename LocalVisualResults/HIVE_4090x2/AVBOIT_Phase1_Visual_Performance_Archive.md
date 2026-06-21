@@ -14,7 +14,7 @@
 | 1 | WBOIT | 深度层次不准确，存在颜色泛化。 | ![Mode 1](./VisualResults/15_Transparency/Screenshots/UT_15_Transparency_DX12_Mode_1.png) |
 | 2 | WBOIT Volition | 针对不透明度做了调整，但深层排序依然有失真。 | ![Mode 2](./VisualResults/15_Transparency/Screenshots/UT_15_Transparency_DX12_Mode_2.png) |
 | 3 | Phenomenological PT | 折射与颜色物理正确性增强，但在面片严格排序下不如 Ground Truth 锐利。 | ![Mode 3](./VisualResults/15_Transparency/Screenshots/UT_15_Transparency_DX12_Mode_3.png) |
-| 4 | Adaptive OIT (AOIT) | 视觉接近 Ground Truth，自适应节点进行了有效的透射率合并。 | ![Mode 4](./VisualResults/15_Transparency/Screenshots/UT_15_Transparency_DX12_Mode_4.png) |
+| 4 | Adaptive OIT (AOIT) | **画面无透明面片**。由于底层着色器在现代 NVIDIA DX12 驱动下存在兼容性缺陷，ROV片段复合静默失败，导致透明物体全部丢失，仅剩静态网格背景。 | ![Mode 4](./VisualResults/15_Transparency/Screenshots/UT_15_Transparency_DX12_Mode_4.png) |
 | 5 | AVBOIT | 正确累积物理透射率与消光，多层面板渲染精确，已完全集成新版算法。 | ![Mode 5](./VisualResults/15_Transparency/Screenshots/UT_15_Transparency_DX12_Mode_5.png) |
 
 ## 结语 (Conclusion)
