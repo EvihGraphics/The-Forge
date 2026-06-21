@@ -8854,6 +8854,8 @@ void Draw() override
             avboitForwardBlendState.mDstFactors[0] = BC_ONE;
             avboitForwardBlendState.mColorWriteMasks[0] = COLOR_MASK_ALL;
             avboitForwardBlendState.mRenderTargetMask = BLEND_STATE_TARGET_0;
+            avboitForwardBlendState.mColorWriteMasks[0] = COLOR_MASK_ALL;
+            avboitForwardBlendState.mRenderTargetMask = BLEND_STATE_TARGET_0;
             avboitForwardPipelineDesc.pBlendState = &avboitForwardBlendState;
 
             LOGF(eINFO, "Adding AVBOITForward Pipeline...");

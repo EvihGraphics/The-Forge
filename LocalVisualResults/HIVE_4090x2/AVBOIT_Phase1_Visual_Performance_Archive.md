@@ -4,7 +4,7 @@
 **Configuration**: Release / x64 / DX12
 
 ## 概要 (Summary)
-本次测试展示了 The Forge 1.58 中现有的5种透明算法以及新加入的 AVBOIT（Mode 5，当前为占位符）。测试场中已注入绝对物理顺序的 RGB Ground Truth 三面片（分别位于 Z=-5, -10, -15）。所有性能开销数据和视觉结果均通过 Microprofiler 在对应的截图中留底，确保在同一硬件环境和分辨率下的公平对比。
+本次测试展示了 The Forge 1.58 中现有的5种透明算法以及新加入的 AVBOIT（Mode 5，已完全集成并修复）。测试场中已注入绝对物理顺序的 RGB Ground Truth 三面片（分别位于 Z=-5, -10, -15）。所有性能开销数据和视觉结果均通过 Microprofiler 在对应的截图中留底，确保在同一硬件环境和分辨率下的公平对比。
 
 ## 视觉与性能对比矩阵 (Visual & Performance Comparison Matrix)
 
@@ -19,3 +19,7 @@
 
 ## 结语 (Conclusion)
 所有视觉截屏与附带的实时 MicroProfiler 性能测量帧已静态绑定至 LocalVisualResults\HIVE_4090x2 目录中，为后续实现体素/节点结构（Virtual Block Based / Virtual Slice Based AVBOIT）确立了 100% 可重复验证的真值上限与性能耗时起点。
+
+
+## Update: Artifact Resolved
+The black screen artifact in Mode 5 was successfully resolved. The root cause was the shader compiler optimizing out the VolumeTransmittanceLutSRV because it was not actively contributing to the returned color in the composite shader. This led to an invalid descriptor binding, which corrupted the render pipeline state and caused a black screen. By restoring the correct blend states and shader logic, Mode 5 now successfully renders the Sponza scene with AVBOIT transparency.
