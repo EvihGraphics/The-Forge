@@ -145,7 +145,10 @@ try {
             $dropdownY = $bounds.Top + 468
             Invoke-Click $dropdownX $dropdownY
             Start-Sleep -Milliseconds 300
-            Invoke-Key 0x24
+            for ($k = 0; $k -lt 6; ++$k) {
+                Invoke-Key 0x26
+                Start-Sleep -Milliseconds 50
+            }
             Start-Sleep -Milliseconds 100
             for ($i = 0; $i -lt $ModeIndex; ++$i) {
                 Invoke-Key 0x28

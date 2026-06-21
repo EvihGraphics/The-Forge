@@ -1,90 +1,88 @@
-2026-06-21 15:54:47 [MainThread     ]                   Log.c:195   INFO| Opened log file 15_Transparency.log
-2026-06-21 15:54:47 [MainThread     ]         WindowsBase.cpp:422   INFO| Operating System: Windows PC. Version: 10.0 (Build: 26200). Device Name: Unknown.
-2026-06-21 15:54:47 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
-2026-06-21 15:54:47 [MainThread     ]       WindowsWindow.cpp:636   INFO| Created window app 15_Transparency
-2026-06-21 15:54:47 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
-2026-06-21 15:54:47 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
-2026-06-21 15:54:47 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
-2026-06-21 15:54:47 [MainThread     ]      GraphicsConfig.cpp:419   INFO| Default GPU Data:
-2026-06-21 15:54:47 [MainThread     ]      GraphicsConfig.cpp:420   INFO|     DefaultGPUPresetLevel set to low
-2026-06-21 15:54:47 [MainThread     ]      GraphicsConfig.cpp:422   INFO| GPU vendors:
-2026-06-21 15:54:47 [MainThread     ]      GraphicsConfig.cpp:440   INFO|     intel: 0x8086
-2026-06-21 15:54:47 [MainThread     ]      GraphicsConfig.cpp:440   INFO|     amd: 0x1002
-2026-06-21 15:54:47 [MainThread     ]      GraphicsConfig.cpp:440   INFO|     nvidia: 0x10de
-2026-06-21 15:54:47 [MainThread     ]      GraphicsConfig.cpp:440   INFO|     qualcomm: 0x5143
-2026-06-21 15:54:47 [MainThread     ]      GraphicsConfig.cpp:898    DBG| Extended Config| GPU Config invalid Field name: 'isheadless'.
-2026-06-21 15:54:47 [MainThread     ]      GraphicsConfig.cpp:723    DBG| Invalid GPU Selection rule: 'isHeadLess != 1;'.
-2026-06-21 15:54:47 [MainThread     ]      GraphicsConfig.cpp:552   INFO| GPU selection settings:
-2026-06-21 15:54:47 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: graphicqueuesupported == 1
-2026-06-21 15:54:47 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: deviceid == 0
-2026-06-21 15:54:47 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: rasterorderviewsupport
-2026-06-21 15:54:47 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: gpupresetlevel
-2026-06-21 15:54:47 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: vendorid != 32902 && vendorid != 32903 && vendorid != 5692
-2026-06-21 15:54:47 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: directxfeaturelevel
-2026-06-21 15:54:47 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: vram
-2026-06-21 15:54:47 [MainThread     ]      GraphicsConfig.cpp:561   INFO| Driver rejections:
-2026-06-21 15:54:47 [MainThread     ]      GraphicsConfig.cpp:579   INFO| GPU configuration settings:
-2026-06-21 15:54:47 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 4318: 64
-2026-06-21 15:54:47 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 4098: 13
-2026-06-21 15:54:47 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 4130: 13
-2026-06-21 15:54:47 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 5692: 64
-2026-06-21 15:54:47 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 32902: 64
-2026-06-21 15:54:47 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 32903: 64
-2026-06-21 15:54:47 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     dynamicrenderingenabled: vendorid == 5692: 0
-2026-06-21 15:54:47 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     dynamicrenderingenabled: vendorid == 32902: 0
-2026-06-21 15:54:47 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     dynamicrenderingenabled: vendorid == 32903: 0
-2026-06-21 15:54:47 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     tessellationsupported: vendorid == 5045: 0
-2026-06-21 15:54:47 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     xclipsetransferqueueworkaroundenabled: deviceid == 29600: 1
-2026-06-21 15:54:47 [MainThread     ]      GraphicsConfig.cpp:592   INFO| User settings:
-2026-06-21 15:54:47 [MainThread     ]      GraphicsConfig.cpp:602   INFO|     EnableAOIT: rasterorderviewsupport == 1: 1
-2026-06-21 15:54:47 [MainThread     ]      GraphicsConfig.cpp:602   INFO|     EnableAOIT: amdasicfamily == 9: 0
-2026-06-21 15:54:47 [MainThread     ]          Direct3D12.cpp:1310  INFO| Loading d3d12.dll
-2026-06-21 15:54:47 [MainThread     ]          Direct3D12.cpp:1322  INFO| Loading dxgi.dll
-2026-06-21 15:54:47 [MainThread     ]             AgsHelper.h:52    INFO| AMD Display Driver Version 78662888
-2026-06-21 15:54:47 [MainThread     ]             AgsHelper.h:53    INFO| AMD Radeon Software Version 
-2026-06-21 15:54:47 [MainThread     ]           NvApiHelper.h:50    INFO| NVIDIA Display Driver Version 59186
-2026-06-21 15:54:47 [MainThread     ]           NvApiHelper.h:51    INFO| NVIDIA Build Branch r590_00
-2026-06-21 15:54:48 [MainThread     ]      GraphicsConfig.cpp:1091  INFO| GPU: NVIDIA GeForce RTX 4090, setting maxrootsignaturedwords to 64
-2026-06-21 15:54:48 [MainThread     ]          Direct3D12.cpp:2659  INFO| GPU[0] detected. Vendor ID: 0x10de, Model ID: 0x2684, Revision ID: 0xa1, Preset: ultra, GPU Name: NVIDIA GeForce RTX 4090
-2026-06-21 15:54:49 [MainThread     ]      GraphicsConfig.cpp:1091  INFO| GPU: NVIDIA GeForce RTX 4090, setting maxrootsignaturedwords to 64
-2026-06-21 15:54:49 [MainThread     ]          Direct3D12.cpp:2659  INFO| GPU[1] detected. Vendor ID: 0x10de, Model ID: 0x2684, Revision ID: 0xa1, Preset: ultra, GPU Name: NVIDIA GeForce RTX 4090
-2026-06-21 15:54:49 [MainThread     ]      GraphicsConfig.cpp:1091  INFO| GPU: NVIDIA GeForce RTX 4090, setting maxrootsignaturedwords to 64
-2026-06-21 15:54:49 [MainThread     ]          Direct3D12.cpp:2659  INFO| GPU[2] detected. Vendor ID: 0x10de, Model ID: 0x2684, Revision ID: 0xa1, Preset: ultra, GPU Name: NVIDIA GeForce RTX 4090
-2026-06-21 15:54:49 [MainThread     ]          Direct3D12.cpp:2332  INFO| GPU[0] is selected as default GPU
-2026-06-21 15:54:49 [MainThread     ]          Direct3D12.cpp:2333  INFO| Name of selected gpu: NVIDIA GeForce RTX 4090
-2026-06-21 15:54:49 [MainThread     ]          Direct3D12.cpp:2334  INFO| Vendor id of selected gpu: 0x10de
-2026-06-21 15:54:49 [MainThread     ]          Direct3D12.cpp:2335  INFO| Model id of selected gpu: 0x2684
-2026-06-21 15:54:49 [MainThread     ]          Direct3D12.cpp:2336  INFO| Revision id of selected gpu: 0xa1
-2026-06-21 15:54:49 [MainThread     ]          Direct3D12.cpp:2337  INFO| Preset of selected gpu: ultra
-2026-06-21 15:54:49 [MainThread     ]      GraphicsConfig.cpp:1122  INFO| Extended setting: setting EnableAOIT to 1
-2026-06-21 15:54:49 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
-2026-06-21 15:54:49 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
-2026-06-21 15:54:49 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
-2026-06-21 15:54:49 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (SkySampler) : User specified Static Sampler
-2026-06-21 15:54:49 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (LinearSampler) : User specified Static Sampler
-2026-06-21 15:54:49 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (LinearSampler) : User specified Static Sampler
-2026-06-21 15:54:49 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (VSMSampler) : User specified Static Sampler
-2026-06-21 15:54:49 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (PointSampler) : User specified Static Sampler
-2026-06-21 15:54:49 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (PointSampler) : User specified Static Sampler
-2026-06-21 15:54:49 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (LinearSampler) : User specified Static Sampler
-2026-06-21 15:54:49 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (PointSampler) : User specified Static Sampler
-2026-06-21 15:54:49 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (LinearSampler) : User specified Static Sampler
-2026-06-21 15:54:49 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (VSMSampler) : User specified Static Sampler
-2026-06-21 15:54:49 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (LinearSampler) : User specified Static Sampler
-2026-06-21 15:54:49 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (LinearSampler) : User specified Static Sampler
-2026-06-21 15:54:49 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (VSMSampler) : User specified Static Sampler
-2026-06-21 15:54:49 [MainThread     ]          Direct3D12.cpp:3206  INFO| Adding D3D12 swapchain @ 1920x1080
-2026-06-21 15:54:49 [MainThread     ]     15_Transparency.cpp:8741  INFO| Adding AVBOITSplat Pipeline... pShaderAVBOITSplat=0000017F559BE230
-2026-06-21 15:54:49 [MainThread     ]     15_Transparency.cpp:8757  INFO| Adding AVBOITClear Pipeline...
-2026-06-21 15:54:49 [MainThread     ]     15_Transparency.cpp:8769  INFO| Adding AVBOITIntegrate Pipeline...
-2026-06-21 15:54:49 [MainThread     ]     15_Transparency.cpp:8821  INFO| Adding AVBOITComposite Pipeline...
-2026-06-21 15:54:49 [MainThread     ]     15_Transparency.cpp:8848  INFO| Adding AVBOITForward Pipeline...
-2026-06-21 15:54:49 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (uSampler) : User specified Static Sampler
-2026-06-21 15:54:49 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (uSampler0) : User specified Static Sampler
-2026-06-21 15:54:49 [MainThread     ]          Direct3D12.cpp:4553  INFO| Descriptor (uniformBlock_rootcbv) : User specified D3D12_ROOT_PARAMETER_TYPE_CBV
-2026-06-21 15:54:49 [MainThread     ]          Direct3D12.cpp:4700  INFO| Root constant (uRootConstants) has (6) 32 bit values. It is recommended to have root constant number <= 4
-2026-06-21 15:54:49 [MainThread     ]         WindowsBase.cpp:591   INFO| Application Init+Load+Reload 1.907000ms
-2026-06-21 15:55:04 [MainThread     ]     15_Transparency.cpp:1904  INFO| OIT Performance Dump [Mode 5]: 4.394598 ms
-2026-06-21 15:55:04 [MainThread     ]          Direct3D12.cpp:1281  INFO| Unloading d3d12.dll
-2026-06-21 15:55:04 [MainThread     ]          Direct3D12.cpp:1292  INFO| Unloading dxgi.dll
-2026-06-21 15:55:04 [MainThread     ]                   Log.c:153   INFO| Shutting down log system.
+2026-06-21 17:21:35 [MainThread     ]                   Log.c:195   INFO| Opened log file 15_Transparency.log
+2026-06-21 17:21:35 [MainThread     ]         WindowsBase.cpp:422   INFO| Operating System: Windows PC. Version: 10.0 (Build: 26200). Device Name: Unknown.
+2026-06-21 17:21:35 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.00, 1.00)
+2026-06-21 17:21:35 [MainThread     ]       WindowsWindow.cpp:636   INFO| Created window app 15_Transparency
+2026-06-21 17:21:35 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.00, 1.00)
+2026-06-21 17:21:35 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.00, 1.00)
+2026-06-21 17:21:35 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.00, 1.00)
+2026-06-21 17:21:35 [MainThread     ]      GraphicsConfig.cpp:419   INFO| Default GPU Data:
+2026-06-21 17:21:35 [MainThread     ]      GraphicsConfig.cpp:420   INFO|     DefaultGPUPresetLevel set to low
+2026-06-21 17:21:35 [MainThread     ]      GraphicsConfig.cpp:422   INFO| GPU vendors:
+2026-06-21 17:21:35 [MainThread     ]      GraphicsConfig.cpp:440   INFO|     intel: 0x8086
+2026-06-21 17:21:35 [MainThread     ]      GraphicsConfig.cpp:440   INFO|     amd: 0x1002
+2026-06-21 17:21:35 [MainThread     ]      GraphicsConfig.cpp:440   INFO|     nvidia: 0x10de
+2026-06-21 17:21:35 [MainThread     ]      GraphicsConfig.cpp:440   INFO|     qualcomm: 0x5143
+2026-06-21 17:21:35 [MainThread     ]      GraphicsConfig.cpp:898    DBG| Extended Config| GPU Config invalid Field name: 'isheadless'.
+2026-06-21 17:21:35 [MainThread     ]      GraphicsConfig.cpp:723    DBG| Invalid GPU Selection rule: 'isHeadLess != 1;'.
+2026-06-21 17:21:35 [MainThread     ]      GraphicsConfig.cpp:552   INFO| GPU selection settings:
+2026-06-21 17:21:35 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: graphicqueuesupported == 1
+2026-06-21 17:21:35 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: deviceid == 0
+2026-06-21 17:21:35 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: rasterorderviewsupport
+2026-06-21 17:21:35 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: gpupresetlevel
+2026-06-21 17:21:35 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: vendorid != 32902 && vendorid != 32903 && vendorid != 5692
+2026-06-21 17:21:35 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: directxfeaturelevel
+2026-06-21 17:21:35 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: vram
+2026-06-21 17:21:35 [MainThread     ]      GraphicsConfig.cpp:561   INFO| Driver rejections:
+2026-06-21 17:21:35 [MainThread     ]      GraphicsConfig.cpp:579   INFO| GPU configuration settings:
+2026-06-21 17:21:35 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 4318: 64
+2026-06-21 17:21:35 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 4098: 13
+2026-06-21 17:21:35 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 4130: 13
+2026-06-21 17:21:35 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 5692: 64
+2026-06-21 17:21:35 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 32902: 64
+2026-06-21 17:21:35 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 32903: 64
+2026-06-21 17:21:35 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     dynamicrenderingenabled: vendorid == 5692: 0
+2026-06-21 17:21:35 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     dynamicrenderingenabled: vendorid == 32902: 0
+2026-06-21 17:21:35 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     dynamicrenderingenabled: vendorid == 32903: 0
+2026-06-21 17:21:35 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     tessellationsupported: vendorid == 5045: 0
+2026-06-21 17:21:35 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     xclipsetransferqueueworkaroundenabled: deviceid == 29600: 1
+2026-06-21 17:21:35 [MainThread     ]      GraphicsConfig.cpp:592   INFO| User settings:
+2026-06-21 17:21:35 [MainThread     ]      GraphicsConfig.cpp:602   INFO|     EnableAOIT: rasterorderviewsupport == 1: 1
+2026-06-21 17:21:35 [MainThread     ]      GraphicsConfig.cpp:602   INFO|     EnableAOIT: amdasicfamily == 9: 0
+2026-06-21 17:21:35 [MainThread     ]          Direct3D12.cpp:1310  INFO| Loading d3d12.dll
+2026-06-21 17:21:35 [MainThread     ]          Direct3D12.cpp:1322  INFO| Loading dxgi.dll
+2026-06-21 17:21:35 [MainThread     ]             AgsHelper.h:52    INFO| AMD Display Driver Version 1479372104
+2026-06-21 17:21:35 [MainThread     ]             AgsHelper.h:53    INFO| AMD Radeon Software Version 
+2026-06-21 17:21:35 [MainThread     ]           NvApiHelper.h:50    INFO| NVIDIA Display Driver Version 59186
+2026-06-21 17:21:35 [MainThread     ]           NvApiHelper.h:51    INFO| NVIDIA Build Branch r590_00
+2026-06-21 17:21:35 [MainThread     ]      GraphicsConfig.cpp:1091  INFO| GPU: NVIDIA GeForce RTX 4090, setting maxrootsignaturedwords to 64
+2026-06-21 17:21:35 [MainThread     ]          Direct3D12.cpp:2659  INFO| GPU[0] detected. Vendor ID: 0x10de, Model ID: 0x2684, Revision ID: 0xa1, Preset: ultra, GPU Name: NVIDIA GeForce RTX 4090
+2026-06-21 17:21:35 [MainThread     ]      GraphicsConfig.cpp:1091  INFO| GPU: NVIDIA GeForce RTX 4090, setting maxrootsignaturedwords to 64
+2026-06-21 17:21:35 [MainThread     ]          Direct3D12.cpp:2659  INFO| GPU[1] detected. Vendor ID: 0x10de, Model ID: 0x2684, Revision ID: 0xa1, Preset: ultra, GPU Name: NVIDIA GeForce RTX 4090
+2026-06-21 17:21:36 [MainThread     ]          Direct3D12.cpp:2332  INFO| GPU[0] is selected as default GPU
+2026-06-21 17:21:36 [MainThread     ]          Direct3D12.cpp:2333  INFO| Name of selected gpu: NVIDIA GeForce RTX 4090
+2026-06-21 17:21:36 [MainThread     ]          Direct3D12.cpp:2334  INFO| Vendor id of selected gpu: 0x10de
+2026-06-21 17:21:36 [MainThread     ]          Direct3D12.cpp:2335  INFO| Model id of selected gpu: 0x2684
+2026-06-21 17:21:36 [MainThread     ]          Direct3D12.cpp:2336  INFO| Revision id of selected gpu: 0xa1
+2026-06-21 17:21:36 [MainThread     ]          Direct3D12.cpp:2337  INFO| Preset of selected gpu: ultra
+2026-06-21 17:21:36 [MainThread     ]      GraphicsConfig.cpp:1122  INFO| Extended setting: setting EnableAOIT to 1
+2026-06-21 17:21:36 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.00, 1.00)
+2026-06-21 17:21:36 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.00, 1.00)
+2026-06-21 17:21:36 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.00, 1.00)
+2026-06-21 17:21:36 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (SkySampler) : User specified Static Sampler
+2026-06-21 17:21:36 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (LinearSampler) : User specified Static Sampler
+2026-06-21 17:21:36 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (LinearSampler) : User specified Static Sampler
+2026-06-21 17:21:36 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (VSMSampler) : User specified Static Sampler
+2026-06-21 17:21:36 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (PointSampler) : User specified Static Sampler
+2026-06-21 17:21:36 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (PointSampler) : User specified Static Sampler
+2026-06-21 17:21:36 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (LinearSampler) : User specified Static Sampler
+2026-06-21 17:21:36 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (PointSampler) : User specified Static Sampler
+2026-06-21 17:21:36 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (LinearSampler) : User specified Static Sampler
+2026-06-21 17:21:36 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (VSMSampler) : User specified Static Sampler
+2026-06-21 17:21:36 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (LinearSampler) : User specified Static Sampler
+2026-06-21 17:21:36 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (LinearSampler) : User specified Static Sampler
+2026-06-21 17:21:36 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (VSMSampler) : User specified Static Sampler
+2026-06-21 17:21:36 [MainThread     ]          Direct3D12.cpp:3206  INFO| Adding D3D12 swapchain @ 1920x1080
+2026-06-21 17:21:36 [MainThread     ]     15_Transparency.cpp:8741  INFO| Adding AVBOITSplat Pipeline... pShaderAVBOITSplat=000001DF5F557700
+2026-06-21 17:21:36 [MainThread     ]     15_Transparency.cpp:8757  INFO| Adding AVBOITClear Pipeline...
+2026-06-21 17:21:36 [MainThread     ]     15_Transparency.cpp:8769  INFO| Adding AVBOITIntegrate Pipeline...
+2026-06-21 17:21:36 [MainThread     ]     15_Transparency.cpp:8821  INFO| Adding AVBOITComposite Pipeline...
+2026-06-21 17:21:36 [MainThread     ]     15_Transparency.cpp:8848  INFO| Adding AVBOITForward Pipeline...
+2026-06-21 17:21:36 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (uSampler) : User specified Static Sampler
+2026-06-21 17:21:36 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (uSampler0) : User specified Static Sampler
+2026-06-21 17:21:36 [MainThread     ]          Direct3D12.cpp:4553  INFO| Descriptor (uniformBlock_rootcbv) : User specified D3D12_ROOT_PARAMETER_TYPE_CBV
+2026-06-21 17:21:36 [MainThread     ]          Direct3D12.cpp:4700  INFO| Root constant (uRootConstants) has (6) 32 bit values. It is recommended to have root constant number <= 4
+2026-06-21 17:21:36 [MainThread     ]         WindowsBase.cpp:591   INFO| Application Init+Load+Reload 1.576000ms
+2026-06-21 17:21:52 [MainThread     ]     15_Transparency.cpp:1904  INFO| OIT Performance Dump [Mode 5]: 4.864989 ms
+2026-06-21 17:21:52 [MainThread     ]          Direct3D12.cpp:1281  INFO| Unloading d3d12.dll
+2026-06-21 17:21:52 [MainThread     ]          Direct3D12.cpp:1292  INFO| Unloading dxgi.dll
+2026-06-21 17:21:52 [MainThread     ]                   Log.c:153   INFO| Shutting down log system.
