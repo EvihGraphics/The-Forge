@@ -2,12 +2,12 @@
 Arguments=--d3d12 --no-auto-exit --transparency-mode=5
 WorkingDirectory=D:\Users\l3d\Documents\AVBOIT\The-Forge\Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\15_Transparency
 ModeIndex=5
-Start=2026-06-21T20:41:44.9055037+08:00
-End=2026-06-21T20:42:00.8314439+08:00
-Status=WINDOW_READY;CLOSED
+Start=2026-06-21T21:02:15.1001904+08:00
+End=2026-06-21T21:02:25.7544201+08:00
+Status=WINDOW_READY
 ExitCode=
-WindowHandle=920542
+WindowHandle=4327930
 WindowTitle=15_Transparency
-CaptureStatus=CAPTURED_CLIENT_PRINTWINDOW
+CaptureStatus=CAPTURE_FAILED
 CapturePath=D:\Users\l3d\Documents\AVBOIT\The-Forge\LocalVisualResults\HIVE_4090x2\VisualResults\15_Transparency\Screenshots\UT_15_Transparency_DX12_Mode_5.png
-CaptureError=
+CaptureError=Initial GetClientRect/ClientToScreen failed
