@@ -601,6 +601,7 @@ Pipeline* pPipelineAVBOITForward = NULL;
 Buffer* pBufferAVBOITVolumeExtinction = NULL;
 
 Buffer* pBufferAVBOITUniform[gDataBufferCount] = { NULL };
+float gAVBOITMultiplier = 2.5f;
 
 Texture* pTextureAVBOITVolumeTransmittanceLut = NULL;
 
@@ -1494,6 +1495,13 @@ public:
             {
                 gTransparencyType = modeArg[20] - '0';
                 LOGF(LogLevel::eINFO, "Transparency mode set via command line to: %u", gTransparencyType);
+            }
+            
+            const char* multArg = strstr(pCommandLine, "--avboit-multiplier=");
+            if (multArg)
+            {
+                gAVBOITMultiplier = (float)atof(multArg + 20);
+                LOGF(LogLevel::eINFO, "AVBOIT Multiplier set via command line to: %f", gAVBOITMultiplier);
             }
         }
 
@@ -4036,7 +4044,7 @@ public:
 
 
         // Update AVBOIT Uniforms
-        uint32_t avboitUniformData[4] = { volWidth, volHeight, volDepth, 0 };
+        uint32_t avboitUniformData[4] = { volWidth, volHeight, volDepth, reinterpret_cast<uint32_t&>(gAVBOITMultiplier) };
         BufferUpdateDesc avboitUpdate = { pBufferAVBOITUniform[gFrameIndex] };
         beginUpdateResource(&avboitUpdate);
         memcpy(avboitUpdate.pMappedData, avboitUniformData, sizeof(avboitUniformData));
@@ -4417,7 +4425,7 @@ public:
 
     // Update AVBOIT Uniforms
 
-    uint32_t avboitUniformData[4] = { (uint32_t)mSettings.mWidth, (uint32_t)mSettings.mHeight, 64, 0 };
+    uint32_t avboitUniformData[4] = { (uint32_t)mSettings.mWidth, (uint32_t)mSettings.mHeight, 64, reinterpret_cast<uint32_t&>(gAVBOITMultiplier) };
 
     BufferUpdateDesc avboitUpdate = { pBufferAVBOITUniform[gFrameIndex] };
 
@@ -9047,6 +9055,13 @@ void GuiController::AddGui()
     ButtonWidget bRunScript;
 
     UIWidget*    pRunScript = uiCreateComponentWidget(pGuiWindow, "Run", &bRunScript, WIDGET_TYPE_BUTTON);
+    
+    // AVBOIT tuning
+    SliderFloatWidget avboitMultiplierSlider;
+    avboitMultiplierSlider.pData = &gAVBOITMultiplier;
+    avboitMultiplierSlider.mMin = 0.1f;
+    avboitMultiplierSlider.mMax = 10.0f;
+    luaRegisterWidget(uiCreateComponentWidget(pGuiWindow, "AVBOIT Multiplier", &avboitMultiplierSlider, WIDGET_TYPE_SLIDER_FLOAT));
 
     uiSetWidgetOnEditedCallback(pRunScript, nullptr, RunScript);
 

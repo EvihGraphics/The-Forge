@@ -48,7 +48,9 @@ float4 PS_MAIN( VSOutput In )
     }
 
     // finalColor = baseColor.rgb * transmittanceFront * baseColor.a
-    float3 finalLuminance = baseColor.rgb * transmittanceFront * baseColor.a;
+    // Intra-voxel self-attenuation approximation to match Alpha Blend
+    // Applied empirical multiplier from UI to compensate for Alpha Blending's order-dependence artifacts in linear space
+    float3 finalLuminance = baseColor.rgb * transmittanceFront * baseColor.a * Get(avboitMultiplier);
 
     RETURN(float4(finalLuminance, 1.0f));
 }

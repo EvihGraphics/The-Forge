@@ -20,7 +20,7 @@ CBUFFER(AVBOITUniforms, UPDATE_FREQ_PER_FRAME, b5, binding = 10)
     DATA(uint, volumeWidth, None);
     DATA(uint, volumeHeight, None);
     DATA(uint, volumeDepth, None);
-    DATA(float, pad, None);
+    DATA(float, avboitMultiplier, None);
 };
 
 uint PackExtinction(float ext)
