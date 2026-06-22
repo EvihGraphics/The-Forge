@@ -3,7 +3,7 @@
 Status: passed-local
 UTC: 2026-06-21T15:40:00Z
 Plan: PLAN-4-0
-Branch: AVBOIT_Agent_Guidance_Package_v2_Checkpoint_Enforced
+Branch: baseline/theforge-1.58-windows-vs-dx12
 
 ## Summary
 

@@ -10,7 +10,7 @@ Current lab skill: `docs/skill/theforge-avboit-lab-skill/SKILL.md`
 
 ## Active Branch
 
-`AVBOIT_Agent_Guidance_Package_v2_Checkpoint_Enforced`
+`baseline/theforge-1.58-windows-vs-dx12`
 
 Base: `origin/baseline/theforge-1.58-windows-vs-dx12` @ `c2b643ae770aa3bc7fc8fd5e4a06d5e3fed6eafc`
 
@@ -39,6 +39,6 @@ Review and refine AVBOIT performance metrics, and prepare to advance to the next
 
 ## Resume Entry
 
-1. Stay on branch `AVBOIT_Agent_Guidance_Package_v2_Checkpoint_Enforced`.
+1. Stay on branch `baseline/theforge-1.58-windows-vs-dx12`.
 2. Read `CHECKPOINT-0005-20260621T153700Z-PLAN-4-0-grayscale-resolved.md`.
 3. Validate AVBOIT performance and transition to OIT Comparison or UE migration based on user guidance.
