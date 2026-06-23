@@ -1,4 +1,4 @@
-﻿# Prerequisites
+# Prerequisites
 *.d
 *.pdf
 
@@ -427,3 +427,4 @@ Tools/clang-tools/out-files.txt
 /TheForge_1.58_Baseline_Report/Build/Full_Build_MSBuild_Patched_VS2022_v143_SDK22621_FileLogger.log
 
 /TheForge_1.58_Baseline_Report/Build/Full_Build_MSBuild_Patched_VS2022_v143_SDK22621_wd4189_FileLogger.log
+LocalVisualResults/DESKTOP-KCK6JUT/NewMachineVerification_20260623T114619Z/
