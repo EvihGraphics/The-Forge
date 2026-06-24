@@ -4496,133 +4496,6 @@ public:
 
 
 
-    void AdaptiveVoxelBasedOITPass(Cmd* pCmd)
-
-{
-
-    // Update AVBOIT Uniforms
-
-    uint32_t avboitUniformData[4] = { (uint32_t)mSettings.mWidth, (uint32_t)mSettings.mHeight, 64, reinterpret_cast<uint32_t&>(gAVBOITMultiplier) };
-
-    BufferUpdateDesc avboitUpdate = { pBufferAVBOITUniform[gFrameIndex] };
-
-    beginUpdateResource(&avboitUpdate);
-
-    memcpy(avboitUpdate.pMappedData, avboitUniformData, sizeof(avboitUniformData));
-
-    endUpdateResource(&avboitUpdate);
-
-
-
-    // Barrier: UAV for Clear
-
-    BufferBarrier clearBufBarriers[] = {
-
-        { pBufferAVBOITVolumeExtinction, RESOURCE_STATE_PIXEL_SHADER_RESOURCE, RESOURCE_STATE_UNORDERED_ACCESS }
-
-    };
-
-    TextureBarrier clearTexBarriers[] = {
-
-        { pTextureAVBOITVolumeTransmittanceLut, RESOURCE_STATE_PIXEL_SHADER_RESOURCE, RESOURCE_STATE_UNORDERED_ACCESS }
-
-    };
-
-    cmdResourceBarrier(pCmd, 1, clearBufBarriers, 1, clearTexBarriers, 0, NULL);
-
-
-
-    // 1. Clear Pass
-
-    cmdBindPipeline(pCmd, pPipelineAVBOITClear);
-
-    cmdBindDescriptorSet(pCmd, 0, pDescriptorSetAVBOITClear[0]);
-    cmdBindDescriptorSet(pCmd, gFrameIndex, pDescriptorSetAVBOITClear[1]);
-
-    uint32_t threadGroupX = (1920 + 7) / 8;
-
-    uint32_t threadGroupY = (1080 + 7) / 8;
-
-    uint32_t threadGroupZ = (64 + 7) / 8;
-
-    cmdDispatch(pCmd, threadGroupX, threadGroupY, threadGroupZ);
-
-
-
-    // Barrier: UAV to UAV (Wait for clear to finish)
-
-    BufferBarrier splatBarriers[] = {
-
-        { pBufferAVBOITVolumeExtinction, RESOURCE_STATE_UNORDERED_ACCESS, RESOURCE_STATE_UNORDERED_ACCESS }
-
-    };
-
-    cmdResourceBarrier(pCmd, 1, splatBarriers, 0, NULL, 0, NULL);
-
-
-
-    // 2. Splat Pass (Draw transparent objects)
-
-    cmdBindPipeline(pCmd, pPipelineAVBOITSplat);
-
-    cmdBindDescriptorSet(pCmd, 0, pDescriptorSetAVBOITSplat[0]);
-
-    cmdBindDescriptorSet(pCmd, gFrameIndex, pDescriptorSetAVBOITSplat[1]);
-
-
-
-    DrawObjects(pCmd, gTransparentDrawCallCount, gTransparentDrawCalls, pRootSignatureAVBOITSplat);
-
-
-
-    // Barrier: Splat done, prepare for Integrate
-
-    BufferBarrier integrateBarriers[] = {
-
-        { pBufferAVBOITVolumeExtinction, RESOURCE_STATE_UNORDERED_ACCESS, RESOURCE_STATE_PIXEL_SHADER_RESOURCE }
-
-    };
-
-    cmdResourceBarrier(pCmd, 1, integrateBarriers, 0, NULL, 0, NULL);
-
-
-
-    // 3. Integrate Pass
-
-    cmdBindPipeline(pCmd, pPipelineAVBOITIntegrate);
-
-    cmdBindDescriptorSet(pCmd, 0, pDescriptorSetAVBOITIntegrate[0]);
-    cmdBindDescriptorSet(pCmd, gFrameIndex, pDescriptorSetAVBOITIntegrate[1]);
-
-    cmdDispatch(pCmd, threadGroupX, threadGroupY, 1);
-
-
-
-    // Barrier: Integrate done, prepare for Composite
-
-    TextureBarrier compositeBarriers[] = {
-
-        { pTextureAVBOITVolumeTransmittanceLut, RESOURCE_STATE_UNORDERED_ACCESS, RESOURCE_STATE_PIXEL_SHADER_RESOURCE }
-
-    };
-
-    cmdResourceBarrier(pCmd, 0, NULL, 1, compositeBarriers, 0, NULL);
-
-
-
-    // 4. Composite Pass
-
-    cmdBindPipeline(pCmd, pPipelineAVBOITComposite);
-
-    cmdBindDescriptorSet(pCmd, 0, pDescriptorSetAVBOITComposite[0]);
-    cmdBindDescriptorSet(pCmd, gFrameIndex, pDescriptorSetAVBOITComposite[1]);
-
-    cmdDraw(pCmd, 3, 0);
-
-}
-
-
-
 void Draw() override
 
     {
@@ -5450,20 +5323,16 @@ void Draw() override
 
             removeShader(pRenderer, pShaderAOITClear);
 
-
-
-            removeShader(pRenderer, pShaderAVBOITSplat);
-
-            removeShader(pRenderer, pShaderAVBOITClear);
-
-            removeShader(pRenderer, pShaderAVBOITIntegrate);
-
-            removeShader(pRenderer, pShaderAVBOITComposite);
-            removeShader(pRenderer, pShaderAVBOITForward);
-
-
-
         }
+
+        removeShader(pRenderer, pShaderAVBOITSplat);
+
+        removeShader(pRenderer, pShaderAVBOITClear);
+
+        removeShader(pRenderer, pShaderAVBOITIntegrate);
+
+        removeShader(pRenderer, pShaderAVBOITComposite);
+        removeShader(pRenderer, pShaderAVBOITForward);
 
     }
 
@@ -5775,7 +5644,11 @@ void Draw() override
 
 
 
-            // AVBOIT Root Signatures
+        }
+
+
+
+        // AVBOIT Root Signatures
 
             RootSignatureDesc avboitSplatRSDesc = {};
 
@@ -5831,10 +5704,6 @@ void Draw() override
             avboitForwardRootSignatureDesc.mStaticSamplerCount = numStaticSamplers;
             addRootSignature(pRenderer, &avboitForwardRootSignatureDesc, &pRootSignatureAVBOITForward);
 
-
-
-        }
-
     }
 
 
@@ -5883,7 +5752,7 @@ void Draw() override
 
             removeRootSignature(pRenderer, pRootSignatureAOITClear);
 
-
+        }
 
         removeRootSignature(pRenderer, pRootSignatureAVBOITSplat);
 
@@ -5892,11 +5761,7 @@ void Draw() override
         removeRootSignature(pRenderer, pRootSignatureAVBOITIntegrate);
 
         removeRootSignature(pRenderer, pRootSignatureAVBOITComposite);
-            removeRootSignature(pRenderer, pRootSignatureAVBOITForward);
-
-
-
-        }
+        removeRootSignature(pRenderer, pRootSignatureAVBOITForward);
 
     }
 
@@ -5986,7 +5851,11 @@ void Draw() override
 
 
 
-            // AVBOIT Descriptor Sets
+        }
+
+
+
+        // AVBOIT Descriptor Sets
 
             setDesc = {}; setDesc.pRootSignature = pRootSignatureAVBOITSplat; setDesc.mUpdateFrequency = DESCRIPTOR_UPDATE_FREQ_NONE; setDesc.mMaxSets = 1;
 
@@ -6031,6 +5900,10 @@ void Draw() override
             addDescriptorSet(pRenderer, &setDesc, &pDescriptorSetAVBOITComposite[1]);
 
 
+
+        if (gGpuSettings.mEnableAOIT)
+
+        {
 
             // AOIT Shade
 
@@ -6092,7 +5965,11 @@ void Draw() override
 
 
 
-            removeDescriptorSet(pRenderer, pDescriptorSetAVBOITSplat[0]);
+        }
+
+
+
+        removeDescriptorSet(pRenderer, pDescriptorSetAVBOITSplat[0]);
 
             removeDescriptorSet(pRenderer, pDescriptorSetAVBOITSplat[1]);
             removeDescriptorSet(pRenderer, pDescriptorSetAVBOITForward[0]);
@@ -6108,6 +5985,10 @@ void Draw() override
             removeDescriptorSet(pRenderer, pDescriptorSetAVBOITComposite[1]);
 
 
+
+        if (gGpuSettings.mEnableAOIT)
+
+        {
 
             removeDescriptorSet(pRenderer, pDescriptorSetAOITShade[0]);
 
@@ -6521,6 +6402,14 @@ void Draw() override
 
             updateDescriptorSet(pRenderer, 0, pDescriptorSetAOITClear, 1, clearParams);
 
+        }
+
+
+
+        // AVBOIT
+
+        {
+
 
 
             DescriptorData avboitClearParams[2] = {};
@@ -6623,6 +6512,14 @@ void Draw() override
             }
 
 
+
+        }
+
+
+
+        if (gGpuSettings.mEnableAOIT)
+
+        {
 
 
 
@@ -7581,6 +7478,17 @@ void Draw() override
 
             addResource(&aoitClearMaskTextureLoadDesc, NULL);
 
+        }
+
+
+
+        // Create AVBOIT resources
+
+        {
+
+            const AVBOITVolumeDimensions& dimensions = gAVBOITVolumeDimensions;
+            const uint32_t voxelCount = (uint32_t)GetAVBOITVoxelCount(dimensions);
+
 
 
             BufferLoadDesc avboitExtLoadDesc = {};
@@ -7589,7 +7497,7 @@ void Draw() override
 
             avboitExtLoadDesc.mDesc.mMemoryUsage = RESOURCE_MEMORY_USAGE_GPU_ONLY;
 
-            avboitExtLoadDesc.mDesc.mElementCount = mSettings.mWidth * mSettings.mHeight * 64;
+            avboitExtLoadDesc.mDesc.mElementCount = voxelCount;
 
             avboitExtLoadDesc.mDesc.mStructStride = sizeof(uint32_t);
 
@@ -7611,13 +7519,13 @@ void Draw() override
 
             avboitTransmittanceDesc.mArraySize = 1;
 
-            avboitTransmittanceDesc.mDepth = 64;
+            avboitTransmittanceDesc.mDepth = dimensions.mVolumeDepth;
 
             avboitTransmittanceDesc.mDescriptors = DESCRIPTOR_TYPE_TEXTURE | DESCRIPTOR_TYPE_RW_TEXTURE;
 
             avboitTransmittanceDesc.mFormat = TinyImageFormat_R16G16B16A16_SFLOAT;
 
-            avboitTransmittanceDesc.mHeight = mSettings.mHeight;
+            avboitTransmittanceDesc.mHeight = dimensions.mVolumeHeight;
 
             avboitTransmittanceDesc.mMipLevels = 1;
 
@@ -7625,7 +7533,7 @@ void Draw() override
 
             avboitTransmittanceDesc.mStartState = RESOURCE_STATE_UNORDERED_ACCESS;
 
-            avboitTransmittanceDesc.mWidth = mSettings.mWidth;
+            avboitTransmittanceDesc.mWidth = dimensions.mVolumeWidth;
 
             avboitTransmittanceDesc.pName = "AVBOITVolumeTransmittanceLut";
 
@@ -7662,6 +7570,14 @@ void Draw() override
             }
 
 
+
+        }
+
+
+
+        if (gGpuSettings.mEnableAOIT)
+
+        {
 
 
 
@@ -7735,15 +7651,23 @@ void Draw() override
 
             removeResource(pTextureAOITClearMask);
 
+        }
 
 
-            removeResource(pBufferAVBOITVolumeExtinction);
+
+        removeResource(pBufferAVBOITVolumeExtinction);
 
             removeResource(pTextureAVBOITVolumeTransmittanceLut);
 
             for (uint32_t i = 0; i < gDataBufferCount; ++i)
 
                 removeResource(pBufferAVBOITUniform[i]);
+
+
+
+        if (gGpuSettings.mEnableAOIT)
+
+        {
 
 
 
@@ -9173,7 +9097,7 @@ void GuiController::AddGui()
 
     ddTransparency.pNames = transparencyTypeNames;
 
-    ddTransparency.mCount = gGpuSettings.mEnableAOIT ? dropDownCount : dropDownCount - 1;
+    ddTransparency.mCount = dropDownCount;
 
     luaRegisterWidget(uiCreateComponentWidget(pGuiWindow, "Transparency Type", &ddTransparency, WIDGET_TYPE_DROPDOWN));
 
