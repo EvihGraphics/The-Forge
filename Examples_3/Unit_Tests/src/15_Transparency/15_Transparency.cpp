@@ -4155,7 +4155,7 @@ public:
         cmdBindDescriptorSet(pCmd, 0, pDescriptorSetAVBOITClear[0]);
         cmdBindDescriptorSet(pCmd, gFrameIndex, pDescriptorSetAVBOITClear[1]);
 
-        cmdDispatch(pCmd, CeilDiv(dimensions.mVolumeWidth, 8), CeilDiv(dimensions.mVolumeHeight, 8), CeilDiv(dimensions.mVolumeDepth, 8));
+        cmdDispatch(pCmd, CeilDiv((uint32_t)GetAVBOITVoxelCount(dimensions), 256), 1, 1);
 
         cmdEndGpuTimestampQuery(pCmd, gCurrentGpuProfileToken);
 
@@ -6412,17 +6412,13 @@ void Draw() override
 
 
 
-            DescriptorData avboitClearParams[2] = {};
+            DescriptorData avboitClearParams[1] = {};
 
             avboitClearParams[0].pName = "VolumeExtinctionBufferUAV";
 
             avboitClearParams[0].ppBuffers = &pBufferAVBOITVolumeExtinction;
 
-            avboitClearParams[1].pName = "VolumeTransmittanceLutUAV";
-
-            avboitClearParams[1].ppTextures = &pTextureAVBOITVolumeTransmittanceLut;
-
-            updateDescriptorSet(pRenderer, 0, pDescriptorSetAVBOITClear[0], 2, avboitClearParams);
+            updateDescriptorSet(pRenderer, 0, pDescriptorSetAVBOITClear[0], 1, avboitClearParams);
 
 
 

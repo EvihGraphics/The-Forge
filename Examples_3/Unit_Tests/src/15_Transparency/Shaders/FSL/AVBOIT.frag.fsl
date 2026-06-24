@@ -1,5 +1,5 @@
 #include "shaderDefs.h.fsl"
-#define AVBOIT_UNORDERED_ACCESS
+#define AVBOIT_EXTINCTION_UAV
 #include "avboit.h.fsl"
 #include "shading.h.fsl"
 

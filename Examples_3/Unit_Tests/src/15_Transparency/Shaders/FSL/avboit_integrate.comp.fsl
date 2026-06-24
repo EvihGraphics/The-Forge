@@ -1,4 +1,4 @@
-#define AVBOIT_UNORDERED_ACCESS
+#define AVBOIT_LUT_UAV
 #define AVBOIT_ORDERED_ACCESS
 #include "avboit.h.fsl"
 
