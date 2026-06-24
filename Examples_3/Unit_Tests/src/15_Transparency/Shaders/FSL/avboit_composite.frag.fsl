@@ -16,7 +16,8 @@ float4 PS_MAIN( VSOutput In )
     float4 bgColor = float4(0, 0, 0, 0); // we will blend it using the blend state
 
     // We get the total transmittance from the LUT by reading the furthest slice
-    uint3 coords = uint3(In.Position.xy, volumeDepth - 1);
+    uint2 voxelXY = GetVolumeXY(uint2(In.Position.xy));
+    uint3 coords = uint3(voxelXY.x, voxelXY.y, volumeDepth - 1);
     float4 lutValue = LoadTex3D(Get(VolumeTransmittanceLutSRV), NO_SAMPLER, coords, 0);
 
     float3 totalTransmittance = lutValue.rgb;

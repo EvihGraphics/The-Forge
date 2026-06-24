@@ -17,7 +17,7 @@ STRUCT(VSOutput)
 
 void DrawTransparent(float4 position, float4 color)
 {
-    uint2 pixelAddr = uint2(position.xy);
+    uint2 voxelXY = GetVolumeXY(uint2(position.xy));
     float depth = position.z;
 
     // Linearize Reverse-Z depth using camClipInfo
@@ -29,7 +29,7 @@ void DrawTransparent(float4 position, float4 color)
 
     uint zIndex = clamp(uint(normalizedLinearDepth * volumeDepth), 0, volumeDepth - 1);
 
-    uint3 coords = uint3(pixelAddr.x, pixelAddr.y, zIndex);
+    uint3 coords = uint3(voxelXY.x, voxelXY.y, zIndex);
 
     // Physically correct extinction from alpha
     float ext = -log(1.0f - min(color.w, 0.99f));

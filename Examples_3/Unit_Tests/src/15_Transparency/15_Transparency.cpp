@@ -603,7 +603,94 @@ Buffer* pBufferAVBOITVolumeExtinction = NULL;
 Buffer* pBufferAVBOITUniform[gDataBufferCount] = { NULL };
 float gAVBOITMultiplier = 2.5f;
 
+struct AVBOITVolumeConfig
+{
+    uint32_t mDownsampleFactor = 8;
+    uint32_t mDepthSlices = 64;
+};
+
+struct AVBOITVolumeDimensions
+{
+    uint32_t mScreenWidth = 0;
+    uint32_t mScreenHeight = 0;
+    uint32_t mVolumeWidth = 0;
+    uint32_t mVolumeHeight = 0;
+    uint32_t mVolumeDepth = 0;
+};
+
+struct AVBOITUniformData
+{
+    uint32_t mVolumeWidth;
+    uint32_t mVolumeHeight;
+    uint32_t mVolumeDepth;
+    uint32_t mDownsampleFactor;
+    float    mMultiplier;
+    float    mPadding0;
+    float    mPadding1;
+    float    mPadding2;
+};
+static_assert(sizeof(AVBOITUniformData) == 32, "AVBOIT uniform layout must match FSL cbuffer layout");
+
+static const AVBOITVolumeConfig gAVBOITVolumeConfig = {};
+static AVBOITVolumeDimensions   gAVBOITVolumeDimensions = {};
+
 Texture* pTextureAVBOITVolumeTransmittanceLut = NULL;
+
+static uint32_t CeilDiv(uint32_t value, uint32_t divisor)
+{
+    return (value + divisor - 1) / divisor;
+}
+
+static AVBOITVolumeDimensions CalculateAVBOITVolumeDimensions(uint32_t screenWidth, uint32_t screenHeight)
+{
+    AVBOITVolumeDimensions dimensions = {};
+    dimensions.mScreenWidth = screenWidth;
+    dimensions.mScreenHeight = screenHeight;
+    dimensions.mVolumeWidth = CeilDiv(screenWidth, gAVBOITVolumeConfig.mDownsampleFactor);
+    dimensions.mVolumeHeight = CeilDiv(screenHeight, gAVBOITVolumeConfig.mDownsampleFactor);
+    dimensions.mVolumeDepth = gAVBOITVolumeConfig.mDepthSlices;
+    return dimensions;
+}
+
+static uint64_t GetAVBOITVoxelCount(const AVBOITVolumeDimensions& dimensions)
+{
+    return (uint64_t)dimensions.mVolumeWidth * (uint64_t)dimensions.mVolumeHeight * (uint64_t)dimensions.mVolumeDepth;
+}
+
+static double BytesToMiB(uint64_t bytes)
+{
+    return (double)bytes / (1024.0 * 1024.0);
+}
+
+static void LogAVBOITVolumeDimensions(const AVBOITVolumeDimensions& dimensions)
+{
+    const uint64_t voxelCount = GetAVBOITVoxelCount(dimensions);
+    const uint64_t extinctionBytes = voxelCount * sizeof(uint32_t);
+    const uint64_t transmittanceBytes = voxelCount * sizeof(uint16_t) * 4;
+
+    LOGF(eINFO, "AVBOIT screen dimensions: %ux%u", dimensions.mScreenWidth, dimensions.mScreenHeight);
+    LOGF(eINFO, "AVBOIT volume dimensions: %ux%ux%u", dimensions.mVolumeWidth, dimensions.mVolumeHeight, dimensions.mVolumeDepth);
+    LOGF(eINFO, "AVBOIT downsample factor: %u", gAVBOITVolumeConfig.mDownsampleFactor);
+    LOGF(eINFO, "AVBOIT depth slices: %u", gAVBOITVolumeConfig.mDepthSlices);
+    LOGF(eINFO, "AVBOIT extinction buffer: %.2f MiB", BytesToMiB(extinctionBytes));
+    LOGF(eINFO, "AVBOIT transmittance LUT: %.2f MiB", BytesToMiB(transmittanceBytes));
+    LOGF(eINFO, "AVBOIT total volume resources: %.2f MiB", BytesToMiB(extinctionBytes + transmittanceBytes));
+}
+
+static void UpdateAVBOITUniformBuffer(uint32_t frameIndex, const AVBOITVolumeDimensions& dimensions)
+{
+    AVBOITUniformData uniformData = {};
+    uniformData.mVolumeWidth = dimensions.mVolumeWidth;
+    uniformData.mVolumeHeight = dimensions.mVolumeHeight;
+    uniformData.mVolumeDepth = dimensions.mVolumeDepth;
+    uniformData.mDownsampleFactor = gAVBOITVolumeConfig.mDownsampleFactor;
+    uniformData.mMultiplier = gAVBOITMultiplier;
+
+    BufferUpdateDesc avboitUpdate = { pBufferAVBOITUniform[frameIndex] };
+    beginUpdateResource(&avboitUpdate);
+    memcpy(avboitUpdate.pMappedData, &uniformData, sizeof(uniformData));
+    endUpdateResource(&avboitUpdate);
+}
 
 
 
@@ -4036,19 +4123,9 @@ public:
 
     {
 
-        uint32_t volWidth = pRenderTargetScreen->mWidth;
+        const AVBOITVolumeDimensions& dimensions = gAVBOITVolumeDimensions;
 
-        uint32_t volHeight = pRenderTargetScreen->mHeight;
-
-        uint32_t volDepth = 64; // Match AVBOIT_VOLUME_DEPTH
-
-
-        // Update AVBOIT Uniforms
-        uint32_t avboitUniformData[4] = { volWidth, volHeight, volDepth, reinterpret_cast<uint32_t&>(gAVBOITMultiplier) };
-        BufferUpdateDesc avboitUpdate = { pBufferAVBOITUniform[gFrameIndex] };
-        beginUpdateResource(&avboitUpdate);
-        memcpy(avboitUpdate.pMappedData, avboitUniformData, sizeof(avboitUniformData));
-        endUpdateResource(&avboitUpdate);
+        UpdateAVBOITUniformBuffer(gFrameIndex, dimensions);
 
 
         BufferBarrier bufferBarriersUAV[] = {
@@ -4078,7 +4155,7 @@ public:
         cmdBindDescriptorSet(pCmd, 0, pDescriptorSetAVBOITClear[0]);
         cmdBindDescriptorSet(pCmd, gFrameIndex, pDescriptorSetAVBOITClear[1]);
 
-        cmdDispatch(pCmd, (volWidth + 7) / 8, (volHeight + 7) / 8, (volDepth + 7) / 8);
+        cmdDispatch(pCmd, CeilDiv(dimensions.mVolumeWidth, 8), CeilDiv(dimensions.mVolumeHeight, 8), CeilDiv(dimensions.mVolumeDepth, 8));
 
         cmdEndGpuTimestampQuery(pCmd, gCurrentGpuProfileToken);
 
@@ -4155,7 +4232,7 @@ public:
         cmdBindDescriptorSet(pCmd, 0, pDescriptorSetAVBOITIntegrate[0]);
         cmdBindDescriptorSet(pCmd, gFrameIndex, pDescriptorSetAVBOITIntegrate[1]);
 
-        cmdDispatch(pCmd, (volWidth + 7) / 8, (volHeight + 7) / 8, 1);
+        cmdDispatch(pCmd, CeilDiv(dimensions.mVolumeWidth, 8), CeilDiv(dimensions.mVolumeHeight, 8), 1);
 
         cmdEndGpuTimestampQuery(pCmd, gCurrentGpuProfileToken);
 
@@ -7262,6 +7339,9 @@ void Draw() override
         const uint32_t height = mSettings.mHeight;
 
 
+        gAVBOITVolumeDimensions = CalculateAVBOITVolumeDimensions(width, height);
+        LogAVBOITVolumeDimensions(gAVBOITVolumeDimensions);
+
 
         const ClearValue depthClear = { { 0.0f, 0 } };
 
@@ -7565,7 +7645,7 @@ void Draw() override
 
             avboitUniformDesc.mDesc.mMemoryUsage = RESOURCE_MEMORY_USAGE_CPU_TO_GPU;
 
-            avboitUniformDesc.mDesc.mSize = sizeof(uint32_t) * 4;
+            avboitUniformDesc.mDesc.mSize = sizeof(AVBOITUniformData);
 
             avboitUniformDesc.mDesc.mFlags = BUFFER_CREATION_FLAG_PERSISTENT_MAP_BIT;
 

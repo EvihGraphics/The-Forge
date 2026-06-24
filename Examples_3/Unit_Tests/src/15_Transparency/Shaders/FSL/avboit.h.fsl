@@ -1,8 +1,3 @@
-
-#define AVBOIT_VOLUME_WIDTH 1920
-#define AVBOIT_VOLUME_HEIGHT 1080
-#define AVBOIT_VOLUME_DEPTH 64
-
 #ifdef AVBOIT_UNORDERED_ACCESS
 RES(RWBuffer(uint), VolumeExtinctionBufferUAV, UPDATE_FREQ_NONE, u1, binding = 5);
 RES(WTex3D(float4), VolumeTransmittanceLutUAV, UPDATE_FREQ_NONE, u2, binding = 6);
@@ -20,7 +15,11 @@ CBUFFER(AVBOITUniforms, UPDATE_FREQ_PER_FRAME, b5, binding = 10)
     DATA(uint, volumeWidth, None);
     DATA(uint, volumeHeight, None);
     DATA(uint, volumeDepth, None);
+    DATA(uint, downsampleFactor, None);
     DATA(float, avboitMultiplier, None);
+    DATA(float, avboitPadding0, None);
+    DATA(float, avboitPadding1, None);
+    DATA(float, avboitPadding2, None);
 };
 
 uint PackExtinction(float ext)
@@ -37,4 +36,10 @@ float UnpackExtinction(uint packed)
 uint GetVolumeIndex(uint3 coords)
 {
     return coords.z * volumeWidth * volumeHeight + coords.y * volumeWidth + coords.x;
+}
+
+uint2 GetVolumeXY(uint2 fullResPixel)
+{
+    uint factor = max(downsampleFactor, 1u);
+    return min(fullResPixel / factor, uint2(volumeWidth - 1, volumeHeight - 1));
 }

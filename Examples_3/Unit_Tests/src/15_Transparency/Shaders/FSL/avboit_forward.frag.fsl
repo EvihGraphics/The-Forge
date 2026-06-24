@@ -27,7 +27,7 @@ float4 PS_MAIN( VSOutput In )
         RETURN(float4(0, 0, 0, 0));
     }
 
-    uint2 pixelAddr = uint2(In.Position.xy);
+    uint2 voxelXY = GetVolumeXY(uint2(In.Position.xy));
     float depth = In.Position.z;
 
     // Linearize Reverse-Z depth using camClipInfo
@@ -42,7 +42,7 @@ float4 PS_MAIN( VSOutput In )
     float3 transmittanceFront = float3(1.0f, 1.0f, 1.0f);
     if(zIndex > 0)
     {
-        uint3 prevCoords = uint3(pixelAddr.x, pixelAddr.y, zIndex - 1);
+        uint3 prevCoords = uint3(voxelXY.x, voxelXY.y, zIndex - 1);
         float4 lutValue = LoadTex3D(Get(VolumeTransmittanceLutSRV), NO_SAMPLER, prevCoords, 0);
         transmittanceFront = lutValue.rgb;
     }
