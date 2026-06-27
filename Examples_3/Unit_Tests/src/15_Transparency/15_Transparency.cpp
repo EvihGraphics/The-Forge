@@ -1377,15 +1377,23 @@ static const char* CurrentAVBOITTestSceneName()
 static void BuildAVBOITCaptureName(char* outName, size_t outNameSize, uint32_t frameIndex, uint32_t width, uint32_t height)
 {
     const char* createdApi = RendererApiToStringLocal(gPlatformParameters.mSelectedRendererApi);
+    char diagnosticSuffix[192] = {};
+    if (gAVBOITTestScene != AVBOIT_TEST_SCENE_DEFAULT)
+    {
+        snprintf(diagnosticSuffix, sizeof(diagnosticSuffix), "_Scene%s_Case%s_Order%s", CurrentAVBOITTestSceneName(), gAVBOITTestCase,
+                 gAVBOITSubmitOrder);
+    }
+
     if (gTransparencyType == TRANSPARENCY_TYPE_ADAPTIVE_VOXEL_BASED_OIT)
     {
-        snprintf(outName, outNameSize, "%s_Mode5_%ux%u_Debug%u_Mul%.1f_Frame%u_%s", createdApi, width, height, gAVBOITDebugView,
-                 gAVBOITMultiplier, frameIndex, gAVBOITCommitShortSha);
+        snprintf(outName, outNameSize, "%s_Mode5_%ux%u_Debug%u_Dir%s_Mul%.1f_Frame%u_%s%s", createdApi, width, height,
+                 gAVBOITDebugView, CurrentAVBOITTransmittanceDirectionName(), gAVBOITMultiplier, frameIndex, gAVBOITCommitShortSha,
+                 diagnosticSuffix);
     }
     else
     {
-        snprintf(outName, outNameSize, "%s_Mode%u_%ux%u_Frame%u_%s", createdApi, gTransparencyType, width, height, frameIndex,
-                 gAVBOITCommitShortSha);
+        snprintf(outName, outNameSize, "%s_Mode%u_%ux%u_Frame%u_%s%s", createdApi, gTransparencyType, width, height, frameIndex,
+                 gAVBOITCommitShortSha, diagnosticSuffix);
     }
 }
 
@@ -1718,12 +1726,21 @@ static void GetAVBOITSubmitOrder(uint32_t layerCount, uint32_t* outOrder)
     }
 }
 
+static vec3 GetAVBOITAnalyticPositionAtZ(float z)
+{
+    const vec3 cameraPosition(-40.0f, 17.0f, 34.0f);
+    const vec3 cameraTarget(0.0f, 5.0f, 0.0f);
+    const vec3 cameraRay = cameraTarget - cameraPosition;
+    const float t = (z - cameraPosition.getZ()) / cameraRay.getZ();
+    return cameraPosition + cameraRay * t;
+}
+
 static void CreateAVBOITAnalyticScene()
 {
     gAVBOITCaptureHideUI = true;
     gAVBOITMultiplier = 1.0f;
 
-    AddUnlitObject(MESH_PLANE, vec3(0.0f, 5.0f, -10.0f), vec4(0.0f, 0.0f, 0.0f, 1.0f), vec3(10.0f, 1.0f, 10.0f),
+    AddUnlitObject(MESH_PLANE, GetAVBOITAnalyticPositionAtZ(-10.0f), vec4(0.0f, 0.0f, 0.0f, 1.0f), vec3(18.0f, 1.0f, 18.0f),
                    vec3(-PI / 2.0f, 0.0f, 0.0f));
 
     vec4 layers[3] = {};
@@ -1735,7 +1752,7 @@ static void CreateAVBOITAnalyticScene()
     for (uint32_t i = 0; i < layerCount; ++i)
     {
         const uint32_t layer = order[i];
-        AddUnlitObject(MESH_PLANE, vec3(0.0f, 5.0f, zValues[layer]), layers[layer], vec3(4.0f, 1.0f, 4.0f),
+        AddUnlitObject(MESH_PLANE, GetAVBOITAnalyticPositionAtZ(zValues[layer]), layers[layer], vec3(4.0f, 1.0f, 4.0f),
                        vec3(-PI / 2.0f, 0.0f, 0.0f));
     }
 
