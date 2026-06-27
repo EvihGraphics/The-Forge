@@ -109,6 +109,107 @@ extern "C" HWND* gLogWindowHandle;
 
 static inline float CounterToSecondsElapsed(int64_t start, int64_t end) { return (float)(end - start) / (float)1e6; }
 
+static const char* RendererApiToString(RendererApi api)
+{
+    switch (api)
+    {
+#if defined(GLES)
+    case RENDERER_API_GLES:
+        return "GLES";
+#endif
+#if defined(DIRECT3D12)
+    case RENDERER_API_D3D12:
+        return "D3D12";
+#endif
+#if defined(VULKAN)
+    case RENDERER_API_VULKAN:
+        return "Vulkan";
+#endif
+#if defined(DIRECT3D11)
+    case RENDERER_API_D3D11:
+        return "D3D11";
+#endif
+#if defined(METAL)
+    case RENDERER_API_METAL:
+        return "Metal";
+#endif
+#if defined(ORBIS)
+    case RENDERER_API_ORBIS:
+        return "Orbis";
+#endif
+#if defined(PROSPERO)
+    case RENDERER_API_PROSPERO:
+        return "Prospero";
+#endif
+    default:
+        return "Unknown";
+    }
+}
+
+static bool     gCommandLineRendererApiRequested = false;
+static RendererApi gCommandLineRendererApi = RENDERER_API_COUNT;
+
+static bool SelectRendererApiFromCommandLine(RendererApi api, const char* pName)
+{
+    if (gCommandLineRendererApiRequested)
+    {
+        LOGF(eERROR, "Multiple command line parameters are requesting the rendering API, only one is allowed.");
+        return false;
+    }
+
+    gPlatformParameters.mSelectedRendererApi = api;
+    gCommandLineRendererApi = api;
+    gCommandLineRendererApiRequested = true;
+    LOGF(LogLevel::eINFO, "Requested Renderer API: %s", pName);
+    return true;
+}
+
+static bool ParseRendererApiCommandLine(int argc, char** argv)
+{
+    gCommandLineRendererApiRequested = false;
+    gCommandLineRendererApi = RENDERER_API_COUNT;
+
+    for (int i = 0; i < argc; ++i)
+    {
+        if (strcmp(argv[i], "--d3d11") == 0)
+        {
+#if defined(DIRECT3D11)
+            if (!SelectRendererApiFromCommandLine(RENDERER_API_D3D11, "D3D11"))
+                return false;
+#else
+            LOGF(eERROR, "Command line requested D3D11, but this build does not include Direct3D 11.");
+            return false;
+#endif
+        }
+        else if (strcmp(argv[i], "--d3d12") == 0)
+        {
+#if defined(DIRECT3D12)
+            if (!SelectRendererApiFromCommandLine(RENDERER_API_D3D12, "D3D12"))
+                return false;
+#else
+            LOGF(eERROR, "Command line requested D3D12, but this build does not include Direct3D 12.");
+            return false;
+#endif
+        }
+        else if (strcmp(argv[i], "--vulkan") == 0)
+        {
+#if defined(VULKAN)
+            if (!SelectRendererApiFromCommandLine(RENDERER_API_VULKAN, "Vulkan"))
+                return false;
+#else
+            LOGF(eERROR, "Command line requested Vulkan, but this build does not include Vulkan.");
+            return false;
+#endif
+        }
+    }
+
+    if (!gCommandLineRendererApiRequested)
+        LOGF(LogLevel::eINFO, "Requested Renderer API: default");
+
+    LOGF(LogLevel::eINFO, "Selected Renderer API before initialization: %s", RendererApiToString(gPlatformParameters.mSelectedRendererApi));
+    return true;
+}
+
 ThermalStatus getThermalStatus() { return THERMAL_STATUS_NOT_SUPPORTED; }
 
 //------------------------------------------------------------------------
@@ -388,8 +489,6 @@ const char** IApp::argv;
 
 int WindowsMain(int argc, char** argv, IApp* app)
 {
-    UNREF_PARAM(argc);
-    UNREF_PARAM(argv);
     if (!initMemAlloc(app->GetName()))
         return EXIT_FAILURE;
 
@@ -428,6 +527,9 @@ int WindowsMain(int argc, char** argv, IApp* app)
 
     pApp = app;
     pWindowAppRef = app;
+
+    if (!ParseRendererApiCommandLine(argc, argv))
+        return EXIT_FAILURE;
 
     initWindowClass();
 
@@ -486,7 +588,6 @@ int WindowsMain(int argc, char** argv, IApp* app)
     pApp->pCommandLine = GetCommandLineA();
 
 #ifdef AUTOMATED_TESTING
-    bool paramRenderingAPIFound = false;
     char benchmarkOutput[1024] = { "\0" };
     // Check if benchmarking was given through command line
     for (int i = 0; i < argc; i += 1)
@@ -512,48 +613,6 @@ int WindowsMain(int argc, char** argv, IApp* app)
         {
             strcpy(benchmarkOutput, argv[i + 1]);
         }
-        // Allow to set renderer API through command line so that we are able to test the same build with differnt APIs
-        // On the TheForge Jenkins setup we change APIs through a lua script that changes the selector variable in the UI,
-        // but for projects where we compile without our lua interface we cannot do this.
-#if defined(DIRECT3D11)
-        else if (strcmp(argv[i], "--d3d11") == 0)
-        {
-            if (paramRenderingAPIFound)
-            {
-                LOGF(eERROR, "Two command line parameters are requesting the rendering API, only one is allowed.");
-                ASSERT(false);
-                return -1;
-            }
-            gPlatformParameters.mSelectedRendererApi = RENDERER_API_D3D11;
-            paramRenderingAPIFound = true;
-        }
-#endif
-#if defined(DIRECT3D12)
-        else if (strcmp(argv[i], "--d3d12") == 0)
-        {
-            if (paramRenderingAPIFound)
-            {
-                LOGF(eERROR, "Two command line parameters are requesting the rendering API, only one is allowed.");
-                ASSERT(false);
-                return -1;
-            }
-            gPlatformParameters.mSelectedRendererApi = RENDERER_API_D3D12;
-            paramRenderingAPIFound = true;
-        }
-#endif
-#if defined(VULKAN)
-        else if (strcmp(argv[i], "--vulkan") == 0)
-        {
-            if (paramRenderingAPIFound)
-            {
-                LOGF(eERROR, "Two command line parameters are requesting the rendering API, only one is allowed.");
-                ASSERT(false);
-                return -1;
-            }
-            gPlatformParameters.mSelectedRendererApi = RENDERER_API_VULKAN;
-            paramRenderingAPIFound = true;
-        }
-#endif
     }
 #endif
 
@@ -579,6 +638,18 @@ int WindowsMain(int argc, char** argv, IApp* app)
                 return 0;
             }
 
+            return EXIT_FAILURE;
+        }
+
+        LOGF(LogLevel::eINFO, "Created Renderer API: %s", RendererApiToString(gPlatformParameters.mSelectedRendererApi));
+        if (gPlatformParameters.mAvailableGpuCount > 0 && gPlatformParameters.mSelectedGpuIndex < gPlatformParameters.mAvailableGpuCount)
+        {
+            LOGF(LogLevel::eINFO, "Selected GPU Name: %s", gPlatformParameters.ppAvailableGpuNames[gPlatformParameters.mSelectedGpuIndex]);
+        }
+        if (gCommandLineRendererApiRequested && gPlatformParameters.mSelectedRendererApi != gCommandLineRendererApi)
+        {
+            LOGF(eERROR, "Requested Renderer API %s but created %s.", RendererApiToString(gCommandLineRendererApi),
+                 RendererApiToString(gPlatformParameters.mSelectedRendererApi));
             return EXIT_FAILURE;
         }
 
