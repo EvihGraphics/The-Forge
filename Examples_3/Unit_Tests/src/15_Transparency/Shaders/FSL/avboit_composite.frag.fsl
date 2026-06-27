@@ -1,32 +1,98 @@
 #include "shaderDefs.h.fsl"
-#define AVBOIT_ORDERED_ACCESS
+#define AVBOIT_LUT_SRV
 #include "avboit.h.fsl"
 
 STRUCT(VSOutput)
 {
     DATA(float4, Position, SV_Position);
     DATA(float2, UV, TEXCOORD0);
+#if FT_MULTIVIEW
+    DATA(FLAT(uint), ViewID, TEXCOORD1);
+#endif
 };
 
-float4 PS_MAIN( VSOutput In )
+#if FT_MULTIVIEW
+RES(Tex2DArray(float4), AVBOITAccumColorWeightTexture, UPDATE_FREQ_NONE, t3, binding = 7);
+RES(Tex2DArray(float4), AVBOITAccumExtinctionTexture, UPDATE_FREQ_NONE, t4, binding = 8);
+#else
+RES(Tex2D(float4), AVBOITAccumColorWeightTexture, UPDATE_FREQ_NONE, t3, binding = 7);
+RES(Tex2D(float4), AVBOITAccumExtinctionTexture, UPDATE_FREQ_NONE, t4, binding = 8);
+#endif
+
+float4 LoadAccumColorWeight(uint2 pixel, uint viewID)
+{
+#if FT_MULTIVIEW
+    return LoadTex3D(Get(AVBOITAccumColorWeightTexture), NO_SAMPLER, uint3(pixel, viewID), 0);
+#else
+    return LoadTex2D(Get(AVBOITAccumColorWeightTexture), NO_SAMPLER, pixel, 0);
+#endif
+}
+
+float4 LoadAccumExtinction(uint2 pixel, uint viewID)
+{
+#if FT_MULTIVIEW
+    return LoadTex3D(Get(AVBOITAccumExtinctionTexture), NO_SAMPLER, uint3(pixel, viewID), 0);
+#else
+    return LoadTex2D(Get(AVBOITAccumExtinctionTexture), NO_SAMPLER, pixel, 0);
+#endif
+}
+
+float4 PS_MAIN(VSOutput In)
 {
     INIT_MAIN;
 
-    // Sample the background color from the screen
-    float4 bgColor = float4(0, 0, 0, 0); // we will blend it using the blend state
+    uint2 pixel = uint2(In.Position.xy);
+    uint viewID = 0;
+#if FT_MULTIVIEW
+    viewID = VR_VIEW_ID(In.ViewID);
+#endif
+    float4 accumColorWeight = LoadAccumColorWeight(pixel, viewID);
+    float4 accumExtinction = LoadAccumExtinction(pixel, viewID);
 
-    // We get the total transmittance from the LUT by reading the furthest slice
-    uint2 voxelXY = GetVolumeXY(uint2(In.Position.xy));
-    uint3 coords = uint3(voxelXY.x, voxelXY.y, volumeDepth - 1);
-    float4 lutValue = LoadTex3D(Get(VolumeTransmittanceLutSRV), NO_SAMPLER, coords, 0);
+    float denominator = accumColorWeight.a;
+    float totalExtinction = max(accumExtinction.r, 0.0f);
+    float coverage = accumExtinction.a > 0.0f ? 1.0f : 0.0f;
+    float totalTransmittance = exp(-totalExtinction);
+    float opacity = 1.0f - totalTransmittance;
 
-    float3 totalTransmittance = lutValue.rgb;
+    if (Get(avboitDebugView) == 1u)
+    {
+        uint2 voxelXY = GetVolumeXY(pixel);
+        uint3 coords = uint3(voxelXY.x, voxelXY.y, volumeDepth - 1);
+        float transmittance = LoadTex3D(Get(VolumeTransmittanceLutSRV), NO_SAMPLER, coords, 0).r;
+        RETURN(float4(transmittance, transmittance, transmittance, 1.0f));
+    }
+    if (Get(avboitDebugView) == 2u)
+    {
+        RETURN(float4(coverage, coverage, coverage, 1.0f));
+    }
+    if (Get(avboitDebugView) == 3u)
+    {
+        float v = 1.0f - exp(-totalExtinction);
+        RETURN(float4(v, v, v, 1.0f));
+    }
+    if (Get(avboitDebugView) == 4u)
+    {
+        float v = saturate(denominator);
+        RETURN(float4(v, v, v, 1.0f));
+    }
+    if (Get(avboitDebugView) == 5u)
+    {
+        RETURN(float4(opacity, opacity, opacity, 1.0f));
+    }
 
-    // Wait, the composite shader needs to composite the accumulated color.
-    // If we only have transmittance, we can only darken the background.
-    // Let's output a color that will blend.
-    // We will need to implement color integration later. For now, just test basic transmittance.
-    float4 outColor = float4(totalTransmittance, 1.0f);
+    if (denominator <= 1e-6f && totalExtinction <= 1e-6f)
+    {
+        RETURN(float4(0.0f, 0.0f, 0.0f, 0.0f));
+    }
 
-    RETURN(outColor);
+    if (opacity <= (1.0f / 65535.0f))
+    {
+        RETURN(float4(0.0f, 0.0f, 0.0f, 0.0f));
+    }
+
+    float3 averageColor = denominator > 1e-6f ? accumColorWeight.rgb / denominator : float3(0.0f, 0.0f, 0.0f);
+    float3 premultipliedColor = averageColor * opacity;
+
+    RETURN(float4(premultipliedColor, opacity));
 }
