@@ -80,6 +80,49 @@ float4 PS_MAIN(VSOutput In)
     {
         RETURN(float4(opacity, opacity, opacity, 1.0f));
     }
+    if (Get(avboitDebugView) == 6u)
+    {
+        float v = saturate(accumExtinction.g);
+        RETURN(float4(v, v, v, 1.0f));
+    }
+    if (Get(avboitDebugView) == 7u)
+    {
+        float v = saturate(accumExtinction.g);
+        RETURN(float4(v, v, v, 1.0f));
+    }
+    if (Get(avboitDebugView) == 8u)
+    {
+        float v = saturate(accumExtinction.b);
+        RETURN(float4(v, v, v, 1.0f));
+    }
+    if (Get(avboitDebugView) == 9u)
+    {
+        float v = saturate(denominator);
+        RETURN(float4(v, v, v, 1.0f));
+    }
+    if (Get(avboitDebugView) == 10u)
+    {
+        RETURN(float4(opacity, opacity, opacity, 1.0f));
+    }
+    if (Get(avboitDebugView) == 11u)
+    {
+        float v = saturate(opacity / max(denominator, 1e-6f));
+        RETURN(float4(v, v, v, 1.0f));
+    }
+    if (Get(avboitDebugView) == 12u)
+    {
+        RETURN(float4(saturate(accumColorWeight.rgb), 1.0f));
+    }
+    if (Get(avboitDebugView) == 13u)
+    {
+        float diff = 0.5f + 0.5f * (accumExtinction.b - accumExtinction.g);
+        RETURN(float4(saturate(diff), saturate(diff), saturate(diff), 1.0f));
+    }
+    if (Get(avboitDebugView) == 14u)
+    {
+        float v = saturate(abs(opacity - denominator));
+        RETURN(float4(v, v, v, 1.0f));
+    }
 
     if (denominator <= 1e-6f && totalExtinction <= 1e-6f)
     {

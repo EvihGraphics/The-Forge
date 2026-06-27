@@ -197,6 +197,9 @@ typedef struct Material
 
 } Material;
 
+static const uint MATERIAL_FLAG_ALBEDO_TEXTURE = 1u << 0;
+static const uint MATERIAL_FLAG_UNLIT = 1u << 1;
+
 
 
 typedef enum MeshResource
@@ -632,6 +635,26 @@ Buffer* pBufferAVBOITUniform[gDataBufferCount] = { NULL };
 float gAVBOITMultiplier = 1.0f;
 uint32_t gAVBOITDebugView = 0;
 
+typedef enum AVBOITTransmittanceDirection
+{
+    AVBOIT_TRANSMITTANCE_LEGACY = 0,
+    AVBOIT_TRANSMITTANCE_FRONT = 1,
+} AVBOITTransmittanceDirection;
+
+typedef enum AVBOITTestScene
+{
+    AVBOIT_TEST_SCENE_DEFAULT = 0,
+    AVBOIT_TEST_SCENE_SINGLE_LAYER,
+    AVBOIT_TEST_SCENE_TWO_LAYER,
+    AVBOIT_TEST_SCENE_THREE_LAYER,
+    AVBOIT_TEST_SCENE_SAME_SLICE,
+} AVBOITTestScene;
+
+uint32_t gAVBOITTransmittanceDirection = AVBOIT_TRANSMITTANCE_LEGACY;
+AVBOITTestScene gAVBOITTestScene = AVBOIT_TEST_SCENE_DEFAULT;
+char gAVBOITTestCase[64] = "default";
+char gAVBOITSubmitOrder[32] = "normal";
+
 static const char* gAVBOITDebugViewNames[] = {
     "Final",
     "Low-resolution total transmittance",
@@ -639,6 +662,15 @@ static const char* gAVBOITDebugViewNames[] = {
     "Full-resolution accumulated extinction",
     "Full-resolution normalization denominator",
     "Final resolve opacity",
+    "AVBOIT z slice",
+    "AVBOIT legacy weight",
+    "AVBOIT candidate front weight",
+    "AVBOIT denominator",
+    "AVBOIT opacity",
+    "AVBOIT opacity denominator ratio",
+    "AVBOIT weighted color sum",
+    "AVBOIT front minus legacy weight",
+    "AVBOIT analytic error proxy",
 };
 
 static const uint32_t gAVBOITDebugViewCount = sizeof(gAVBOITDebugViewNames) / sizeof(gAVBOITDebugViewNames[0]);
@@ -666,8 +698,8 @@ struct AVBOITUniformData
     uint32_t mDownsampleFactor;
     float    mMultiplier;
     uint32_t mDebugView;
-    float    mPadding1;
-    float    mPadding2;
+    uint32_t mTransmittanceDirection;
+    uint32_t mAnalyticFlags;
 };
 static_assert(sizeof(AVBOITUniformData) == 32, "AVBOIT uniform layout must match FSL cbuffer layout");
 
@@ -726,6 +758,8 @@ static void UpdateAVBOITUniformBuffer(uint32_t frameIndex, const AVBOITVolumeDim
     uniformData.mDownsampleFactor = gAVBOITVolumeConfig.mDownsampleFactor;
     uniformData.mMultiplier = gAVBOITMultiplier;
     uniformData.mDebugView = gAVBOITDebugView;
+    uniformData.mTransmittanceDirection = gAVBOITTransmittanceDirection;
+    uniformData.mAnalyticFlags = (gAVBOITTestScene != AVBOIT_TEST_SCENE_DEFAULT) ? 1u : 0u;
 
     BufferUpdateDesc avboitUpdate = { pBufferAVBOITUniform[frameIndex] };
     beginUpdateResource(&avboitUpdate);
@@ -1265,6 +1299,22 @@ static float CommandLineGetFloat(const char* optionName, float defaultValue)
     return CommandLineGetValue(optionName, value, sizeof(value)) ? (float)atof(value) : defaultValue;
 }
 
+static bool StringEqualsNoCase(const char* lhs, const char* rhs)
+{
+    if (!lhs || !rhs)
+        return false;
+
+    while (*lhs && *rhs)
+    {
+        if (tolower((unsigned char)*lhs) != tolower((unsigned char)*rhs))
+            return false;
+        ++lhs;
+        ++rhs;
+    }
+
+    return *lhs == 0 && *rhs == 0;
+}
+
 static const char* RendererApiToStringLocal(RendererApi api)
 {
     switch (api)
@@ -1309,12 +1359,19 @@ static void UpdateRequestedApiNameFromCommandLine()
 
 static const char* CurrentAVBOITTransmittanceDirectionName()
 {
-    return "legacy";
+    return gAVBOITTransmittanceDirection == AVBOIT_TRANSMITTANCE_FRONT ? "front" : "legacy";
 }
 
 static const char* CurrentAVBOITTestSceneName()
 {
-    return "default";
+    switch (gAVBOITTestScene)
+    {
+    case AVBOIT_TEST_SCENE_SINGLE_LAYER: return "single_layer";
+    case AVBOIT_TEST_SCENE_TWO_LAYER: return "two_layer";
+    case AVBOIT_TEST_SCENE_THREE_LAYER: return "three_layer";
+    case AVBOIT_TEST_SCENE_SAME_SLICE: return "same_slice";
+    default: return "default";
+    }
 }
 
 static void BuildAVBOITCaptureName(char* outName, size_t outNameSize, uint32_t frameIndex, uint32_t width, uint32_t height)
@@ -1358,12 +1415,15 @@ static void WriteAVBOITCaptureMetadata(uint32_t frameIndex, uint32_t width, uint
              "  \"randomSeed\": %u,\n"
              "  \"transmittanceDirection\": \"%s\",\n"
              "  \"testScene\": \"%s\",\n"
+             "  \"testCase\": \"%s\",\n"
+             "  \"submitOrder\": \"%s\",\n"
              "  \"commit\": \"%s\",\n"
              "  \"screenshot\": \"%s.png\"\n"
              "}\n",
              gAVBOITRequestedApiName, createdApi, gpuName, driver, width, height, gTransparencyType, gAVBOITDebugView,
              gAVBOITMultiplier, frameIndex, gAVBOITFixedDelta, gAVBOITFixedDeltaEnabled ? "true" : "false", gAVBOITRandomSeed,
-             CurrentAVBOITTransmittanceDirectionName(), CurrentAVBOITTestSceneName(), gAVBOITCommitShortSha, gAVBOITCaptureName);
+             CurrentAVBOITTransmittanceDirectionName(), CurrentAVBOITTestSceneName(), gAVBOITTestCase, gAVBOITSubmitOrder,
+             gAVBOITCommitShortSha, gAVBOITCaptureName);
 
     FileStream stream = {};
     if (fsOpenStreamFromPath(RD_SCREENSHOTS, metadataName, FM_WRITE, &stream))
@@ -1382,13 +1442,14 @@ static void ParseAVBOITCaptureCommandLine()
 {
     UpdateRequestedApiNameFromCommandLine();
 
+    char commandValue[FS_MAX_PATH] = {};
+
     gAVBOITAutoCaptureEnabled = CommandLineHasSwitch("--avboit-auto-capture");
     gAVBOITCaptureHideUI = CommandLineHasSwitch("--avboit-capture-hide-ui");
     gAVBOITAutoCaptureTargetFrame = CommandLineGetUInt("--avboit-capture-frame=", 240);
     gAVBOITRandomSeed = CommandLineGetUInt("--avboit-random-seed=", 1337);
     gAVBOITFixedDelta = CommandLineGetFloat("--avboit-fixed-delta=", 1.0f / 60.0f);
-    gAVBOITFixedDeltaEnabled = CommandLineGetValue("--avboit-fixed-delta=", gAVBOITOutputDir, sizeof(gAVBOITOutputDir));
-    gAVBOITOutputDir[0] = 0;
+    gAVBOITFixedDeltaEnabled = CommandLineGetValue("--avboit-fixed-delta=", commandValue, sizeof(commandValue));
 
     if (CommandLineGetValue("--avboit-output-dir=", gAVBOITOutputDir, sizeof(gAVBOITOutputDir)))
         LOGF(LogLevel::eINFO, "AVBOIT auto capture output dir: %s", gAVBOITOutputDir);
@@ -1396,9 +1457,43 @@ static void ParseAVBOITCaptureCommandLine()
         strncpy(gAVBOITCommitShortSha, "unknown", sizeof(gAVBOITCommitShortSha) - 1);
     gAVBOITCommitShortSha[sizeof(gAVBOITCommitShortSha) - 1] = 0;
 
+    if (CommandLineGetValue("--avboit-transmittance-direction=", commandValue, sizeof(commandValue)))
+    {
+        if (StringEqualsNoCase(commandValue, "front"))
+            gAVBOITTransmittanceDirection = AVBOIT_TRANSMITTANCE_FRONT;
+        else
+            gAVBOITTransmittanceDirection = AVBOIT_TRANSMITTANCE_LEGACY;
+    }
+
+    if (CommandLineGetValue("--avboit-test-scene=", commandValue, sizeof(commandValue)))
+    {
+        if (StringEqualsNoCase(commandValue, "single_layer"))
+            gAVBOITTestScene = AVBOIT_TEST_SCENE_SINGLE_LAYER;
+        else if (StringEqualsNoCase(commandValue, "two_layer"))
+            gAVBOITTestScene = AVBOIT_TEST_SCENE_TWO_LAYER;
+        else if (StringEqualsNoCase(commandValue, "three_layer"))
+            gAVBOITTestScene = AVBOIT_TEST_SCENE_THREE_LAYER;
+        else if (StringEqualsNoCase(commandValue, "same_slice"))
+            gAVBOITTestScene = AVBOIT_TEST_SCENE_SAME_SLICE;
+        else
+            gAVBOITTestScene = AVBOIT_TEST_SCENE_DEFAULT;
+    }
+
+    if (!CommandLineGetValue("--avboit-test-case=", gAVBOITTestCase, sizeof(gAVBOITTestCase)))
+        strncpy(gAVBOITTestCase, "default", sizeof(gAVBOITTestCase) - 1);
+    gAVBOITTestCase[sizeof(gAVBOITTestCase) - 1] = 0;
+
+    if (!CommandLineGetValue("--avboit-submit-order=", gAVBOITSubmitOrder, sizeof(gAVBOITSubmitOrder)))
+        strncpy(gAVBOITSubmitOrder, "normal", sizeof(gAVBOITSubmitOrder) - 1);
+    gAVBOITSubmitOrder[sizeof(gAVBOITSubmitOrder) - 1] = 0;
+
     gAVBOITAutoCaptureFrame = 0;
     gAVBOITAutoCaptureQueued = false;
     gAVBOITAutoCaptureCaptured = false;
+
+    LOGF(LogLevel::eINFO, "AVBOIT transmittance direction: %s", CurrentAVBOITTransmittanceDirectionName());
+    LOGF(LogLevel::eINFO, "AVBOIT test scene: %s case=%s submitOrder=%s", CurrentAVBOITTestSceneName(), gAVBOITTestCase,
+         gAVBOITSubmitOrder);
 
     if (gAVBOITAutoCaptureEnabled)
     {
@@ -1452,7 +1547,29 @@ void AddObject(MeshResource mesh, const vec3& position, TextureResource texture,
 
                                                mesh,
 
-                                               { float4(1.0f), float4(0.0f), 1.0f, 0.0f, float2(0.0f), 1, (uint)texture, 0, 0 } };
+                                               { float4(1.0f), float4(0.0f), 1.0f, 0.0f, float2(0.0f), MATERIAL_FLAG_ALBEDO_TEXTURE,
+                                                 (uint)texture, 0, 0 } };
+
+}
+
+
+void AddUnlitObject(MeshResource mesh, const vec3& position, const vec4& color, const vec3& scale = vec3(1.0f),
+
+                    const vec3& orientation = vec3(0.0f))
+
+{
+
+    ASSERT(gScene.mObjectCount < sizeof(gScene.mObjects) / sizeof(*gScene.mObjects));
+
+    gScene.mObjects[gScene.mObjectCount++] = { position,
+
+                                               scale,
+
+                                               orientation,
+
+                                               mesh,
+
+                                               { v4ToF4(color), float4(0.0f), 1.0f, 0.0f, float2(0.0f), MATERIAL_FLAG_UNLIT, 0, 0, 0 } };
 
 }
 
@@ -1509,10 +1626,133 @@ void AddParticleSystem(const vec3& position, const vec4& color, const vec3& tran
 }
 
 
+static bool AVBOITCaseContains(const char* token)
+{
+    return gAVBOITTestCase[0] && token && strstr(gAVBOITTestCase, token) != NULL;
+}
+
+static float AVBOITAnalyticAlphaFromCase(float defaultAlpha)
+{
+    if (AVBOITCaseContains("025")) return 0.25f;
+    if (AVBOITCaseContains("050")) return 0.50f;
+    if (AVBOITCaseContains("075")) return 0.75f;
+    if (AVBOITCaseContains("010")) return 0.10f;
+    if (AVBOITCaseContains("090")) return 0.90f;
+    return defaultAlpha;
+}
+
+static uint32_t SelectAVBOITAnalyticLayers(vec4* outLayers, float* outZ, uint32_t capacity)
+{
+    ASSERT(capacity >= 3);
+
+    const float frontZ = 8.0f;
+    const float middleZ = 4.0f;
+    const float backZ = 0.0f;
+
+    if (gAVBOITTestScene == AVBOIT_TEST_SCENE_SINGLE_LAYER)
+    {
+        outLayers[0] = vec4(1.0f, 0.0f, 0.0f, AVBOITAnalyticAlphaFromCase(0.5f));
+        outZ[0] = middleZ;
+        return 1;
+    }
+
+    if (gAVBOITTestScene == AVBOIT_TEST_SCENE_TWO_LAYER || gAVBOITTestScene == AVBOIT_TEST_SCENE_SAME_SLICE)
+    {
+        float alpha0 = 0.5f;
+        float alpha1 = 0.5f;
+        if (AVBOITCaseContains("025_025")) { alpha0 = 0.25f; alpha1 = 0.25f; }
+        else if (AVBOITCaseContains("050_050")) { alpha0 = 0.50f; alpha1 = 0.50f; }
+        else if (AVBOITCaseContains("075_050")) { alpha0 = 0.75f; alpha1 = 0.50f; }
+        else if (AVBOITCaseContains("010_090")) { alpha0 = 0.10f; alpha1 = 0.90f; }
+
+        outLayers[0] = vec4(1.0f, 0.0f, 0.0f, alpha0);
+        outLayers[1] = vec4(0.0f, 1.0f, 0.0f, alpha1);
+        if (gAVBOITTestScene == AVBOIT_TEST_SCENE_SAME_SLICE && !AVBOITCaseContains("different"))
+        {
+            outZ[0] = middleZ;
+            outZ[1] = middleZ;
+        }
+        else
+        {
+            outZ[0] = frontZ;
+            outZ[1] = backZ;
+        }
+        return 2;
+    }
+
+    float alpha0 = 0.5f;
+    float alpha1 = 0.5f;
+    float alpha2 = 0.5f;
+    if (AVBOITCaseContains("020_060_080")) { alpha0 = 0.2f; alpha1 = 0.6f; alpha2 = 0.8f; }
+    else if (AVBOITCaseContains("090_020_040")) { alpha0 = 0.9f; alpha1 = 0.2f; alpha2 = 0.4f; }
+
+    outLayers[0] = vec4(1.0f, 0.0f, 0.0f, alpha0);
+    outLayers[1] = vec4(0.0f, 1.0f, 0.0f, alpha1);
+    outLayers[2] = vec4(0.0f, 0.0f, 1.0f, alpha2);
+    outZ[0] = frontZ;
+    outZ[1] = middleZ;
+    outZ[2] = backZ;
+    return 3;
+}
+
+static void GetAVBOITSubmitOrder(uint32_t layerCount, uint32_t* outOrder)
+{
+    for (uint32_t i = 0; i < layerCount; ++i)
+        outOrder[i] = i;
+
+    if (StringEqualsNoCase(gAVBOITSubmitOrder, "reverse"))
+    {
+        for (uint32_t i = 0; i < layerCount; ++i)
+            outOrder[i] = layerCount - 1u - i;
+        return;
+    }
+
+    if (strncmp(gAVBOITSubmitOrder, "perm", 4) == 0)
+    {
+        for (uint32_t i = 0; i < layerCount && gAVBOITSubmitOrder[4 + i]; ++i)
+        {
+            const char c = gAVBOITSubmitOrder[4 + i];
+            if (c >= '0' && c <= '9' && (uint32_t)(c - '0') < layerCount)
+                outOrder[i] = (uint32_t)(c - '0');
+        }
+    }
+}
+
+static void CreateAVBOITAnalyticScene()
+{
+    gAVBOITCaptureHideUI = true;
+    gAVBOITMultiplier = 1.0f;
+
+    AddUnlitObject(MESH_PLANE, vec3(0.0f, 5.0f, -10.0f), vec4(0.0f, 0.0f, 0.0f, 1.0f), vec3(10.0f, 1.0f, 10.0f),
+                   vec3(-PI / 2.0f, 0.0f, 0.0f));
+
+    vec4 layers[3] = {};
+    float zValues[3] = {};
+    uint32_t order[3] = {};
+    const uint32_t layerCount = SelectAVBOITAnalyticLayers(layers, zValues, 3);
+    GetAVBOITSubmitOrder(layerCount, order);
+
+    for (uint32_t i = 0; i < layerCount; ++i)
+    {
+        const uint32_t layer = order[i];
+        AddUnlitObject(MESH_PLANE, vec3(0.0f, 5.0f, zValues[layer]), layers[layer], vec3(4.0f, 1.0f, 4.0f),
+                       vec3(-PI / 2.0f, 0.0f, 0.0f));
+    }
+
+    LOGF(LogLevel::eINFO, "AVBOIT analytic scene built: scene=%s case=%s submitOrder=%s layerCount=%u", CurrentAVBOITTestSceneName(),
+         gAVBOITTestCase, gAVBOITSubmitOrder, layerCount);
+}
+
+
 
 static void CreateScene()
 
 {
+    if (gAVBOITTestScene != AVBOIT_TEST_SCENE_DEFAULT)
+    {
+        CreateAVBOITAnalyticScene();
+        return;
+    }
 
     // Set plane
 
@@ -1844,30 +2084,27 @@ public:
         ParseAVBOITCaptureCommandLine();
         if (gAVBOITCommandLine)
         {
+            char commandValue[FS_MAX_PATH] = {};
             uint32_t mode = gTransparencyType;
-            if (CommandLineGetValue("--transparency-mode=", gAVBOITOutputDir, sizeof(gAVBOITOutputDir)))
+            if (CommandLineGetValue("--transparency-mode=", commandValue, sizeof(commandValue)))
             {
-                mode = (uint32_t)atoi(gAVBOITOutputDir);
+                mode = (uint32_t)atoi(commandValue);
                 gTransparencyType = min(mode, (uint32_t)TRANSPARENCY_TYPE_COUNT - 1);
                 LOGF(LogLevel::eINFO, "Transparency mode set via command line to: %u", gTransparencyType);
             }
-            gAVBOITOutputDir[0] = 0;
             
-            if (CommandLineGetValue("--avboit-multiplier=", gAVBOITOutputDir, sizeof(gAVBOITOutputDir)))
+            if (CommandLineGetValue("--avboit-multiplier=", commandValue, sizeof(commandValue)))
             {
-                gAVBOITMultiplier = (float)atof(gAVBOITOutputDir);
+                gAVBOITMultiplier = (float)atof(commandValue);
                 LOGF(LogLevel::eINFO, "AVBOIT Multiplier set via command line to: %f", gAVBOITMultiplier);
             }
-            gAVBOITOutputDir[0] = 0;
 
-            if (CommandLineGetValue("--avboit-debug-view=", gAVBOITOutputDir, sizeof(gAVBOITOutputDir)))
+            if (CommandLineGetValue("--avboit-debug-view=", commandValue, sizeof(commandValue)))
             {
-                gAVBOITDebugView = min((uint32_t)atoi(gAVBOITOutputDir), gAVBOITDebugViewCount - 1);
+                gAVBOITDebugView = min((uint32_t)atoi(commandValue), gAVBOITDebugViewCount - 1);
                 LOGF(LogLevel::eINFO, "AVBOIT Debug View set via command line to: %u (%s)", gAVBOITDebugView,
                      gAVBOITDebugViewNames[gAVBOITDebugView]);
             }
-            gAVBOITOutputDir[0] = 0;
-            CommandLineGetValue("--avboit-output-dir=", gAVBOITOutputDir, sizeof(gAVBOITOutputDir));
         }
 
 

@@ -32,6 +32,10 @@ float4 Shade(uint matID, float2 uv, float3 worldPos, float3 normal, uint ViewID)
 {
 	float nDotl = dot(normal, -Get(lightDirection).xyz);
 	Material mat = Get(Materials)[matID];
+	if ((mat.TextureFlags & 2) > 0)
+	{
+		return mat.Color;
+	}
 	float4 matColor = f4(0);
 	uint index = mat.AlbedoTexID;
 	BeginNonUniformResourceIndex(index, MAX_NUM_TEXTURES);

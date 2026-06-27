@@ -22,9 +22,12 @@ CBUFFER(AVBOITUniforms, UPDATE_FREQ_PER_FRAME, b5, binding = 10)
     DATA(uint, downsampleFactor, None);
     DATA(float, avboitMultiplier, None);
     DATA(uint, avboitDebugView, None);
-    DATA(float, avboitPadding1, None);
-    DATA(float, avboitPadding2, None);
+    DATA(uint, avboitTransmittanceDirection, None);
+    DATA(uint, avboitAnalyticFlags, None);
 };
+
+#define AVBOIT_TRANSMITTANCE_LEGACY 0u
+#define AVBOIT_TRANSMITTANCE_FRONT 1u
 
 uint PackExtinction(float ext)
 {

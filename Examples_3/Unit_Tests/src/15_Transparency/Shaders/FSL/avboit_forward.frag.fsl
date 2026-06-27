@@ -1,5 +1,5 @@
 #include "shaderDefs.h.fsl"
-#define AVBOIT_ORDERED_ACCESS
+#define AVBOIT_LUT_SRV
 #include "avboit.h.fsl"
 #include "shading.h.fsl"
 
@@ -45,19 +45,26 @@ PSOutput PS_MAIN(VSOutput In)
     float normalizedLinearDepth = clamp(log2(zFar / linearDepth) / log2(zFar / zNear), 0.0f, 1.0f);
     uint zIndex = clamp(uint(normalizedLinearDepth * volumeDepth), 0, volumeDepth - 1);
 
-    float eventWeight = 1.0f;
+    float legacyWeight = 1.0f;
     if (zIndex > 0)
     {
         uint3 prevCoords = uint3(voxelXY.x, voxelXY.y, zIndex - 1);
         float4 lutValue = LoadTex3D(Get(VolumeTransmittanceLutSRV), NO_SAMPLER, prevCoords, 0);
-        eventWeight = lutValue.r;
+        legacyWeight = lutValue.r;
     }
+
+    uint3 frontCoords = uint3(voxelXY.x, voxelXY.y, zIndex);
+    float4 frontLutValue = LoadTex3D(Get(VolumeTransmittanceLutSRV), NO_SAMPLER, frontCoords, 0);
+    float frontWeight = frontLutValue.r;
+
+    float eventWeight = Get(avboitTransmittanceDirection) == AVBOIT_TRANSMITTANCE_FRONT ? frontWeight : legacyWeight;
     eventWeight = max(eventWeight, 1e-6f);
 
     float alpha = min(baseColor.a, 0.99f);
     float extinction = -log(max(1.0f - alpha, 1e-6f)) * Get(avboitMultiplier);
 
     Out.AccumColorWeight = float4(baseColor.rgb * alpha * eventWeight, alpha * eventWeight);
-    Out.AccumExtinction = float4(extinction, 0.0f, 0.0f, 1.0f);
+    float diagnosticG = Get(avboitDebugView) == 6u ? normalizedLinearDepth * alpha : legacyWeight * alpha;
+    Out.AccumExtinction = float4(extinction, diagnosticG, frontWeight * alpha, 1.0f);
     RETURN(Out);
 }
