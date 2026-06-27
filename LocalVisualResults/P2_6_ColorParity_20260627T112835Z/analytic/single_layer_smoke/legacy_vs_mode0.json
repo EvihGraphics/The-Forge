@@ -1,0 +1,16 @@
+{
+  "brightPixelCount": 0,
+  "candidate": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6_ColorParity_work\\analytic_unique\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_390e1baa_Scenesingle_layer_Casesingle_a050_Ordernormal.png",
+  "darkPixelCount": 0,
+  "height": 1080,
+  "linearRgbMae": 2.987499464805993e-06,
+  "lumaMae": 1.0666829308883415e-06,
+  "pixelCount": 2073600,
+  "psnr": 81.83189349795752,
+  "reference": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6_ColorParity_work\\analytic_unique\\DX12_Mode0_1920x1080_Frame60_390e1baa_Scenesingle_layer_Casesingle_a050_Ordernormal.png",
+  "rgbMae": 1.6724410957798704e-06,
+  "rgbMaxAbsDiff": 0.0039215686274510775,
+  "signedLumaDiff": -1.0666829308883415e-06,
+  "ssimLuma": 0.9999999787315467,
+  "width": 1920
+}
