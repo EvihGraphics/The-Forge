@@ -15,42 +15,49 @@ STRUCT(VSOutput)
 #endif
 };
 
+STRUCT(PSOutput)
+{
+    DATA(float4, AccumColorWeight, SV_Target0);
+    DATA(float4, AccumExtinction, SV_Target1);
+};
+
 EARLY_FRAGMENT_TESTS
-float4 PS_MAIN( VSOutput In )
+PSOutput PS_MAIN(VSOutput In)
 {
     INIT_MAIN;
-    float4 baseColor = Shade(In.MatID, In.UV.xy, In.WorldPosition.xyz, normalize(In.Normal.xyz), VR_VIEW_ID(In.ViewID));
+    PSOutput Out;
+    Out.AccumColorWeight = float4(0.0f, 0.0f, 0.0f, 0.0f);
+    Out.AccumExtinction = float4(0.0f, 0.0f, 0.0f, 0.0f);
 
+    float4 baseColor = Shade(In.MatID, In.UV.xy, In.WorldPosition.xyz, normalize(In.Normal.xyz), VR_VIEW_ID(In.ViewID));
     if (baseColor.a <= 0.01f)
     {
         clip(-1.0f);
-        RETURN(float4(0, 0, 0, 0));
+        RETURN(Out);
     }
 
     uint2 voxelXY = GetVolumeXY(uint2(In.Position.xy));
     float depth = In.Position.z;
 
-    // Linearize Reverse-Z depth using camClipInfo
     float linearDepth = Get(camClipInfo)[0] / (Get(camClipInfo)[1] * depth + Get(camClipInfo)[2]);
     float zFar = Get(camClipInfo)[2];
     float zNear = Get(camClipInfo)[0] / zFar;
     float normalizedLinearDepth = clamp(log2(zFar / linearDepth) / log2(zFar / zNear), 0.0f, 1.0f);
-
     uint zIndex = clamp(uint(normalizedLinearDepth * volumeDepth), 0, volumeDepth - 1);
 
-    // Sample Transmittance from LUT at previous depth slice
-    float3 transmittanceFront = float3(1.0f, 1.0f, 1.0f);
-    if(zIndex > 0)
+    float eventWeight = 1.0f;
+    if (zIndex > 0)
     {
         uint3 prevCoords = uint3(voxelXY.x, voxelXY.y, zIndex - 1);
         float4 lutValue = LoadTex3D(Get(VolumeTransmittanceLutSRV), NO_SAMPLER, prevCoords, 0);
-        transmittanceFront = lutValue.rgb;
+        eventWeight = lutValue.r;
     }
+    eventWeight = max(eventWeight, 1e-6f);
 
-    // finalColor = baseColor.rgb * transmittanceFront * baseColor.a
-    // Intra-voxel self-attenuation approximation to match Alpha Blend
-    // Applied empirical multiplier from UI to compensate for Alpha Blending's order-dependence artifacts in linear space
-    float3 finalLuminance = baseColor.rgb * transmittanceFront * baseColor.a * Get(avboitMultiplier);
+    float alpha = min(baseColor.a, 0.99f);
+    float extinction = -log(max(1.0f - alpha, 1e-6f)) * Get(avboitMultiplier);
 
-    RETURN(float4(finalLuminance, 1.0f));
+    Out.AccumColorWeight = float4(baseColor.rgb * alpha * eventWeight, alpha * eventWeight);
+    Out.AccumExtinction = float4(extinction, 0.0f, 0.0f, 1.0f);
+    RETURN(Out);
 }

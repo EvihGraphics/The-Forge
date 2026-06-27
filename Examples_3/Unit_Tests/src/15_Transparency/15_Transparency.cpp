@@ -481,6 +481,24 @@ TinyImageFormat gPTRenderTargetFormats[3] = { TinyImageFormat_R16G16B16A16_SFLOA
 
                                               TinyImageFormat_R16G16_SFLOAT };
 
+typedef enum AVBOITRenderTargets
+
+{
+
+    AVBOIT_RT_ACCUM_COLOR_WEIGHT,
+
+    AVBOIT_RT_ACCUM_EXTINCTION,
+
+    AVBOIT_RT_COUNT
+
+} AVBOITRenderTargets;
+
+
+
+TinyImageFormat gAVBOITRenderTargetFormats[AVBOIT_RT_COUNT] = { TinyImageFormat_R16G16B16A16_SFLOAT,
+
+                                                                TinyImageFormat_R16G16B16A16_SFLOAT };
+
 
 
 typedef enum TextureResource
@@ -601,7 +619,19 @@ Pipeline* pPipelineAVBOITForward = NULL;
 Buffer* pBufferAVBOITVolumeExtinction = NULL;
 
 Buffer* pBufferAVBOITUniform[gDataBufferCount] = { NULL };
-float gAVBOITMultiplier = 2.5f;
+float gAVBOITMultiplier = 1.0f;
+uint32_t gAVBOITDebugView = 0;
+
+static const char* gAVBOITDebugViewNames[] = {
+    "Final",
+    "Low-resolution total transmittance",
+    "Full-resolution transparent coverage",
+    "Full-resolution accumulated extinction",
+    "Full-resolution normalization denominator",
+    "Final resolve opacity",
+};
+
+static const uint32_t gAVBOITDebugViewCount = sizeof(gAVBOITDebugViewNames) / sizeof(gAVBOITDebugViewNames[0]);
 
 struct AVBOITVolumeConfig
 {
@@ -625,7 +655,7 @@ struct AVBOITUniformData
     uint32_t mVolumeDepth;
     uint32_t mDownsampleFactor;
     float    mMultiplier;
-    float    mPadding0;
+    uint32_t mDebugView;
     float    mPadding1;
     float    mPadding2;
 };
@@ -685,6 +715,7 @@ static void UpdateAVBOITUniformBuffer(uint32_t frameIndex, const AVBOITVolumeDim
     uniformData.mVolumeDepth = dimensions.mVolumeDepth;
     uniformData.mDownsampleFactor = gAVBOITVolumeConfig.mDownsampleFactor;
     uniformData.mMultiplier = gAVBOITMultiplier;
+    uniformData.mDebugView = gAVBOITDebugView;
 
     BufferUpdateDesc avboitUpdate = { pBufferAVBOITUniform[frameIndex] };
     beginUpdateResource(&avboitUpdate);
@@ -904,6 +935,8 @@ RenderTarget* pRenderTargetWBOIT[WBOIT_RT_COUNT] = {};
 RenderTarget* pRenderTargetPT[PT_RT_COUNT] = {};
 
 RenderTarget* pRenderTargetPTBackground = NULL;
+
+RenderTarget* pRenderTargetAVBOIT[AVBOIT_RT_COUNT] = {};
 
 #if USE_SHADOWS != 0
 
@@ -1132,6 +1165,7 @@ Semaphore* pImageAcquiredSemaphore = NULL;
 uint32_t gTransparencyType = TRANSPARENCY_TYPE_ADAPTIVE_VOXEL_BASED_OIT;
 
 bool     gAVBOITAutoCaptureEnabled = false;
+bool     gAVBOITCaptureHideUI = false;
 uint32_t gAVBOITAutoCaptureFrame = 0;
 bool     gAVBOITAutoCaptureQueued = false;
 bool     gAVBOITAutoCaptureCaptured = false;
@@ -1567,6 +1601,7 @@ public:
         initHiresTimer(&gCpuTimer);
 
         gAVBOITAutoCaptureEnabled = pCommandLine && strstr(pCommandLine, "--avboit-auto-capture");
+        gAVBOITCaptureHideUI = pCommandLine && strstr(pCommandLine, "--avboit-capture-hide-ui");
         gAVBOITAutoCaptureFrame = 0;
         gAVBOITAutoCaptureQueued = false;
         gAVBOITAutoCaptureCaptured = false;
@@ -1574,6 +1609,8 @@ public:
         {
             gTransparencyType = TRANSPARENCY_TYPE_ADAPTIVE_VOXEL_BASED_OIT;
             LOGF(LogLevel::eINFO, "AVBOIT auto capture enabled.");
+            if (gAVBOITCaptureHideUI)
+                LOGF(LogLevel::eINFO, "AVBOIT auto capture will hide UI overlays.");
         }
         if (pCommandLine)
         {
@@ -1589,6 +1626,14 @@ public:
             {
                 gAVBOITMultiplier = (float)atof(multArg + 20);
                 LOGF(LogLevel::eINFO, "AVBOIT Multiplier set via command line to: %f", gAVBOITMultiplier);
+            }
+
+            const char* debugViewArg = strstr(pCommandLine, "--avboit-debug-view=");
+            if (debugViewArg)
+            {
+                gAVBOITDebugView = min((uint32_t)atoi(debugViewArg + 20), gAVBOITDebugViewCount - 1);
+                LOGF(LogLevel::eINFO, "AVBOIT Debug View set via command line to: %u (%s)", gAVBOITDebugView,
+                     gAVBOITDebugViewNames[gAVBOITDebugView]);
             }
         }
 
@@ -2236,9 +2281,11 @@ public:
 
             if (!gAVBOITAutoCaptureQueued && gAVBOITAutoCaptureFrame >= 120)
             {
-                setCaptureScreenshot("AVBOIT_AutoCapture");
+                char captureName[128] = {};
+                snprintf(captureName, sizeof(captureName), "AVBOIT_AutoCapture_Mode%u_Debug%u", gTransparencyType, gAVBOITDebugView);
+                setCaptureScreenshot(captureName);
                 gAVBOITAutoCaptureQueued = true;
-                LOGF(LogLevel::eINFO, "AVBOIT auto capture queued at frame %u.", gAVBOITAutoCaptureFrame);
+                LOGF(LogLevel::eINFO, "AVBOIT auto capture queued at frame %u as %s.", gAVBOITAutoCaptureFrame, captureName);
             }
 
             if (gAVBOITAutoCaptureCaptured || gAVBOITAutoCaptureFrame >= 900)
@@ -4252,53 +4299,40 @@ public:
 
 
 
-        // 4. Composite Pass (into render target)
+        // 4. Accumulate full-resolution transparent events.
 
-        cmdBeginDebugMarker(pCmd, 1, 0, 1, "Composite AVBOIT");
+        RenderTargetBarrier avboitAccumBarriers[AVBOIT_RT_COUNT] = {};
 
-        cmdBeginGpuTimestampQuery(pCmd, gCurrentGpuProfileToken, "Composite AVBOIT");
+        for (uint32_t i = 0; i < AVBOIT_RT_COUNT; ++i)
 
+        {
 
+            avboitAccumBarriers[i].pRenderTarget = pRenderTargetAVBOIT[i];
 
-        BindRenderTargetsDesc bindRenderTargetsComp = {};
+            avboitAccumBarriers[i].mCurrentState = RESOURCE_STATE_PIXEL_SHADER_RESOURCE;
 
-        bindRenderTargetsComp.mRenderTargetCount = 1;
+            avboitAccumBarriers[i].mNewState = RESOURCE_STATE_RENDER_TARGET;
 
-        bindRenderTargetsComp.mRenderTargets[0] = { pRenderTargetScreen, LOAD_ACTION_LOAD };
+        }
 
-        cmdBindRenderTargets(pCmd, &bindRenderTargetsComp);
+        cmdResourceBarrier(pCmd, 0, NULL, 0, NULL, AVBOIT_RT_COUNT, avboitAccumBarriers);
 
+        cmdBeginDebugMarker(pCmd, 1, 0, 1, "Accumulate AVBOIT");
 
-
-        cmdBindPipeline(pCmd, pPipelineAVBOITComposite);
-
-        cmdBindDescriptorSet(pCmd, 0, pDescriptorSetAVBOITComposite[0]);
-        cmdBindDescriptorSet(pCmd, gFrameIndex, pDescriptorSetAVBOITComposite[1]);
-
-        cmdDraw(pCmd, 3, 0);
-
-
-
-        cmdBindRenderTargets(pCmd, NULL);
-
-        cmdEndGpuTimestampQuery(pCmd, gCurrentGpuProfileToken);
-
-        cmdEndDebugMarker(pCmd);
-
-
-
-        // 5. Forward Color Pass (draw transparent objects with actual colors)
-
-        cmdBeginDebugMarker(pCmd, 1, 0, 1, "Forward AVBOIT");
-
-        cmdBeginGpuTimestampQuery(pCmd, gCurrentGpuProfileToken, "Forward AVBOIT");
+        cmdBeginGpuTimestampQuery(pCmd, gCurrentGpuProfileToken, "Accumulate AVBOIT");
 
 
         BindRenderTargetsDesc bindRenderTargetsFwd = {};
 
-        bindRenderTargetsFwd.mRenderTargetCount = 1;
+        bindRenderTargetsFwd.mRenderTargetCount = AVBOIT_RT_COUNT;
 
-        bindRenderTargetsFwd.mRenderTargets[0] = { pRenderTargetScreen, LOAD_ACTION_LOAD };
+        for (uint32_t i = 0; i < AVBOIT_RT_COUNT; ++i)
+
+        {
+
+            bindRenderTargetsFwd.mRenderTargets[i] = { pRenderTargetAVBOIT[i], LOAD_ACTION_CLEAR };
+
+        }
 
         bindRenderTargetsFwd.mDepthStencil = { pRenderTargetDepth, LOAD_ACTION_LOAD };
 
@@ -4316,6 +4350,59 @@ public:
         cmdBindDescriptorSet(pCmd, gFrameIndex, pDescriptorSetAVBOITForward[1]);
 
         DrawObjects(pCmd, gTransparentDrawCallCount, gTransparentDrawCalls, pRootSignatureAVBOITForward);
+
+
+        cmdBindRenderTargets(pCmd, NULL);
+
+        cmdEndGpuTimestampQuery(pCmd, gCurrentGpuProfileToken);
+
+        cmdEndDebugMarker(pCmd);
+
+        for (uint32_t i = 0; i < AVBOIT_RT_COUNT; ++i)
+
+        {
+
+            avboitAccumBarriers[i].pRenderTarget = pRenderTargetAVBOIT[i];
+
+            avboitAccumBarriers[i].mCurrentState = RESOURCE_STATE_RENDER_TARGET;
+
+            avboitAccumBarriers[i].mNewState = RESOURCE_STATE_PIXEL_SHADER_RESOURCE;
+
+        }
+
+        cmdResourceBarrier(pCmd, 0, NULL, 0, NULL, AVBOIT_RT_COUNT, avboitAccumBarriers);
+
+
+
+        // 5. Resolve full-resolution AVBOIT into the screen target.
+
+        cmdBeginDebugMarker(pCmd, 1, 0, 1, "Resolve AVBOIT");
+
+        cmdBeginGpuTimestampQuery(pCmd, gCurrentGpuProfileToken, "Resolve AVBOIT");
+
+
+
+        BindRenderTargetsDesc bindRenderTargetsComp = {};
+
+        bindRenderTargetsComp.mRenderTargetCount = 1;
+
+        bindRenderTargetsComp.mRenderTargets[0] = { pRenderTargetScreen, LOAD_ACTION_LOAD };
+
+        cmdBindRenderTargets(pCmd, &bindRenderTargetsComp);
+
+        cmdSetViewport(pCmd, 0.0f, 0.0f, (float)pRenderTargetScreen->mWidth, (float)pRenderTargetScreen->mHeight, 0.0f, 1.0f);
+
+        cmdSetScissor(pCmd, 0, 0, pRenderTargetScreen->mWidth, pRenderTargetScreen->mHeight);
+
+
+
+        cmdBindPipeline(pCmd, pPipelineAVBOITComposite);
+
+        cmdBindDescriptorSet(pCmd, 0, pDescriptorSetAVBOITComposite[0]);
+        cmdBindDescriptorSet(pCmd, gFrameIndex, pDescriptorSetAVBOITComposite[1]);
+
+        cmdDraw(pCmd, 3, 0);
+
 
 
         cmdBindRenderTargets(pCmd, NULL);
@@ -4726,37 +4813,40 @@ void Draw() override
 
 
 
-        cmdBeginDebugMarker(pCmd, 0, 1, 0, "Draw UI");
+        if (!gAVBOITCaptureHideUI)
+        {
+            cmdBeginDebugMarker(pCmd, 0, 1, 0, "Draw UI");
 
-        BindRenderTargetsDesc bindRenderTargets = {};
+            BindRenderTargetsDesc bindRenderTargets = {};
 
-        bindRenderTargets.mRenderTargetCount = 1;
+            bindRenderTargets.mRenderTargetCount = 1;
 
-        bindRenderTargets.mRenderTargets[0] = { pRenderTargetScreen, LOAD_ACTION_LOAD };
+            bindRenderTargets.mRenderTargets[0] = { pRenderTargetScreen, LOAD_ACTION_LOAD };
 
-        cmdBindRenderTargets(pCmd, &bindRenderTargets);
-
-
-
-        gFrameTimeDraw.mFontColor = 0xff00ffff;
-
-        gFrameTimeDraw.mFontSize = 18.0f;
-
-        gFrameTimeDraw.mFontID = gFontID;
-
-        float2 txtSize = cmdDrawCpuProfile(pCmd, float2(8.0f, 15.0f), &gFrameTimeDraw);
-
-        cmdDrawGpuProfile(pCmd, float2(8.0f, txtSize.y + 75.f), gCurrentGpuProfileToken, &gFrameTimeDraw);
+            cmdBindRenderTargets(pCmd, &bindRenderTargets);
 
 
 
-        cmdDrawUserInterface(pCmd);
+            gFrameTimeDraw.mFontColor = 0xff00ffff;
 
-        cmdBindRenderTargets(pCmd, NULL);
+            gFrameTimeDraw.mFontSize = 18.0f;
+
+            gFrameTimeDraw.mFontID = gFontID;
+
+            float2 txtSize = cmdDrawCpuProfile(pCmd, float2(8.0f, 15.0f), &gFrameTimeDraw);
+
+            cmdDrawGpuProfile(pCmd, float2(8.0f, txtSize.y + 75.f), gCurrentGpuProfileToken, &gFrameTimeDraw);
 
 
 
-        cmdEndDebugMarker(pCmd);
+            cmdDrawUserInterface(pCmd);
+
+            cmdBindRenderTargets(pCmd, NULL);
+
+
+
+            cmdEndDebugMarker(pCmd);
+        }
 
         ////////////////////////////////////////////////////////
 
@@ -6436,13 +6526,21 @@ void Draw() override
 
 
 
-            DescriptorData avboitCompositeParams[1] = {};
+            DescriptorData avboitCompositeParams[3] = {};
 
-            avboitCompositeParams[0].pName = "VolumeTransmittanceLutSRV";
+            avboitCompositeParams[0].pName = "AVBOITAccumColorWeightTexture";
 
-            avboitCompositeParams[0].ppTextures = &pTextureAVBOITVolumeTransmittanceLut;
+            avboitCompositeParams[0].ppTextures = &pRenderTargetAVBOIT[AVBOIT_RT_ACCUM_COLOR_WEIGHT]->pTexture;
 
-            updateDescriptorSet(pRenderer, 0, pDescriptorSetAVBOITComposite[0], 1, avboitCompositeParams);
+            avboitCompositeParams[1].pName = "AVBOITAccumExtinctionTexture";
+
+            avboitCompositeParams[1].ppTextures = &pRenderTargetAVBOIT[AVBOIT_RT_ACCUM_EXTINCTION]->pTexture;
+
+            avboitCompositeParams[2].pName = "VolumeTransmittanceLutSRV";
+
+            avboitCompositeParams[2].ppTextures = &pTextureAVBOITVolumeTransmittanceLut;
+
+            updateDescriptorSet(pRenderer, 0, pDescriptorSetAVBOITComposite[0], 3, avboitCompositeParams);
 
 
 
@@ -7432,6 +7530,51 @@ void Draw() override
 
 
 
+        {
+
+            const char* avboitNames[] = { "AVBOIT Accum Color Weight RT", "AVBOIT Accum Extinction RT" };
+
+            for (uint32_t i = 0; i < AVBOIT_RT_COUNT; ++i)
+
+            {
+
+                RenderTargetDesc renderTargetDesc = {};
+
+                renderTargetDesc.mArraySize = 1;
+
+                renderTargetDesc.mClearValue = colorClearBlack;
+
+                renderTargetDesc.mDepth = 1;
+
+                renderTargetDesc.mDescriptors = DESCRIPTOR_TYPE_TEXTURE;
+
+                renderTargetDesc.mFormat = gAVBOITRenderTargetFormats[i];
+
+                renderTargetDesc.mStartState = RESOURCE_STATE_PIXEL_SHADER_RESOURCE;
+
+                renderTargetDesc.mWidth = width;
+
+                renderTargetDesc.mHeight = height;
+
+                renderTargetDesc.mSampleCount = SAMPLE_COUNT_1;
+
+                renderTargetDesc.mSampleQuality = 0;
+
+                renderTargetDesc.mFlags = TEXTURE_CREATION_FLAG_VR_MULTIVIEW;
+
+                renderTargetDesc.pName = avboitNames[i];
+
+                addRenderTarget(pRenderer, &renderTargetDesc, &pRenderTargetAVBOIT[i]);
+
+            }
+
+            const uint64_t avboitFullResBytes = (uint64_t)width * (uint64_t)height * (uint64_t)sizeof(uint16_t) * 4ULL * AVBOIT_RT_COUNT;
+            LOGF(eINFO, "AVBOIT full-resolution accumulation render targets: %.2f MiB", BytesToMiB(avboitFullResBytes));
+
+        }
+
+
+
         if (gGpuSettings.mEnableAOIT)
 
         {
@@ -7712,6 +7855,14 @@ void Draw() override
         }
 
         removeRenderTarget(pRenderer, pRenderTargetPTBackground);
+
+        for (uint32_t i = 0; i < AVBOIT_RT_COUNT; ++i)
+
+        {
+
+            removeRenderTarget(pRenderer, pRenderTargetAVBOIT[i]);
+
+        }
 
     }
 
@@ -8825,13 +8976,17 @@ void Draw() override
 
             BlendStateDesc avboitBlendState = {};
 
-            avboitBlendState.mSrcAlphaFactors[0] = BC_ZERO;
+            avboitBlendState.mSrcAlphaFactors[0] = BC_ONE;
 
-            avboitBlendState.mDstAlphaFactors[0] = BC_ONE;
+            avboitBlendState.mDstAlphaFactors[0] = BC_ONE_MINUS_SRC_ALPHA;
 
-            avboitBlendState.mSrcFactors[0] = BC_ZERO;
+            avboitBlendState.mBlendAlphaModes[0] = BM_ADD;
 
-            avboitBlendState.mDstFactors[0] = BC_SRC_COLOR;
+            avboitBlendState.mSrcFactors[0] = BC_ONE;
+
+            avboitBlendState.mDstFactors[0] = BC_ONE_MINUS_SRC_ALPHA;
+
+            avboitBlendState.mBlendModes[0] = BM_ADD;
 
             avboitBlendState.mColorWriteMasks[0] = COLOR_MASK_ALL;
 
@@ -8841,16 +8996,18 @@ void Draw() override
 
             avboitCompositePipelineDesc.pBlendState = &avboitBlendState;
 
-            LOGF(eINFO, "Adding AVBOITComposite Pipeline...");
+            LOGF(eINFO, "Adding AVBOITResolve Pipeline...");
 
             addPipeline(pRenderer, &desc, &pPipelineAVBOITComposite);
 
+            desc = {};
+            desc.mType = PIPELINE_TYPE_GRAPHICS;
             GraphicsPipelineDesc& avboitForwardPipelineDesc = desc.mGraphicsDesc;
             avboitForwardPipelineDesc.mDepthStencilFormat = pRenderTargetDepth->mFormat;
-            avboitForwardPipelineDesc.mRenderTargetCount = 1;
-            avboitForwardPipelineDesc.pColorFormats = &pSwapChain->ppRenderTargets[0]->mFormat;
-            avboitForwardPipelineDesc.mSampleCount = pSwapChain->ppRenderTargets[0]->mSampleCount;
-            avboitForwardPipelineDesc.mSampleQuality = pSwapChain->ppRenderTargets[0]->mSampleQuality;
+            avboitForwardPipelineDesc.mRenderTargetCount = AVBOIT_RT_COUNT;
+            avboitForwardPipelineDesc.pColorFormats = gAVBOITRenderTargetFormats;
+            avboitForwardPipelineDesc.mSampleCount = pRenderTargetAVBOIT[0]->mSampleCount;
+            avboitForwardPipelineDesc.mSampleQuality = pRenderTargetAVBOIT[0]->mSampleQuality;
             avboitForwardPipelineDesc.mPrimitiveTopo = PRIMITIVE_TOPO_TRI_LIST;
             avboitForwardPipelineDesc.pShaderProgram = pShaderAVBOITForward;
             avboitForwardPipelineDesc.pRootSignature = pRootSignatureAVBOITForward;
@@ -8860,17 +9017,21 @@ void Draw() override
             avboitForwardPipelineDesc.pDepthState = &reverseDepthStateNoWriteDesc;
 
             BlendStateDesc avboitForwardBlendState = {};
-            avboitForwardBlendState.mSrcAlphaFactors[0] = BC_ZERO;
-            avboitForwardBlendState.mDstAlphaFactors[0] = BC_ONE;
-            avboitForwardBlendState.mSrcFactors[0] = BC_ONE;
-            avboitForwardBlendState.mDstFactors[0] = BC_ONE;
-            avboitForwardBlendState.mColorWriteMasks[0] = COLOR_MASK_ALL;
-            avboitForwardBlendState.mRenderTargetMask = BLEND_STATE_TARGET_0;
-            avboitForwardBlendState.mColorWriteMasks[0] = COLOR_MASK_ALL;
-            avboitForwardBlendState.mRenderTargetMask = BLEND_STATE_TARGET_0;
+            for (uint32_t i = 0; i < AVBOIT_RT_COUNT; ++i)
+            {
+                avboitForwardBlendState.mSrcAlphaFactors[i] = BC_ONE;
+                avboitForwardBlendState.mDstAlphaFactors[i] = BC_ONE;
+                avboitForwardBlendState.mBlendAlphaModes[i] = BM_ADD;
+                avboitForwardBlendState.mSrcFactors[i] = BC_ONE;
+                avboitForwardBlendState.mDstFactors[i] = BC_ONE;
+                avboitForwardBlendState.mBlendModes[i] = BM_ADD;
+                avboitForwardBlendState.mColorWriteMasks[i] = COLOR_MASK_ALL;
+            }
+            avboitForwardBlendState.mRenderTargetMask = BLEND_STATE_TARGET_0 | BLEND_STATE_TARGET_1;
+            avboitForwardBlendState.mIndependentBlend = true;
             avboitForwardPipelineDesc.pBlendState = &avboitForwardBlendState;
 
-            LOGF(eINFO, "Adding AVBOITForward Pipeline...");
+            LOGF(eINFO, "Adding AVBOITAccumulate Pipeline...");
             addPipeline(pRenderer, &desc, &pPipelineAVBOITForward);
 
         }
@@ -9062,6 +9223,12 @@ void GuiController::AddGui()
     avboitMultiplierSlider.mMin = 0.1f;
     avboitMultiplierSlider.mMax = 10.0f;
     luaRegisterWidget(uiCreateComponentWidget(pGuiWindow, "AVBOIT Multiplier", &avboitMultiplierSlider, WIDGET_TYPE_SLIDER_FLOAT));
+
+    DropdownWidget avboitDebugViewDropdown;
+    avboitDebugViewDropdown.pData = &gAVBOITDebugView;
+    avboitDebugViewDropdown.pNames = gAVBOITDebugViewNames;
+    avboitDebugViewDropdown.mCount = gAVBOITDebugViewCount;
+    luaRegisterWidget(uiCreateComponentWidget(pGuiWindow, "AVBOIT Debug View", &avboitDebugViewDropdown, WIDGET_TYPE_DROPDOWN));
 
     uiSetWidgetOnEditedCallback(pRunScript, nullptr, RunScript);
 

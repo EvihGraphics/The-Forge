@@ -8,6 +8,9 @@ RES(WTex3D(float4), VolumeTransmittanceLutUAV, UPDATE_FREQ_NONE, u2, binding = 6
 
 #ifdef AVBOIT_ORDERED_ACCESS
 RES(Buffer(uint), VolumeExtinctionBufferSRV, UPDATE_FREQ_NONE, t1, binding = 5);
+#endif
+
+#if defined(AVBOIT_ORDERED_ACCESS) || defined(AVBOIT_LUT_SRV)
 RES(Tex3D(float4), VolumeTransmittanceLutSRV, UPDATE_FREQ_NONE, t2, binding = 6);
 #endif
 
@@ -18,7 +21,7 @@ CBUFFER(AVBOITUniforms, UPDATE_FREQ_PER_FRAME, b5, binding = 10)
     DATA(uint, volumeDepth, None);
     DATA(uint, downsampleFactor, None);
     DATA(float, avboitMultiplier, None);
-    DATA(float, avboitPadding0, None);
+    DATA(uint, avboitDebugView, None);
     DATA(float, avboitPadding1, None);
     DATA(float, avboitPadding2, None);
 };
