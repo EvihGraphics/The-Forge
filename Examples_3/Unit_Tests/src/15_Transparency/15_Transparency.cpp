@@ -79,6 +79,14 @@
 
 #include "../../../../Common_3/Utilities/Threading/ThreadSystem.h"
 
+#include <ctype.h>
+
+#include <stdio.h>
+
+#include <stdlib.h>
+
+#include <string.h>
+
 
 
 // Math
@@ -94,6 +102,8 @@
 // input
 
 #include "../../../../Common_3/Utilities/Interfaces/IMemory.h"
+
+extern PlatformParameters gPlatformParameters;
 
 
 
@@ -1169,6 +1179,236 @@ bool     gAVBOITCaptureHideUI = false;
 uint32_t gAVBOITAutoCaptureFrame = 0;
 bool     gAVBOITAutoCaptureQueued = false;
 bool     gAVBOITAutoCaptureCaptured = false;
+uint32_t gAVBOITAutoCaptureTargetFrame = 240;
+bool     gAVBOITFixedDeltaEnabled = false;
+float    gAVBOITFixedDelta = 1.0f / 60.0f;
+uint32_t gAVBOITRandomSeed = 1337;
+char     gAVBOITOutputDir[FS_MAX_PATH] = {};
+char     gAVBOITCommitShortSha[64] = "unknown";
+char     gAVBOITRequestedApiName[32] = "Default";
+char     gAVBOITCaptureName[FS_MAX_PATH] = {};
+const char* gAVBOITCommandLine = NULL;
+
+
+static bool IsCommandLineDelimiter(char c)
+{
+    return c == 0 || isspace((unsigned char)c) != 0;
+}
+
+static bool CommandLineHasSwitch(const char* switchName)
+{
+    if (!gAVBOITCommandLine || !switchName)
+        return false;
+
+    const size_t switchLen = strlen(switchName);
+    const char*  search = gAVBOITCommandLine;
+    while ((search = strstr(search, switchName)) != NULL)
+    {
+        const char before = (search == gAVBOITCommandLine) ? ' ' : search[-1];
+        const char after = search[switchLen];
+        if (IsCommandLineDelimiter(before) && IsCommandLineDelimiter(after))
+            return true;
+        search += switchLen;
+    }
+
+    return false;
+}
+
+static bool CommandLineGetValue(const char* optionName, char* outValue, size_t valueCapacity)
+{
+    if (!gAVBOITCommandLine || !optionName || !outValue || valueCapacity == 0)
+        return false;
+
+    outValue[0] = 0;
+    const size_t optionLen = strlen(optionName);
+    const char*  search = gAVBOITCommandLine;
+    while ((search = strstr(search, optionName)) != NULL)
+    {
+        const char before = (search == gAVBOITCommandLine) ? ' ' : search[-1];
+        if (!IsCommandLineDelimiter(before))
+        {
+            search += optionLen;
+            continue;
+        }
+
+        const char* value = search + optionLen;
+        size_t      valueLen = 0;
+        if (*value == '"')
+        {
+            ++value;
+            while (value[valueLen] && value[valueLen] != '"' && valueLen + 1 < valueCapacity)
+                ++valueLen;
+        }
+        else
+        {
+            while (!IsCommandLineDelimiter(value[valueLen]) && valueLen + 1 < valueCapacity)
+                ++valueLen;
+        }
+
+        strncpy(outValue, value, valueLen);
+        outValue[valueLen] = 0;
+        return valueLen > 0;
+    }
+
+    return false;
+}
+
+static uint32_t CommandLineGetUInt(const char* optionName, uint32_t defaultValue)
+{
+    char value[64] = {};
+    return CommandLineGetValue(optionName, value, sizeof(value)) ? (uint32_t)strtoul(value, NULL, 10) : defaultValue;
+}
+
+static float CommandLineGetFloat(const char* optionName, float defaultValue)
+{
+    char value[64] = {};
+    return CommandLineGetValue(optionName, value, sizeof(value)) ? (float)atof(value) : defaultValue;
+}
+
+static const char* RendererApiToStringLocal(RendererApi api)
+{
+    switch (api)
+    {
+#if defined(GLES)
+    case RENDERER_API_GLES: return "GLES";
+#endif
+#if defined(DIRECT3D12)
+    case RENDERER_API_D3D12: return "DX12";
+#endif
+#if defined(VULKAN)
+    case RENDERER_API_VULKAN: return "Vulkan";
+#endif
+#if defined(DIRECT3D11)
+    case RENDERER_API_D3D11: return "D3D11";
+#endif
+#if defined(METAL)
+    case RENDERER_API_METAL: return "Metal";
+#endif
+#if defined(ORBIS)
+    case RENDERER_API_ORBIS: return "Orbis";
+#endif
+#if defined(PROSPERO)
+    case RENDERER_API_PROSPERO: return "Prospero";
+#endif
+    default: return "Unknown";
+    }
+}
+
+static void UpdateRequestedApiNameFromCommandLine()
+{
+    if (CommandLineHasSwitch("--d3d12"))
+        strncpy(gAVBOITRequestedApiName, "DX12", sizeof(gAVBOITRequestedApiName) - 1);
+    else if (CommandLineHasSwitch("--vulkan"))
+        strncpy(gAVBOITRequestedApiName, "Vulkan", sizeof(gAVBOITRequestedApiName) - 1);
+    else if (CommandLineHasSwitch("--d3d11"))
+        strncpy(gAVBOITRequestedApiName, "D3D11", sizeof(gAVBOITRequestedApiName) - 1);
+    else
+        strncpy(gAVBOITRequestedApiName, "Default", sizeof(gAVBOITRequestedApiName) - 1);
+    gAVBOITRequestedApiName[sizeof(gAVBOITRequestedApiName) - 1] = 0;
+}
+
+static const char* CurrentAVBOITTransmittanceDirectionName()
+{
+    return "legacy";
+}
+
+static const char* CurrentAVBOITTestSceneName()
+{
+    return "default";
+}
+
+static void BuildAVBOITCaptureName(char* outName, size_t outNameSize, uint32_t frameIndex, uint32_t width, uint32_t height)
+{
+    const char* createdApi = RendererApiToStringLocal(gPlatformParameters.mSelectedRendererApi);
+    if (gTransparencyType == TRANSPARENCY_TYPE_ADAPTIVE_VOXEL_BASED_OIT)
+    {
+        snprintf(outName, outNameSize, "%s_Mode5_%ux%u_Debug%u_Mul%.1f_Frame%u_%s", createdApi, width, height, gAVBOITDebugView,
+                 gAVBOITMultiplier, frameIndex, gAVBOITCommitShortSha);
+    }
+    else
+    {
+        snprintf(outName, outNameSize, "%s_Mode%u_%ux%u_Frame%u_%s", createdApi, gTransparencyType, width, height, frameIndex,
+                 gAVBOITCommitShortSha);
+    }
+}
+
+static void WriteAVBOITCaptureMetadata(uint32_t frameIndex, uint32_t width, uint32_t height)
+{
+    char metadataName[FS_MAX_PATH] = {};
+    snprintf(metadataName, sizeof(metadataName), "%s.json", gAVBOITCaptureName);
+
+    const char* createdApi = RendererApiToStringLocal(gPlatformParameters.mSelectedRendererApi);
+    const char* gpuName = pRenderer && pRenderer->pGpu ? pRenderer->pGpu->mSettings.mGpuVendorPreset.mGpuName : "unknown";
+    const char* driver = pRenderer && pRenderer->pGpu ? pRenderer->pGpu->mSettings.mGpuVendorPreset.mGpuDriverVersion : "unknown";
+
+    char json[4096] = {};
+    snprintf(json, sizeof(json),
+             "{\n"
+             "  \"requestedApi\": \"%s\",\n"
+             "  \"createdApi\": \"%s\",\n"
+             "  \"gpu\": \"%s\",\n"
+             "  \"driver\": \"%s\",\n"
+             "  \"resolution\": { \"width\": %u, \"height\": %u },\n"
+             "  \"mode\": %u,\n"
+             "  \"debugView\": %u,\n"
+             "  \"multiplier\": %.6f,\n"
+             "  \"captureFrame\": %u,\n"
+             "  \"fixedDelta\": %.10f,\n"
+             "  \"fixedDeltaEnabled\": %s,\n"
+             "  \"randomSeed\": %u,\n"
+             "  \"transmittanceDirection\": \"%s\",\n"
+             "  \"testScene\": \"%s\",\n"
+             "  \"commit\": \"%s\",\n"
+             "  \"screenshot\": \"%s.png\"\n"
+             "}\n",
+             gAVBOITRequestedApiName, createdApi, gpuName, driver, width, height, gTransparencyType, gAVBOITDebugView,
+             gAVBOITMultiplier, frameIndex, gAVBOITFixedDelta, gAVBOITFixedDeltaEnabled ? "true" : "false", gAVBOITRandomSeed,
+             CurrentAVBOITTransmittanceDirectionName(), CurrentAVBOITTestSceneName(), gAVBOITCommitShortSha, gAVBOITCaptureName);
+
+    FileStream stream = {};
+    if (fsOpenStreamFromPath(RD_SCREENSHOTS, metadataName, FM_WRITE, &stream))
+    {
+        fsWriteToStream(&stream, json, strlen(json));
+        fsCloseStream(&stream);
+        LOGF(LogLevel::eINFO, "AVBOIT capture metadata written to %s.", metadataName);
+    }
+    else
+    {
+        LOGF(LogLevel::eERROR, "Failed to open AVBOIT capture metadata file: %s", metadataName);
+    }
+}
+
+static void ParseAVBOITCaptureCommandLine()
+{
+    UpdateRequestedApiNameFromCommandLine();
+
+    gAVBOITAutoCaptureEnabled = CommandLineHasSwitch("--avboit-auto-capture");
+    gAVBOITCaptureHideUI = CommandLineHasSwitch("--avboit-capture-hide-ui");
+    gAVBOITAutoCaptureTargetFrame = CommandLineGetUInt("--avboit-capture-frame=", 240);
+    gAVBOITRandomSeed = CommandLineGetUInt("--avboit-random-seed=", 1337);
+    gAVBOITFixedDelta = CommandLineGetFloat("--avboit-fixed-delta=", 1.0f / 60.0f);
+    gAVBOITFixedDeltaEnabled = CommandLineGetValue("--avboit-fixed-delta=", gAVBOITOutputDir, sizeof(gAVBOITOutputDir));
+    gAVBOITOutputDir[0] = 0;
+
+    if (CommandLineGetValue("--avboit-output-dir=", gAVBOITOutputDir, sizeof(gAVBOITOutputDir)))
+        LOGF(LogLevel::eINFO, "AVBOIT auto capture output dir: %s", gAVBOITOutputDir);
+    if (!CommandLineGetValue("--avboit-commit-sha=", gAVBOITCommitShortSha, sizeof(gAVBOITCommitShortSha)))
+        strncpy(gAVBOITCommitShortSha, "unknown", sizeof(gAVBOITCommitShortSha) - 1);
+    gAVBOITCommitShortSha[sizeof(gAVBOITCommitShortSha) - 1] = 0;
+
+    gAVBOITAutoCaptureFrame = 0;
+    gAVBOITAutoCaptureQueued = false;
+    gAVBOITAutoCaptureCaptured = false;
+
+    if (gAVBOITAutoCaptureEnabled)
+    {
+        LOGF(LogLevel::eINFO, "AVBOIT auto capture enabled: frame=%u fixedDelta=%s %.10f seed=%u commit=%s.",
+             gAVBOITAutoCaptureTargetFrame, gAVBOITFixedDeltaEnabled ? "on" : "off", gAVBOITFixedDelta, gAVBOITRandomSeed,
+             gAVBOITCommitShortSha);
+        if (gAVBOITCaptureHideUI)
+            LOGF(LogLevel::eINFO, "AVBOIT auto capture will hide UI overlays.");
+    }
+}
 
 
 
@@ -1600,41 +1840,34 @@ public:
 
         initHiresTimer(&gCpuTimer);
 
-        gAVBOITAutoCaptureEnabled = pCommandLine && strstr(pCommandLine, "--avboit-auto-capture");
-        gAVBOITCaptureHideUI = pCommandLine && strstr(pCommandLine, "--avboit-capture-hide-ui");
-        gAVBOITAutoCaptureFrame = 0;
-        gAVBOITAutoCaptureQueued = false;
-        gAVBOITAutoCaptureCaptured = false;
-        if (gAVBOITAutoCaptureEnabled)
+        gAVBOITCommandLine = pCommandLine;
+        ParseAVBOITCaptureCommandLine();
+        if (gAVBOITCommandLine)
         {
-            gTransparencyType = TRANSPARENCY_TYPE_ADAPTIVE_VOXEL_BASED_OIT;
-            LOGF(LogLevel::eINFO, "AVBOIT auto capture enabled.");
-            if (gAVBOITCaptureHideUI)
-                LOGF(LogLevel::eINFO, "AVBOIT auto capture will hide UI overlays.");
-        }
-        if (pCommandLine)
-        {
-            const char* modeArg = strstr(pCommandLine, "--transparency-mode=");
-            if (modeArg && strlen(modeArg) > 20)
+            uint32_t mode = gTransparencyType;
+            if (CommandLineGetValue("--transparency-mode=", gAVBOITOutputDir, sizeof(gAVBOITOutputDir)))
             {
-                gTransparencyType = modeArg[20] - '0';
+                mode = (uint32_t)atoi(gAVBOITOutputDir);
+                gTransparencyType = min(mode, (uint32_t)TRANSPARENCY_TYPE_COUNT - 1);
                 LOGF(LogLevel::eINFO, "Transparency mode set via command line to: %u", gTransparencyType);
             }
+            gAVBOITOutputDir[0] = 0;
             
-            const char* multArg = strstr(pCommandLine, "--avboit-multiplier=");
-            if (multArg)
+            if (CommandLineGetValue("--avboit-multiplier=", gAVBOITOutputDir, sizeof(gAVBOITOutputDir)))
             {
-                gAVBOITMultiplier = (float)atof(multArg + 20);
+                gAVBOITMultiplier = (float)atof(gAVBOITOutputDir);
                 LOGF(LogLevel::eINFO, "AVBOIT Multiplier set via command line to: %f", gAVBOITMultiplier);
             }
+            gAVBOITOutputDir[0] = 0;
 
-            const char* debugViewArg = strstr(pCommandLine, "--avboit-debug-view=");
-            if (debugViewArg)
+            if (CommandLineGetValue("--avboit-debug-view=", gAVBOITOutputDir, sizeof(gAVBOITOutputDir)))
             {
-                gAVBOITDebugView = min((uint32_t)atoi(debugViewArg + 20), gAVBOITDebugViewCount - 1);
+                gAVBOITDebugView = min((uint32_t)atoi(gAVBOITOutputDir), gAVBOITDebugViewCount - 1);
                 LOGF(LogLevel::eINFO, "AVBOIT Debug View set via command line to: %u (%s)", gAVBOITDebugView,
                      gAVBOITDebugViewNames[gAVBOITDebugView]);
             }
+            gAVBOITOutputDir[0] = 0;
+            CommandLineGetValue("--avboit-output-dir=", gAVBOITOutputDir, sizeof(gAVBOITOutputDir));
         }
 
 
@@ -1651,7 +1884,7 @@ public:
 
         fsSetPathForResourceDir(pSystemFileIO, RM_CONTENT, RD_SCRIPTS, "Scripts");
 
-        fsSetPathForResourceDir(pSystemFileIO, RM_DEBUG, RD_SCREENSHOTS, "Screenshots");
+        fsSetPathForResourceDir(pSystemFileIO, RM_DEBUG, RD_SCREENSHOTS, gAVBOITOutputDir[0] ? gAVBOITOutputDir : "Screenshots");
 
         fsSetPathForResourceDir(pSystemFileIO, RM_DEBUG, RD_DEBUG, "Debug");
 
@@ -2263,6 +2496,8 @@ public:
     void Update(float deltaTime) override
 
     {
+        if (gAVBOITAutoCaptureEnabled && gAVBOITFixedDeltaEnabled)
+            deltaTime = gAVBOITFixedDelta;
 
         updateInputSystem(deltaTime, mSettings.mWidth, mSettings.mHeight);
 
@@ -2276,19 +2511,18 @@ public:
 
         if (gAVBOITAutoCaptureEnabled)
         {
-            gTransparencyType = TRANSPARENCY_TYPE_ADAPTIVE_VOXEL_BASED_OIT;
             ++gAVBOITAutoCaptureFrame;
 
-            if (!gAVBOITAutoCaptureQueued && gAVBOITAutoCaptureFrame >= 120)
+            if (!gAVBOITAutoCaptureQueued && gAVBOITAutoCaptureFrame >= gAVBOITAutoCaptureTargetFrame)
             {
-                char captureName[128] = {};
-                snprintf(captureName, sizeof(captureName), "AVBOIT_AutoCapture_Mode%u_Debug%u", gTransparencyType, gAVBOITDebugView);
-                setCaptureScreenshot(captureName);
+                BuildAVBOITCaptureName(gAVBOITCaptureName, sizeof(gAVBOITCaptureName), gAVBOITAutoCaptureFrame, mSettings.mWidth,
+                                       mSettings.mHeight);
+                setCaptureScreenshot(gAVBOITCaptureName);
                 gAVBOITAutoCaptureQueued = true;
-                LOGF(LogLevel::eINFO, "AVBOIT auto capture queued at frame %u as %s.", gAVBOITAutoCaptureFrame, captureName);
+                LOGF(LogLevel::eINFO, "AVBOIT auto capture queued at frame %u as %s.", gAVBOITAutoCaptureFrame, gAVBOITCaptureName);
             }
 
-            if (gAVBOITAutoCaptureCaptured || gAVBOITAutoCaptureFrame >= 900)
+            if (gAVBOITAutoCaptureCaptured || gAVBOITAutoCaptureFrame >= gAVBOITAutoCaptureTargetFrame + 300)
             {
                 mSettings.mQuit = true;
             }
@@ -4895,6 +5129,7 @@ void Draw() override
         if (gAVBOITAutoCaptureQueued && !gAVBOITAutoCaptureCaptured)
         {
             captureScreenshot(pSwapChain, swapchainImageIndex, true, false);
+            WriteAVBOITCaptureMetadata(gAVBOITAutoCaptureFrame, mSettings.mWidth, mSettings.mHeight);
             gAVBOITAutoCaptureCaptured = true;
             LOGF(LogLevel::eINFO, "AVBOIT auto capture completed at frame %u.", gAVBOITAutoCaptureFrame);
         }

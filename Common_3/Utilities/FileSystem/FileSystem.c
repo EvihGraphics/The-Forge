@@ -304,6 +304,9 @@ FORGE_API bool fsMergeDirAndFileName(const char* prePath, const char* postPath, 
 {
     *output = 0;
 
+    if (postPath && (isDriveLetter(postPath) || isDirectorySeparator(postPath[0])))
+        prePath = "";
+
     size_t outputLength = fsNormalizePathContinue(prePath, separator, output, output, output + outputSize);
 
     if (                                         // put separator between paths, if conditions are met:
