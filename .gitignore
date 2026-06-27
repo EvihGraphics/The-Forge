@@ -428,3 +428,14 @@ Tools/clang-tools/out-files.txt
 
 /TheForge_1.58_Baseline_Report/Build/Full_Build_MSBuild_Patched_VS2022_v143_SDK22621_wd4189_FileLogger.log
 LocalVisualResults/DESKTOP-KCK6JUT/NewMachineVerification_20260623T114619Z/
+
+# Local visual validation bundles are delivery artifacts and should remain trackable.
+# Runtime logs can still follow the global **.log ignore rule.
+!LocalVisualResults/
+!LocalVisualResults/**/*.md
+!LocalVisualResults/**/*.png
+!LocalVisualResults/**/*.jpg
+!LocalVisualResults/**/*.jpeg
+!LocalVisualResults/**/*.webp
+!LocalVisualResults/**/*.gif
+!LocalVisualResults/**/*.txt
