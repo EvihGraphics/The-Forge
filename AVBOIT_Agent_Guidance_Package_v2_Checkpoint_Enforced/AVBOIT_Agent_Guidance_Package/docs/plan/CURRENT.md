@@ -12,40 +12,40 @@ Current lab skill: `docs/skill/theforge-avboit-lab-skill/SKILL.md`
 
 `baseline/theforge-1.58-windows-vs-dx12`
 
-Verified P2.6S start point: `4120b7e5b8c79f843086e7ed6b83c1e6075959e0`
+Verified P2.6T start point: `dbeb4094409c34f2bf67721d93aa727ef4e073da`
 
 ## Latest Checkpoint
 
-`docs/checkpoints/archive/CHECKPOINT-0010-20260628T110901Z-p2-6s-weight-propagation.md`
+`docs/checkpoints/archive/CHECKPOINT-0011-20260628T164524Z-p2-6t-reverse-z-depth.md`
 
-Status: `blocked-local`
+Status: `passed-local`
 
 ## Latest State
 
-P2.6S added explicit analytic target-slice placement, selected-weight debug views, forced analytic weights, and raw MRT dumps in `LocalVisualResults/P2_6S_WeightPropagation_20260628T110901Z/`.
+P2.6T fixed the reverse-Z depth mapping used by AVBOIT, normalized low-resolution splat extinction by `downsampleFactor^2`, and closed explicit selected-weight propagation. Evidence is stored in `LocalVisualResults/P2_6T_ReverseZDepth_20260628T164524Z/`.
 
-Raw MRT tracing shows legacy/front first differ at `AVBOITAccumColorWeight`, with final Debug0 RGB MAE `0.00350683`. However, the hard gates failed: GPU zIndex remained `63` for expected target slices `48/32/16`, selected/legacy/front simultaneous weights were not proven, and forced layer-id A/B changed raw accumulation but not final overlap output. The default direction remains `legacy`; no front-default commit was made.
+DX12 and Vulkan target slices now hit 48/32/16, forced layer-id A/B changes raw and final coverage color, and the analytic front direction matrix improves against Mode0 by about 97%. The validated defaults are now `reverse_correct` depth mapping and `front` transmittance direction, with legacy command-line overrides preserved.
 
 ## Current Plan
 
-`docs/plan/phase_p2_6s_weight_propagation.md`
+`docs/plan/phase_p2_6t_reverse_z_depth.md`
 
 ## Validation Snapshot
 
 - Build: PASS with Release x64 MSBuild after setting `FSL_COMPILER_DXC` to Windows Kits `10.0.26100.0\x64`.
-- Runtime auto-capture/raw dump: PASS enough for evidence; launcher exit code is noisy but files are written.
-- Slice target placement: FAIL, GPU zIndex is `63` for expected slices `48/32/16`.
-- Selected-weight diagnostic: FAIL, current layer filter changes the LUT under test.
-- Raw MRT stage trace: PASS, first differing stage is `AVBOITAccumColorWeight`.
-- Forced layer-id final sensitivity: FAIL, raw differs but final overlap RGB MAE is `0.0`.
-- Front-default switch: NOT COMMITTED.
-- Vulkan analytic, default scene, cross-API, coverage, and performance gates: NOT RUN after P2.6S hard gates failed.
+- Reverse-Z calibration: PASS, near device depth is high and far device depth is low.
+- Target slices: PASS, DX12/Vulkan raw medians hit 48/32/16 within tolerance.
+- Explicit layer IDs and forced weight sensitivity: PASS.
+- Dual legacy/front diagnostics: PASS with simultaneous LUT channels.
+- DX12 analytic direction matrix: PASS, front improves average MAE by about 97%.
+- Vulkan minimal gate and cross-API front parity: PASS minimal.
+- Coverage invariant: PASS.
+- Performance: PASS smoke; full 300-frame benchmark not run.
+- Renderer validation layer gate: NOT RUN.
 
 ## Resume Entry
 
 1. Stay on branch `baseline/theforge-1.58-windows-vs-dx12`.
-2. Confirm latest local P2.6S commits with `git log -8 --oneline`.
-3. Use `LocalVisualResults/P2_6S_WeightPropagation_20260628T110901Z/metrics/p2_6s_weight_propagation_metrics.json` as the current blocked evidence.
-4. Fix analytic target-slice placement against the actual GPU depth path before rerunning the direction matrix.
-5. Add a diagnostic that observes selected, legacy, and front weights without rebuilding the low-res LUT differently for each layer.
-6. Do not switch default direction to `front` until all DX12/Vulkan/default/perf gates pass.
+2. Use `LocalVisualResults/P2_6T_ReverseZDepth_20260628T164524Z/metrics/final_summary.md` as the current evidence index.
+3. Treat remaining default-scene darkening as low-resolution volume/resolve approximation, not depth direction failure.
+4. If continuing, start a later reconstruction/resolve phase; do not revisit Depth Warp until default-scene residuals are attributed with an XY/Z matrix.
