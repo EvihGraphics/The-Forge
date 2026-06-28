@@ -685,6 +685,11 @@ static const char* gAVBOITDebugViewNames[] = {
 
 static const uint32_t gAVBOITDebugViewCount = sizeof(gAVBOITDebugViewNames) / sizeof(gAVBOITDebugViewNames[0]);
 
+static const vec3  kAVBOITAnalyticCameraPosition = vec3(-40.0f, 17.0f, 34.0f);
+static const vec3  kAVBOITAnalyticCameraTarget = vec3(0.0f, 5.0f, 0.0f);
+static const float kAVBOITAnalyticZNear = 1.0f;
+static const float kAVBOITAnalyticZFar = 4000.0f;
+
 struct AVBOITVolumeConfig
 {
     uint32_t mDownsampleFactor = 8;
@@ -1384,9 +1389,9 @@ static const char* CurrentAVBOITTestSceneName()
     }
 }
 
-static uint32_t SelectAVBOITAnalyticLayers(vec4* outLayers, float* outZ, uint32_t capacity);
+static uint32_t SelectAVBOITAnalyticLayers(vec4* outLayers, uint32_t* outTargetSlices, uint32_t capacity);
 static void     GetAVBOITSubmitOrder(uint32_t layerCount, uint32_t* outOrder);
-static vec3     GetAVBOITAnalyticPositionAtZ(float z);
+static vec3     GetAVBOITAnalyticPositionForTargetSlice(uint32_t targetSlice);
 
 static void AppendAVBOITJson(char* buffer, size_t bufferSize, size_t* offset, const char* format, ...)
 {
@@ -1413,19 +1418,17 @@ static float ClampAVBOITFloat(float value, float lo, float hi)
 
 static float ComputeAVBOITAnalyticLinearDepth(const vec3& position)
 {
-    const vec3 cameraPosition(-40.0f, 17.0f, 34.0f);
-    const float dx = position.getX() - cameraPosition.getX();
-    const float dy = position.getY() - cameraPosition.getY();
-    const float dz = position.getZ() - cameraPosition.getZ();
+    const float dx = position.getX() - kAVBOITAnalyticCameraPosition.getX();
+    const float dy = position.getY() - kAVBOITAnalyticCameraPosition.getY();
+    const float dz = position.getZ() - kAVBOITAnalyticCameraPosition.getZ();
     return sqrtf(dx * dx + dy * dy + dz * dz);
 }
 
 static float ComputeAVBOITAnalyticNormalizedDepth(float linearDepth)
 {
-    const float zNear = 1.0f;
-    const float zFar = 4000.0f;
-    const float safeDepth = max(linearDepth, zNear);
-    return ClampAVBOITFloat(logf(zFar / safeDepth) / logf(zFar / zNear), 0.0f, 1.0f);
+    const float safeDepth = max(linearDepth, kAVBOITAnalyticZNear);
+    return ClampAVBOITFloat(logf(kAVBOITAnalyticZFar / safeDepth) / logf(kAVBOITAnalyticZFar / kAVBOITAnalyticZNear), 0.0f,
+                            1.0f);
 }
 
 static uint32_t ComputeAVBOITAnalyticZIndex(float linearDepth)
@@ -1436,12 +1439,35 @@ static uint32_t ComputeAVBOITAnalyticZIndex(float linearDepth)
     return min(zIndex, depth - 1);
 }
 
+static float ComputeAVBOITAnalyticLinearDepthForTargetSlice(uint32_t targetSlice)
+{
+    const uint32_t depth = max(gAVBOITVolumeConfig.mDepthSlices, 1u);
+    const float normalizedTarget = ((float)min(targetSlice, depth - 1u) + 0.5f) / (float)depth;
+    return kAVBOITAnalyticZFar / powf(kAVBOITAnalyticZFar / kAVBOITAnalyticZNear, normalizedTarget);
+}
+
+static vec3 GetAVBOITAnalyticCameraForward()
+{
+    return normalize(kAVBOITAnalyticCameraTarget - kAVBOITAnalyticCameraPosition);
+}
+
+static vec3 GetAVBOITAnalyticPositionForTargetSlice(uint32_t targetSlice)
+{
+    return kAVBOITAnalyticCameraPosition + GetAVBOITAnalyticCameraForward() * ComputeAVBOITAnalyticLinearDepthForTargetSlice(targetSlice);
+}
+
+static vec3 GetAVBOITAnalyticPlaneScale(uint32_t targetSlice, float minimumScale)
+{
+    const float scale = max(minimumScale, ComputeAVBOITAnalyticLinearDepthForTargetSlice(targetSlice) * 0.08f);
+    return vec3(scale, 1.0f, scale);
+}
+
 static bool IsAVBOITAnalyticLayerIncluded(uint32_t layer)
 {
     return gAVBOITAnalyticLayerFilter < 0 || gAVBOITAnalyticLayerFilter == (int32_t)layer;
 }
 
-static void ComputeAVBOITAnalyticExpectedColor(const vec4* layers, const float* zValues, uint32_t layerCount, vec4* outExpected)
+static void ComputeAVBOITAnalyticExpectedColor(const vec4* layers, const uint32_t* targetSlices, uint32_t layerCount, vec4* outExpected)
 {
     uint32_t sorted[3] = { 0, 1, 2 };
     for (uint32_t i = 0; i < layerCount; ++i)
@@ -1451,7 +1477,7 @@ static void ComputeAVBOITAnalyticExpectedColor(const vec4* layers, const float* 
     {
         for (uint32_t j = i + 1; j < layerCount; ++j)
         {
-            if (zValues[sorted[j]] < zValues[sorted[i]])
+            if (targetSlices[sorted[j]] < targetSlices[sorted[i]])
             {
                 const uint32_t tmp = sorted[i];
                 sorted[i] = sorted[j];
@@ -1492,13 +1518,13 @@ static void AppendAVBOITAnalyticMetadataJson(char* json, size_t jsonSize, size_t
     }
 
     vec4 layers[3] = {};
-    float zValues[3] = {};
+    uint32_t targetSlices[3] = {};
     uint32_t order[3] = {};
-    const uint32_t layerCount = SelectAVBOITAnalyticLayers(layers, zValues, 3);
+    const uint32_t layerCount = SelectAVBOITAnalyticLayers(layers, targetSlices, 3);
     GetAVBOITSubmitOrder(layerCount, order);
 
     vec4 expected = {};
-    ComputeAVBOITAnalyticExpectedColor(layers, zValues, layerCount, &expected);
+    ComputeAVBOITAnalyticExpectedColor(layers, targetSlices, layerCount, &expected);
 
     AppendAVBOITJson(json, jsonSize, offset,
                      "  \"analyticLayerFilter\": \"%s\",\n"
@@ -1520,7 +1546,7 @@ static void AppendAVBOITAnalyticMetadataJson(char* json, size_t jsonSize, size_t
 
     for (uint32_t i = 0; i < layerCount; ++i)
     {
-        const vec3 position = GetAVBOITAnalyticPositionAtZ(zValues[i]);
+        const vec3 position = GetAVBOITAnalyticPositionForTargetSlice(targetSlices[i]);
         const float linearDepth = ComputeAVBOITAnalyticLinearDepth(position);
         const float normalizedDepth = ComputeAVBOITAnalyticNormalizedDepth(linearDepth);
         const uint32_t zIndex = ComputeAVBOITAnalyticZIndex(linearDepth);
@@ -1552,11 +1578,12 @@ static void AppendAVBOITAnalyticMetadataJson(char* json, size_t jsonSize, size_t
         AppendAVBOITJson(json, jsonSize, offset,
                          "      { \"index\": %u, \"includedByLayerFilter\": %s, \"color\": [%.6f, %.6f, %.6f, %.6f], "
                          "\"worldPosition\": [%.6f, %.6f, %.6f], \"linearDepth\": %.6f, \"normalizedDepth\": %.6f, "
-                         "\"zIndex\": %u, \"screenBoundsApprox\": { \"left\": %.1f, \"top\": %.1f, \"right\": %.1f, \"bottom\": %.1f } }%s\n",
+                         "\"targetSlice\": %u, \"cpuExpectedZIndex\": %u, \"gpuCapturedZIndex\": null, "
+                         "\"screenBoundsApprox\": { \"left\": %.1f, \"top\": %.1f, \"right\": %.1f, \"bottom\": %.1f } }%s\n",
                          i, IsAVBOITAnalyticLayerIncluded(i) ? "true" : "false", (float)layers[i].getX(),
                          (float)layers[i].getY(), (float)layers[i].getZ(), (float)layers[i].getW(), (float)position.getX(),
-                         (float)position.getY(), (float)position.getZ(), linearDepth, normalizedDepth, zIndex, left, top, right,
-                         bottom, i + 1 < layerCount ? "," : "");
+                         (float)position.getY(), (float)position.getZ(), linearDepth, normalizedDepth, targetSlices[i], zIndex, left, top,
+                         right, bottom, i + 1 < layerCount ? "," : "");
     }
 
     if (!haveOverlap || overlapRight < overlapLeft || overlapBottom < overlapTop)
@@ -1875,18 +1902,19 @@ static float AVBOITAnalyticAlphaFromCase(float defaultAlpha)
     return defaultAlpha;
 }
 
-static uint32_t SelectAVBOITAnalyticLayers(vec4* outLayers, float* outZ, uint32_t capacity)
+static uint32_t SelectAVBOITAnalyticLayers(vec4* outLayers, uint32_t* outTargetSlices, uint32_t capacity)
 {
     ASSERT(capacity >= 3);
 
-    const float frontZ = 8.0f;
-    const float middleZ = 4.0f;
-    const float backZ = 0.0f;
+    const uint32_t frontSlice = 48;
+    const uint32_t middleSlice = 32;
+    const uint32_t backSlice = 16;
+    const uint32_t sameSlice = 32;
 
     if (gAVBOITTestScene == AVBOIT_TEST_SCENE_SINGLE_LAYER)
     {
         outLayers[0] = vec4(1.0f, 0.0f, 0.0f, AVBOITAnalyticAlphaFromCase(0.5f));
-        outZ[0] = middleZ;
+        outTargetSlices[0] = middleSlice;
         return 1;
     }
 
@@ -1907,13 +1935,13 @@ static uint32_t SelectAVBOITAnalyticLayers(vec4* outLayers, float* outZ, uint32_
         outLayers[1] = vec4(0.0f, 1.0f, 0.0f, alpha1);
         if (gAVBOITTestScene == AVBOIT_TEST_SCENE_SAME_SLICE && !AVBOITCaseContains("different"))
         {
-            outZ[0] = middleZ;
-            outZ[1] = middleZ;
+            outTargetSlices[0] = sameSlice;
+            outTargetSlices[1] = sameSlice;
         }
         else
         {
-            outZ[0] = frontZ;
-            outZ[1] = backZ;
+            outTargetSlices[0] = frontSlice;
+            outTargetSlices[1] = backSlice;
         }
         return 2;
     }
@@ -1929,15 +1957,15 @@ static uint32_t SelectAVBOITAnalyticLayers(vec4* outLayers, float* outZ, uint32_
     outLayers[2] = vec4(0.0f, 0.0f, 1.0f, alpha2);
     if (gAVBOITTestScene == AVBOIT_TEST_SCENE_SAME_SLICE)
     {
-        outZ[0] = middleZ;
-        outZ[1] = middleZ;
-        outZ[2] = middleZ;
+        outTargetSlices[0] = sameSlice;
+        outTargetSlices[1] = sameSlice;
+        outTargetSlices[2] = sameSlice;
     }
     else
     {
-        outZ[0] = frontZ;
-        outZ[1] = middleZ;
-        outZ[2] = backZ;
+        outTargetSlices[0] = frontSlice;
+        outTargetSlices[1] = middleSlice;
+        outTargetSlices[2] = backSlice;
     }
     return 3;
 }
@@ -1965,28 +1993,20 @@ static void GetAVBOITSubmitOrder(uint32_t layerCount, uint32_t* outOrder)
     }
 }
 
-static vec3 GetAVBOITAnalyticPositionAtZ(float z)
-{
-    const vec3 cameraPosition(-40.0f, 17.0f, 34.0f);
-    const vec3 cameraTarget(0.0f, 5.0f, 0.0f);
-    const vec3 cameraRay = cameraTarget - cameraPosition;
-    const float t = (z - cameraPosition.getZ()) / cameraRay.getZ();
-    return cameraPosition + cameraRay * t;
-}
-
 static void CreateAVBOITAnalyticScene()
 {
     avboitBootstrapStage("SCENE_CREATE_BEGIN");
     gAVBOITCaptureHideUI = true;
     gAVBOITMultiplier = 1.0f;
 
-    AddUnlitObject(MESH_PLANE, GetAVBOITAnalyticPositionAtZ(-10.0f), vec4(0.0f, 0.0f, 0.0f, 1.0f), vec3(18.0f, 1.0f, 18.0f),
-                   vec3(-PI / 2.0f, 0.0f, 0.0f));
+    const uint32_t backgroundSlice = 8;
+    AddUnlitObject(MESH_PLANE, GetAVBOITAnalyticPositionForTargetSlice(backgroundSlice), vec4(0.0f, 0.0f, 0.0f, 1.0f),
+                   GetAVBOITAnalyticPlaneScale(backgroundSlice, 18.0f), vec3(-PI / 2.0f, 0.0f, 0.0f));
 
     vec4 layers[3] = {};
-    float zValues[3] = {};
+    uint32_t targetSlices[3] = {};
     uint32_t order[3] = {};
-    const uint32_t layerCount = SelectAVBOITAnalyticLayers(layers, zValues, 3);
+    const uint32_t layerCount = SelectAVBOITAnalyticLayers(layers, targetSlices, 3);
     GetAVBOITSubmitOrder(layerCount, order);
 
     for (uint32_t i = 0; i < layerCount; ++i)
@@ -1994,8 +2014,8 @@ static void CreateAVBOITAnalyticScene()
         const uint32_t layer = order[i];
         if (!IsAVBOITAnalyticLayerIncluded(layer))
             continue;
-        AddUnlitObject(MESH_PLANE, GetAVBOITAnalyticPositionAtZ(zValues[layer]), layers[layer], vec3(4.0f, 1.0f, 4.0f),
-                       vec3(-PI / 2.0f, 0.0f, 0.0f));
+        AddUnlitObject(MESH_PLANE, GetAVBOITAnalyticPositionForTargetSlice(targetSlices[layer]), layers[layer],
+                       GetAVBOITAnalyticPlaneScale(targetSlices[layer], 4.0f), vec3(-PI / 2.0f, 0.0f, 0.0f));
     }
 
     LOGF(LogLevel::eINFO, "AVBOIT analytic scene built: scene=%s case=%s submitOrder=%s layerFilter=%s layerCount=%u",
