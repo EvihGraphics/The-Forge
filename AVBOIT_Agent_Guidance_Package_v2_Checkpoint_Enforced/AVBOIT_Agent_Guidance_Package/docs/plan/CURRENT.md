@@ -12,38 +12,38 @@ Current lab skill: `docs/skill/theforge-avboit-lab-skill/SKILL.md`
 
 `baseline/theforge-1.58-windows-vs-dx12`
 
-Verified P2.6 start point: `83b3f8e4e47e7272441a9fb53f6cfc7fd4eda4af`
+Verified P2.6R start point: `91163ff9d7956a670d8562e73376de3ad9b789db`
 
 ## Latest Checkpoint
 
-`docs/checkpoints/archive/CHECKPOINT-0008-20260627T112835Z-p2-6-color-parity.md`
+`docs/checkpoints/archive/CHECKPOINT-0009-20260628T054228Z-p2-6r-direction-closure.md`
 
 Status: `blocked-local`
 
 ## Latest State
 
-P2.6 implemented deterministic capture controls, JSON metadata sidecars, analytic test scenes, unlit analytic material output, `legacy|front` transmittance direction selection, and extended AVBOIT debug views. The default direction remains `legacy` because the analytic direction gate did not complete after the overlap fix.
+P2.6R restored runtime auto-capture and captured overlapping DX12 analytic evidence in `LocalVisualResults/P2_6R_DirectionClosure_20260628T054228Z/`.
 
-The first two-layer analytic captures were invalidated because layers did not overlap on screen. The scene was corrected to place layers along the camera ray, but subsequent local runtime auto-capture became unstable (`exit -1` or wait timeout without screenshot/log). Do not promote `front` to default until the overlapping analytic matrix is recaptured and passes.
+Overlap validation passes (`12914` two-layer overlap pixels and `12914` three-way overlap pixels). Direction plumbing is visible in debug views `7` and `8`, but all `37 / 37` paired `Debug0` final legacy/front captures are byte-identical. The default direction remains `legacy`; no front-default commit was made.
 
 ## Current Plan
 
-`docs/plan/phase_p2_6_transmittance_direction_color_parity.md`
+`docs/plan/phase_p2_6r_runtime_direction_closure.md`
 
 ## Validation Snapshot
 
 - Build: PASS with Release x64 MSBuild after setting `FSL_COMPILER_DXC` to Windows Kits `10.0.26100.0\x64`.
-- Deterministic capture/metadata: PARTIAL PASS.
-- Single-layer analytic smoke: PASS within PNG quantization, but non-discriminating.
-- Two-layer direction gate: BLOCKED after overlap correction due local runtime no-log/no-screenshot launch instability.
+- Runtime auto-capture: PASS.
+- Two-layer and three-layer overlap: PASS.
+- Direction debug plumbing: PASS.
+- Direction final-output improvement: FAIL, final legacy/front outputs are byte-identical.
 - Front-default switch: NOT COMMITTED.
-- Default scene, cross-API, coverage, and performance gates: NOT RUN for P2.6.
+- Vulkan analytic, default scene, cross-API, coverage, and performance gates: NOT RUN after the DX12 direction gate failed.
 
 ## Resume Entry
 
 1. Stay on branch `baseline/theforge-1.58-windows-vs-dx12`.
-2. Confirm latest local P2.6 commits with `git log -6 --oneline`.
-3. Ensure no stale `15_Transparency.exe` process is running before runtime tests.
-4. Rebuild with `FSL_COMPILER_DXC` pointed at a Windows Kits DXC directory if the repo-local DXC cannot load `dxcompiler.dll`.
-5. Resolve the no-log/exit-`-1` auto-capture blocker, then recapture overlapping analytic cases from `ba103708` or later.
-6. Commit front-default direction only after analytic, default-scene, cross-API, coverage, and performance gates pass.
+2. Confirm latest local P2.6R commits with `git log -8 --oneline`.
+3. Use `LocalVisualResults/P2_6R_DirectionClosure_20260628T054228Z/metrics/direction_dx12/dx12_direction_gate_summary.json` as the current blocked evidence.
+4. Investigate why direction-dependent weights alter debug views but not final resolved Debug0 output.
+5. Do not switch default direction to `front` until final output improves against Mode0 and the Vulkan/default/perf gates run.
