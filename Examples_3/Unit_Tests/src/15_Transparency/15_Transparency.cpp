@@ -83,6 +83,8 @@
 
 #include <stdio.h>
 
+#include <stdarg.h>
+
 #include <stdlib.h>
 
 #include <string.h>
@@ -104,6 +106,12 @@
 #include "../../../../Common_3/Utilities/Interfaces/IMemory.h"
 
 extern PlatformParameters gPlatformParameters;
+
+#if defined(_WINDOWS)
+extern void avboitBootstrapStage(const char* stage);
+#else
+static void avboitBootstrapStage(const char*) {}
+#endif
 
 
 
@@ -654,6 +662,8 @@ uint32_t gAVBOITTransmittanceDirection = AVBOIT_TRANSMITTANCE_LEGACY;
 AVBOITTestScene gAVBOITTestScene = AVBOIT_TEST_SCENE_DEFAULT;
 char gAVBOITTestCase[64] = "default";
 char gAVBOITSubmitOrder[32] = "normal";
+int32_t gAVBOITAnalyticLayerFilter = -1;
+char gAVBOITAnalyticLayerFilterName[16] = "all";
 
 static const char* gAVBOITDebugViewNames[] = {
     "Final",
@@ -1374,14 +1384,203 @@ static const char* CurrentAVBOITTestSceneName()
     }
 }
 
+static uint32_t SelectAVBOITAnalyticLayers(vec4* outLayers, float* outZ, uint32_t capacity);
+static void     GetAVBOITSubmitOrder(uint32_t layerCount, uint32_t* outOrder);
+static vec3     GetAVBOITAnalyticPositionAtZ(float z);
+
+static void AppendAVBOITJson(char* buffer, size_t bufferSize, size_t* offset, const char* format, ...)
+{
+    if (!buffer || !bufferSize || !offset || *offset >= bufferSize)
+        return;
+
+    va_list args;
+    va_start(args, format);
+    const int written = vsnprintf(buffer + *offset, bufferSize - *offset, format, args);
+    va_end(args);
+
+    if (written < 0)
+        return;
+
+    *offset += (size_t)written;
+    if (*offset >= bufferSize)
+        *offset = bufferSize - 1;
+}
+
+static float ClampAVBOITFloat(float value, float lo, float hi)
+{
+    return value < lo ? lo : (value > hi ? hi : value);
+}
+
+static float ComputeAVBOITAnalyticLinearDepth(const vec3& position)
+{
+    const vec3 cameraPosition(-40.0f, 17.0f, 34.0f);
+    const float dx = position.getX() - cameraPosition.getX();
+    const float dy = position.getY() - cameraPosition.getY();
+    const float dz = position.getZ() - cameraPosition.getZ();
+    return sqrtf(dx * dx + dy * dy + dz * dz);
+}
+
+static float ComputeAVBOITAnalyticNormalizedDepth(float linearDepth)
+{
+    const float zNear = 1.0f;
+    const float zFar = 4000.0f;
+    const float safeDepth = max(linearDepth, zNear);
+    return ClampAVBOITFloat(logf(zFar / safeDepth) / logf(zFar / zNear), 0.0f, 1.0f);
+}
+
+static uint32_t ComputeAVBOITAnalyticZIndex(float linearDepth)
+{
+    const float normalized = ComputeAVBOITAnalyticNormalizedDepth(linearDepth);
+    const uint32_t depth = gAVBOITVolumeConfig.mDepthSlices;
+    const uint32_t zIndex = (uint32_t)(normalized * (float)depth);
+    return min(zIndex, depth - 1);
+}
+
+static bool IsAVBOITAnalyticLayerIncluded(uint32_t layer)
+{
+    return gAVBOITAnalyticLayerFilter < 0 || gAVBOITAnalyticLayerFilter == (int32_t)layer;
+}
+
+static void ComputeAVBOITAnalyticExpectedColor(const vec4* layers, const float* zValues, uint32_t layerCount, vec4* outExpected)
+{
+    uint32_t sorted[3] = { 0, 1, 2 };
+    for (uint32_t i = 0; i < layerCount; ++i)
+        sorted[i] = i;
+
+    for (uint32_t i = 0; i < layerCount; ++i)
+    {
+        for (uint32_t j = i + 1; j < layerCount; ++j)
+        {
+            if (zValues[sorted[j]] < zValues[sorted[i]])
+            {
+                const uint32_t tmp = sorted[i];
+                sorted[i] = sorted[j];
+                sorted[j] = tmp;
+            }
+        }
+    }
+
+    float r = 0.0f;
+    float g = 0.0f;
+    float b = 0.0f;
+    float a = 0.0f;
+    for (uint32_t i = 0; i < layerCount; ++i)
+    {
+        const uint32_t layer = sorted[i];
+        if (!IsAVBOITAnalyticLayerIncluded(layer))
+            continue;
+
+        const float alpha = layers[layer].getW();
+        r = layers[layer].getX() * alpha + r * (1.0f - alpha);
+        g = layers[layer].getY() * alpha + g * (1.0f - alpha);
+        b = layers[layer].getZ() * alpha + b * (1.0f - alpha);
+        a = alpha + a * (1.0f - alpha);
+    }
+
+    *outExpected = vec4(r, g, b, a);
+}
+
+static void AppendAVBOITAnalyticMetadataJson(char* json, size_t jsonSize, size_t* offset, uint32_t width, uint32_t height)
+{
+    if (gAVBOITTestScene == AVBOIT_TEST_SCENE_DEFAULT)
+    {
+        AppendAVBOITJson(json, jsonSize, offset,
+                         "  \"analyticLayerFilter\": \"%s\",\n"
+                         "  \"analytic\": null,\n",
+                         gAVBOITAnalyticLayerFilterName);
+        return;
+    }
+
+    vec4 layers[3] = {};
+    float zValues[3] = {};
+    uint32_t order[3] = {};
+    const uint32_t layerCount = SelectAVBOITAnalyticLayers(layers, zValues, 3);
+    GetAVBOITSubmitOrder(layerCount, order);
+
+    vec4 expected = {};
+    ComputeAVBOITAnalyticExpectedColor(layers, zValues, layerCount, &expected);
+
+    AppendAVBOITJson(json, jsonSize, offset,
+                     "  \"analyticLayerFilter\": \"%s\",\n"
+                     "  \"analytic\": {\n"
+                     "    \"layerCount\": %u,\n"
+                     "    \"submitOrderIndices\": [",
+                     gAVBOITAnalyticLayerFilterName, layerCount);
+    for (uint32_t i = 0; i < layerCount; ++i)
+        AppendAVBOITJson(json, jsonSize, offset, "%s%u", i ? ", " : "", order[i]);
+    AppendAVBOITJson(json, jsonSize, offset, "],\n    \"layers\": [\n");
+
+    const float centerX = (float)width * 0.5f;
+    const float centerY = (float)height * 0.5f;
+    float overlapLeft = 0.0f;
+    float overlapTop = 0.0f;
+    float overlapRight = (float)width;
+    float overlapBottom = (float)height;
+    bool haveOverlap = false;
+
+    for (uint32_t i = 0; i < layerCount; ++i)
+    {
+        const vec3 position = GetAVBOITAnalyticPositionAtZ(zValues[i]);
+        const float linearDepth = ComputeAVBOITAnalyticLinearDepth(position);
+        const float normalizedDepth = ComputeAVBOITAnalyticNormalizedDepth(linearDepth);
+        const uint32_t zIndex = ComputeAVBOITAnalyticZIndex(linearDepth);
+        const float halfPixels = ClampAVBOITFloat(((float)width * 2.0f) / max(linearDepth, 1.0f), 8.0f, (float)width * 0.5f);
+        const float left = ClampAVBOITFloat(centerX - halfPixels, 0.0f, (float)width);
+        const float top = ClampAVBOITFloat(centerY - halfPixels, 0.0f, (float)height);
+        const float right = ClampAVBOITFloat(centerX + halfPixels, 0.0f, (float)width);
+        const float bottom = ClampAVBOITFloat(centerY + halfPixels, 0.0f, (float)height);
+
+        if (IsAVBOITAnalyticLayerIncluded(i))
+        {
+            if (!haveOverlap)
+            {
+                overlapLeft = left;
+                overlapTop = top;
+                overlapRight = right;
+                overlapBottom = bottom;
+                haveOverlap = true;
+            }
+            else
+            {
+                overlapLeft = max(overlapLeft, left);
+                overlapTop = max(overlapTop, top);
+                overlapRight = min(overlapRight, right);
+                overlapBottom = min(overlapBottom, bottom);
+            }
+        }
+
+        AppendAVBOITJson(json, jsonSize, offset,
+                         "      { \"index\": %u, \"includedByLayerFilter\": %s, \"color\": [%.6f, %.6f, %.6f, %.6f], "
+                         "\"worldPosition\": [%.6f, %.6f, %.6f], \"linearDepth\": %.6f, \"normalizedDepth\": %.6f, "
+                         "\"zIndex\": %u, \"screenBoundsApprox\": { \"left\": %.1f, \"top\": %.1f, \"right\": %.1f, \"bottom\": %.1f } }%s\n",
+                         i, IsAVBOITAnalyticLayerIncluded(i) ? "true" : "false", (float)layers[i].getX(),
+                         (float)layers[i].getY(), (float)layers[i].getZ(), (float)layers[i].getW(), (float)position.getX(),
+                         (float)position.getY(), (float)position.getZ(), linearDepth, normalizedDepth, zIndex, left, top, right,
+                         bottom, i + 1 < layerCount ? "," : "");
+    }
+
+    if (!haveOverlap || overlapRight < overlapLeft || overlapBottom < overlapTop)
+    {
+        overlapLeft = overlapTop = overlapRight = overlapBottom = 0.0f;
+    }
+
+    AppendAVBOITJson(json, jsonSize, offset,
+                     "    ],\n"
+                     "    \"expectedSortedOverBlack\": { \"rgba\": [%.6f, %.6f, %.6f, %.6f] },\n"
+                     "    \"overlapRoiApprox\": { \"left\": %.1f, \"top\": %.1f, \"right\": %.1f, \"bottom\": %.1f }\n"
+                     "  },\n",
+                     (float)expected.getX(), (float)expected.getY(), (float)expected.getZ(), (float)expected.getW(), overlapLeft,
+                     overlapTop, overlapRight, overlapBottom);
+}
+
 static void BuildAVBOITCaptureName(char* outName, size_t outNameSize, uint32_t frameIndex, uint32_t width, uint32_t height)
 {
     const char* createdApi = RendererApiToStringLocal(gPlatformParameters.mSelectedRendererApi);
     char diagnosticSuffix[192] = {};
     if (gAVBOITTestScene != AVBOIT_TEST_SCENE_DEFAULT)
     {
-        snprintf(diagnosticSuffix, sizeof(diagnosticSuffix), "_Scene%s_Case%s_Order%s", CurrentAVBOITTestSceneName(), gAVBOITTestCase,
-                 gAVBOITSubmitOrder);
+        snprintf(diagnosticSuffix, sizeof(diagnosticSuffix), "_Scene%s_Case%s_Order%s_Layer%s", CurrentAVBOITTestSceneName(),
+                 gAVBOITTestCase, gAVBOITSubmitOrder, gAVBOITAnalyticLayerFilterName);
     }
 
     if (gTransparencyType == TRANSPARENCY_TYPE_ADAPTIVE_VOXEL_BASED_OIT)
@@ -1406,32 +1605,38 @@ static void WriteAVBOITCaptureMetadata(uint32_t frameIndex, uint32_t width, uint
     const char* gpuName = pRenderer && pRenderer->pGpu ? pRenderer->pGpu->mSettings.mGpuVendorPreset.mGpuName : "unknown";
     const char* driver = pRenderer && pRenderer->pGpu ? pRenderer->pGpu->mSettings.mGpuVendorPreset.mGpuDriverVersion : "unknown";
 
-    char json[4096] = {};
-    snprintf(json, sizeof(json),
-             "{\n"
-             "  \"requestedApi\": \"%s\",\n"
-             "  \"createdApi\": \"%s\",\n"
-             "  \"gpu\": \"%s\",\n"
-             "  \"driver\": \"%s\",\n"
-             "  \"resolution\": { \"width\": %u, \"height\": %u },\n"
-             "  \"mode\": %u,\n"
-             "  \"debugView\": %u,\n"
-             "  \"multiplier\": %.6f,\n"
-             "  \"captureFrame\": %u,\n"
-             "  \"fixedDelta\": %.10f,\n"
-             "  \"fixedDeltaEnabled\": %s,\n"
-             "  \"randomSeed\": %u,\n"
-             "  \"transmittanceDirection\": \"%s\",\n"
-             "  \"testScene\": \"%s\",\n"
-             "  \"testCase\": \"%s\",\n"
-             "  \"submitOrder\": \"%s\",\n"
-             "  \"commit\": \"%s\",\n"
-             "  \"screenshot\": \"%s.png\"\n"
-             "}\n",
-             gAVBOITRequestedApiName, createdApi, gpuName, driver, width, height, gTransparencyType, gAVBOITDebugView,
-             gAVBOITMultiplier, frameIndex, gAVBOITFixedDelta, gAVBOITFixedDeltaEnabled ? "true" : "false", gAVBOITRandomSeed,
-             CurrentAVBOITTransmittanceDirectionName(), CurrentAVBOITTestSceneName(), gAVBOITTestCase, gAVBOITSubmitOrder,
-             gAVBOITCommitShortSha, gAVBOITCaptureName);
+    char json[12288] = {};
+    size_t jsonOffset = 0;
+    AppendAVBOITJson(json, sizeof(json), &jsonOffset,
+                     "{\n"
+                     "  \"requestedApi\": \"%s\",\n"
+                     "  \"createdApi\": \"%s\",\n"
+                     "  \"gpu\": \"%s\",\n"
+                     "  \"driver\": \"%s\",\n"
+                     "  \"resolution\": { \"width\": %u, \"height\": %u },\n"
+                     "  \"mode\": %u,\n"
+                     "  \"debugView\": %u,\n"
+                     "  \"debugViewName\": \"%s\",\n"
+                     "  \"multiplier\": %.6f,\n"
+                     "  \"captureFrame\": %u,\n"
+                     "  \"fixedDelta\": %.10f,\n"
+                     "  \"fixedDeltaEnabled\": %s,\n"
+                     "  \"randomSeed\": %u,\n"
+                     "  \"transmittanceDirection\": \"%s\",\n"
+                     "  \"testScene\": \"%s\",\n"
+                     "  \"testCase\": \"%s\",\n"
+                     "  \"submitOrder\": \"%s\",\n",
+                     gAVBOITRequestedApiName, createdApi, gpuName, driver, width, height, gTransparencyType, gAVBOITDebugView,
+                     gAVBOITDebugView < gAVBOITDebugViewCount ? gAVBOITDebugViewNames[gAVBOITDebugView] : "unknown",
+                     gAVBOITMultiplier, frameIndex, gAVBOITFixedDelta, gAVBOITFixedDeltaEnabled ? "true" : "false",
+                     gAVBOITRandomSeed, CurrentAVBOITTransmittanceDirectionName(), CurrentAVBOITTestSceneName(), gAVBOITTestCase,
+                     gAVBOITSubmitOrder);
+    AppendAVBOITAnalyticMetadataJson(json, sizeof(json), &jsonOffset, width, height);
+    AppendAVBOITJson(json, sizeof(json), &jsonOffset,
+                     "  \"commit\": \"%s\",\n"
+                     "  \"screenshot\": \"%s.png\"\n"
+                     "}\n",
+                     gAVBOITCommitShortSha, gAVBOITCaptureName);
 
     FileStream stream = {};
     if (fsOpenStreamFromPath(RD_SCREENSHOTS, metadataName, FM_WRITE, &stream))
@@ -1495,13 +1700,34 @@ static void ParseAVBOITCaptureCommandLine()
         strncpy(gAVBOITSubmitOrder, "normal", sizeof(gAVBOITSubmitOrder) - 1);
     gAVBOITSubmitOrder[sizeof(gAVBOITSubmitOrder) - 1] = 0;
 
+    gAVBOITAnalyticLayerFilter = -1;
+    strncpy(gAVBOITAnalyticLayerFilterName, "all", sizeof(gAVBOITAnalyticLayerFilterName) - 1);
+    gAVBOITAnalyticLayerFilterName[sizeof(gAVBOITAnalyticLayerFilterName) - 1] = 0;
+    if (CommandLineGetValue("--avboit-analytic-layer-filter=", commandValue, sizeof(commandValue)))
+    {
+        if (StringEqualsNoCase(commandValue, "all"))
+        {
+            gAVBOITAnalyticLayerFilter = -1;
+            strncpy(gAVBOITAnalyticLayerFilterName, "all", sizeof(gAVBOITAnalyticLayerFilterName) - 1);
+        }
+        else
+        {
+            const int32_t layerFilter = (int32_t)atoi(commandValue);
+            gAVBOITAnalyticLayerFilter = layerFilter >= 0 && layerFilter <= 2 ? layerFilter : -1;
+            snprintf(gAVBOITAnalyticLayerFilterName, sizeof(gAVBOITAnalyticLayerFilterName), "%s",
+                     gAVBOITAnalyticLayerFilter >= 0 ? commandValue : "all");
+        }
+        gAVBOITAnalyticLayerFilterName[sizeof(gAVBOITAnalyticLayerFilterName) - 1] = 0;
+    }
+
     gAVBOITAutoCaptureFrame = 0;
     gAVBOITAutoCaptureQueued = false;
     gAVBOITAutoCaptureCaptured = false;
 
     LOGF(LogLevel::eINFO, "AVBOIT transmittance direction: %s", CurrentAVBOITTransmittanceDirectionName());
-    LOGF(LogLevel::eINFO, "AVBOIT test scene: %s case=%s submitOrder=%s", CurrentAVBOITTestSceneName(), gAVBOITTestCase,
-         gAVBOITSubmitOrder);
+    LOGF(LogLevel::eINFO, "AVBOIT test scene: %s case=%s submitOrder=%s layerFilter=%s", CurrentAVBOITTestSceneName(),
+         gAVBOITTestCase, gAVBOITSubmitOrder, gAVBOITAnalyticLayerFilterName);
+    avboitBootstrapStage("COMMAND_LINE_CAPTURE_ARGS_PARSED");
 
     if (gAVBOITAutoCaptureEnabled)
     {
@@ -1664,7 +1890,11 @@ static uint32_t SelectAVBOITAnalyticLayers(vec4* outLayers, float* outZ, uint32_
         return 1;
     }
 
-    if (gAVBOITTestScene == AVBOIT_TEST_SCENE_TWO_LAYER || gAVBOITTestScene == AVBOIT_TEST_SCENE_SAME_SLICE)
+    const bool sameSliceThreeLayer = gAVBOITTestScene == AVBOIT_TEST_SCENE_SAME_SLICE &&
+                                     (AVBOITCaseContains("three") || AVBOITCaseContains("020_060_080") ||
+                                      AVBOITCaseContains("090_020_040"));
+
+    if (gAVBOITTestScene == AVBOIT_TEST_SCENE_TWO_LAYER || (gAVBOITTestScene == AVBOIT_TEST_SCENE_SAME_SLICE && !sameSliceThreeLayer))
     {
         float alpha0 = 0.5f;
         float alpha1 = 0.5f;
@@ -1697,9 +1927,18 @@ static uint32_t SelectAVBOITAnalyticLayers(vec4* outLayers, float* outZ, uint32_
     outLayers[0] = vec4(1.0f, 0.0f, 0.0f, alpha0);
     outLayers[1] = vec4(0.0f, 1.0f, 0.0f, alpha1);
     outLayers[2] = vec4(0.0f, 0.0f, 1.0f, alpha2);
-    outZ[0] = frontZ;
-    outZ[1] = middleZ;
-    outZ[2] = backZ;
+    if (gAVBOITTestScene == AVBOIT_TEST_SCENE_SAME_SLICE)
+    {
+        outZ[0] = middleZ;
+        outZ[1] = middleZ;
+        outZ[2] = middleZ;
+    }
+    else
+    {
+        outZ[0] = frontZ;
+        outZ[1] = middleZ;
+        outZ[2] = backZ;
+    }
     return 3;
 }
 
@@ -1737,6 +1976,7 @@ static vec3 GetAVBOITAnalyticPositionAtZ(float z)
 
 static void CreateAVBOITAnalyticScene()
 {
+    avboitBootstrapStage("SCENE_CREATE_BEGIN");
     gAVBOITCaptureHideUI = true;
     gAVBOITMultiplier = 1.0f;
 
@@ -1752,12 +1992,15 @@ static void CreateAVBOITAnalyticScene()
     for (uint32_t i = 0; i < layerCount; ++i)
     {
         const uint32_t layer = order[i];
+        if (!IsAVBOITAnalyticLayerIncluded(layer))
+            continue;
         AddUnlitObject(MESH_PLANE, GetAVBOITAnalyticPositionAtZ(zValues[layer]), layers[layer], vec3(4.0f, 1.0f, 4.0f),
                        vec3(-PI / 2.0f, 0.0f, 0.0f));
     }
 
-    LOGF(LogLevel::eINFO, "AVBOIT analytic scene built: scene=%s case=%s submitOrder=%s layerCount=%u", CurrentAVBOITTestSceneName(),
-         gAVBOITTestCase, gAVBOITSubmitOrder, layerCount);
+    LOGF(LogLevel::eINFO, "AVBOIT analytic scene built: scene=%s case=%s submitOrder=%s layerFilter=%s layerCount=%u",
+         CurrentAVBOITTestSceneName(), gAVBOITTestCase, gAVBOITSubmitOrder, gAVBOITAnalyticLayerFilterName, layerCount);
+    avboitBootstrapStage("SCENE_CREATE_END");
 }
 
 
@@ -1765,6 +2008,9 @@ static void CreateAVBOITAnalyticScene()
 static void CreateScene()
 
 {
+    if (gAVBOITTestScene == AVBOIT_TEST_SCENE_DEFAULT)
+        avboitBootstrapStage("SCENE_CREATE_BEGIN");
+
     if (gAVBOITTestScene != AVBOIT_TEST_SCENE_DEFAULT)
     {
         CreateAVBOITAnalyticScene();
@@ -1888,6 +2134,8 @@ static void CreateScene()
     AddObject(MESH_PLANE, vec3(-10.0f, 15.0f, 5.0f), vec4(0.0f, 1.0f, 0.0f, 0.5f), vec3(0.0f), 1.0f, 1.0f, vec3(2.0f, 2.0f, 2.0f), vec3(-PI/2, -PI/4, 0.0f));
 
     AddObject(MESH_PLANE, vec3(-10.0f, 15.0f, 0.0f), vec4(0.0f, 0.0f, 1.0f, 0.5f), vec3(0.0f), 1.0f, 1.0f, vec3(2.0f, 2.0f, 2.0f), vec3(-PI/2, -PI/4, 0.0f));
+
+    avboitBootstrapStage("SCENE_CREATE_END");
 
 }
 
@@ -2164,7 +2412,9 @@ public:
 
         settings.pExtendedSettings = &extendedSettings;
 
+        avboitBootstrapStage("RENDERER_INIT_BEGIN");
         initRenderer(GetName(), &settings, &pRenderer);
+        avboitBootstrapStage(pRenderer ? "RENDERER_INIT_END" : "RENDERER_INIT_FAILED");
 
 
 
@@ -2773,11 +3023,13 @@ public:
                                        mSettings.mHeight);
                 setCaptureScreenshot(gAVBOITCaptureName);
                 gAVBOITAutoCaptureQueued = true;
+                avboitBootstrapStage("CAPTURE_REQUESTED");
                 LOGF(LogLevel::eINFO, "AVBOIT auto capture queued at frame %u as %s.", gAVBOITAutoCaptureFrame, gAVBOITCaptureName);
             }
 
             if (gAVBOITAutoCaptureCaptured || gAVBOITAutoCaptureFrame >= gAVBOITAutoCaptureTargetFrame + 300)
             {
+                avboitBootstrapStage(gAVBOITAutoCaptureCaptured ? "APP_EXIT_REQUESTED" : "CAPTURE_TIMEOUT_APP_EXIT_REQUESTED");
                 mSettings.mQuit = true;
             }
         }
@@ -5385,6 +5637,7 @@ void Draw() override
             captureScreenshot(pSwapChain, swapchainImageIndex, true, false);
             WriteAVBOITCaptureMetadata(gAVBOITAutoCaptureFrame, mSettings.mWidth, mSettings.mHeight);
             gAVBOITAutoCaptureCaptured = true;
+            avboitBootstrapStage("CAPTURE_WRITTEN");
             LOGF(LogLevel::eINFO, "AVBOIT auto capture completed at frame %u.", gAVBOITAutoCaptureFrame);
         }
 
