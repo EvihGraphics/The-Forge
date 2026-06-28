@@ -1756,6 +1756,20 @@ static uint32_t GetAVBOITReadbackSliceAlignment(TinyImageFormat format)
     return round_up(alignment, GetAVBOITReadbackRowAlignment());
 }
 
+static uint32_t HashAVBOITString(const char* text)
+{
+    uint32_t hash = 2166136261u;
+    if (!text)
+        return hash;
+
+    while (*text)
+    {
+        hash ^= (uint8_t)*text++;
+        hash *= 16777619u;
+    }
+    return hash;
+}
+
 static bool DumpAVBOITRenderTargetRaw(const char* label, RenderTarget* pRenderTarget)
 {
     if (!label || !pRenderTarget || !pRenderTarget->pTexture)
@@ -1811,8 +1825,9 @@ static bool DumpAVBOITRenderTargetRaw(const char* label, RenderTarget* pRenderTa
 
     char rawName[FS_MAX_PATH] = {};
     char jsonName[FS_MAX_PATH] = {};
-    snprintf(rawName, sizeof(rawName), "%s_raw_%s.bin", gAVBOITCaptureName, label);
-    snprintf(jsonName, sizeof(jsonName), "%s_raw_%s.json", gAVBOITCaptureName, label);
+    const uint32_t captureHash = HashAVBOITString(gAVBOITCaptureName);
+    snprintf(rawName, sizeof(rawName), "raw_%08x_%s.bin", captureHash, label);
+    snprintf(jsonName, sizeof(jsonName), "raw_%08x_%s.json", captureHash, label);
 
     const bool rawOk = WriteAVBOITRawFile(rawName, readbackBuffer->pCpuMappedAddress, readbackBuffer->mSize);
 
@@ -1820,6 +1835,7 @@ static bool DumpAVBOITRenderTargetRaw(const char* label, RenderTarget* pRenderTa
     snprintf(json, sizeof(json),
              "{\n"
              "  \"capture\": \"%s\",\n"
+             "  \"captureHash\": \"%08x\",\n"
              "  \"label\": \"%s\",\n"
              "  \"file\": \"%s\",\n"
              "  \"width\": %u,\n"
@@ -1844,9 +1860,9 @@ static bool DumpAVBOITRenderTargetRaw(const char* label, RenderTarget* pRenderTa
              "  \"submitOrder\": \"%s\",\n"
              "  \"commit\": \"%s\"\n"
              "}\n",
-             gAVBOITCaptureName, label, rawName, pRenderTarget->mWidth, pRenderTarget->mHeight, max(1u, pRenderTarget->mDepth),
-             TinyImageFormat_Name(format), rowBytes, numRows, rowAlignment, sliceAlignment, (uint32_t)readbackBuffer->mSize,
-             RendererApiToStringLocal(gPlatformParameters.mSelectedRendererApi), gTransparencyType, gAVBOITDebugView,
+             gAVBOITCaptureName, captureHash, label, rawName, pRenderTarget->mWidth, pRenderTarget->mHeight,
+             max(1u, pRenderTarget->mDepth), TinyImageFormat_Name(format), rowBytes, numRows, rowAlignment, sliceAlignment,
+             (uint32_t)readbackBuffer->mSize, RendererApiToStringLocal(gPlatformParameters.mSelectedRendererApi), gTransparencyType, gAVBOITDebugView,
              CurrentAVBOITTransmittanceDirectionName(), CurrentAVBOITWeightSourceName(), gAVBOITWeightConstant,
              gAVBOITWeightPattern ? 'B' : 'A', CurrentAVBOITTestSceneName(), gAVBOITTestCase, gAVBOITSubmitOrder,
              gAVBOITCommitShortSha);
@@ -1867,9 +1883,13 @@ static void DumpAVBOITRawAccumResources()
     DumpAVBOITRenderTargetRaw("AVBOITAccumExtinction", pRenderTargetAVBOIT[AVBOIT_RT_ACCUM_EXTINCTION]);
 
     char jsonName[FS_MAX_PATH] = {};
-    snprintf(jsonName, sizeof(jsonName), "%s_raw_AVBOITAccumDiagnostics.json", gAVBOITCaptureName);
-    const char* json =
+    const uint32_t captureHash = HashAVBOITString(gAVBOITCaptureName);
+    snprintf(jsonName, sizeof(jsonName), "raw_%08x_AVBOITAccumDiagnostics.json", captureHash);
+    char json[2048] = {};
+    snprintf(json, sizeof(json),
         "{\n"
+        "  \"capture\": \"%s\",\n"
+        "  \"captureHash\": \"%08x\",\n"
         "  \"label\": \"AVBOITAccumDiagnostics\",\n"
         "  \"storage\": \"synthesized_from_existing_mrts\",\n"
         "  \"channels\": {\n"
@@ -1880,7 +1900,8 @@ static void DumpAVBOITRawAccumResources()
         "    \"frontWeightTimesAlpha\": \"AVBOITAccumExtinction.b\",\n"
         "    \"alphaSum\": \"AVBOITAccumExtinction.a\"\n"
         "  }\n"
-        "}\n";
+        "}\n",
+        gAVBOITCaptureName, captureHash);
     WriteAVBOITRawFile(jsonName, json, strlen(json));
     avboitBootstrapStage("RAW_ACCUM_DUMP_END");
 }
