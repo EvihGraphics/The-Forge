@@ -52,6 +52,10 @@ float4 PS_MAIN(VSOutput In)
     float denominator = accumColorWeight.a;
     float totalExtinction = max(accumExtinction.r, 0.0f);
     float coverage = accumExtinction.a > 0.0f ? 1.0f : 0.0f;
+    float alphaSum = accumExtinction.a;
+    float selectedWeight = denominator / max(alphaSum, 1e-6f);
+    float legacyWeight = accumExtinction.g / max(alphaSum, 1e-6f);
+    float frontWeight = accumExtinction.b / max(alphaSum, 1e-6f);
     float totalTransmittance = exp(-totalExtinction);
     float opacity = 1.0f - totalTransmittance;
 
@@ -122,6 +126,35 @@ float4 PS_MAIN(VSOutput In)
     {
         float v = saturate(abs(opacity - denominator));
         RETURN(float4(v, v, v, 1.0f));
+    }
+    if (Get(avboitDebugView) == 15u)
+    {
+        float v = saturate(selectedWeight);
+        RETURN(float4(v, v, v, 1.0f));
+    }
+    if (Get(avboitDebugView) == 16u)
+    {
+        float v = saturate(legacyWeight);
+        RETURN(float4(v, v, v, 1.0f));
+    }
+    if (Get(avboitDebugView) == 17u)
+    {
+        float v = saturate(frontWeight);
+        RETURN(float4(v, v, v, 1.0f));
+    }
+    if (Get(avboitDebugView) == 18u)
+    {
+        float v = saturate(0.5f + 0.5f * (selectedWeight - legacyWeight));
+        RETURN(float4(v, v, v, 1.0f));
+    }
+    if (Get(avboitDebugView) == 19u)
+    {
+        float v = saturate(0.5f + 0.5f * (selectedWeight - frontWeight));
+        RETURN(float4(v, v, v, 1.0f));
+    }
+    if (Get(avboitDebugView) == 20u)
+    {
+        RETURN(float4(coverage, coverage, coverage, 1.0f));
     }
 
     if (denominator <= 1e-6f && totalExtinction <= 1e-6f)

@@ -66,6 +66,7 @@
 #include "../../../../Common_3/Graphics/Interfaces/IGraphics.h"
 
 #include "../../../../Common_3/Resources/ResourceLoader/Interfaces/IResourceLoader.h"
+#include "../../../../Common_3/Resources/ResourceLoader/TextureContainers.h"
 
 #include "../../../../Common_3/Utilities/Interfaces/IFileSystem.h"
 
@@ -658,7 +659,18 @@ typedef enum AVBOITTestScene
     AVBOIT_TEST_SCENE_SAME_SLICE,
 } AVBOITTestScene;
 
+typedef enum AVBOITWeightSource
+{
+    AVBOIT_WEIGHT_SOURCE_LUT = 0,
+    AVBOIT_WEIGHT_SOURCE_CONSTANT = 1,
+    AVBOIT_WEIGHT_SOURCE_LAYER_ID = 2,
+} AVBOITWeightSource;
+
 uint32_t gAVBOITTransmittanceDirection = AVBOIT_TRANSMITTANCE_LEGACY;
+uint32_t gAVBOITWeightSource = AVBOIT_WEIGHT_SOURCE_LUT;
+float    gAVBOITWeightConstant = 0.25f;
+uint32_t gAVBOITWeightPattern = 0;
+bool     gAVBOITDumpRawAccum = false;
 AVBOITTestScene gAVBOITTestScene = AVBOIT_TEST_SCENE_DEFAULT;
 char gAVBOITTestCase[64] = "default";
 char gAVBOITSubmitOrder[32] = "normal";
@@ -681,6 +693,12 @@ static const char* gAVBOITDebugViewNames[] = {
     "AVBOIT weighted color sum",
     "AVBOIT front minus legacy weight",
     "AVBOIT analytic error proxy",
+    "AVBOIT selected event weight",
+    "AVBOIT legacy event weight",
+    "AVBOIT front event weight",
+    "AVBOIT selected minus legacy",
+    "AVBOIT selected minus front",
+    "AVBOIT selected weight coverage",
 };
 
 static const uint32_t gAVBOITDebugViewCount = sizeof(gAVBOITDebugViewNames) / sizeof(gAVBOITDebugViewNames[0]);
@@ -717,6 +735,10 @@ struct AVBOITUniformData
     uint32_t mAnalyticFlags;
 };
 static_assert(sizeof(AVBOITUniformData) == 32, "AVBOIT uniform layout must match FSL cbuffer layout");
+
+static const uint32_t AVBOIT_ANALYTIC_FLAG_WEIGHT_SOURCE_MASK = 0xFu;
+static const uint32_t AVBOIT_ANALYTIC_FLAG_WEIGHT_CONSTANT_075 = 1u << 4;
+static const uint32_t AVBOIT_ANALYTIC_FLAG_WEIGHT_PATTERN_B = 1u << 5;
 
 static const AVBOITVolumeConfig gAVBOITVolumeConfig = {};
 static AVBOITVolumeDimensions   gAVBOITVolumeDimensions = {};
@@ -774,7 +796,11 @@ static void UpdateAVBOITUniformBuffer(uint32_t frameIndex, const AVBOITVolumeDim
     uniformData.mMultiplier = gAVBOITMultiplier;
     uniformData.mDebugView = gAVBOITDebugView;
     uniformData.mTransmittanceDirection = gAVBOITTransmittanceDirection;
-    uniformData.mAnalyticFlags = (gAVBOITTestScene != AVBOIT_TEST_SCENE_DEFAULT) ? 1u : 0u;
+    uniformData.mAnalyticFlags = gAVBOITWeightSource & AVBOIT_ANALYTIC_FLAG_WEIGHT_SOURCE_MASK;
+    if (gAVBOITWeightConstant >= 0.5f)
+        uniformData.mAnalyticFlags |= AVBOIT_ANALYTIC_FLAG_WEIGHT_CONSTANT_075;
+    if (gAVBOITWeightPattern == 1)
+        uniformData.mAnalyticFlags |= AVBOIT_ANALYTIC_FLAG_WEIGHT_PATTERN_B;
 
     BufferUpdateDesc avboitUpdate = { pBufferAVBOITUniform[frameIndex] };
     beginUpdateResource(&avboitUpdate);
@@ -1377,6 +1403,16 @@ static const char* CurrentAVBOITTransmittanceDirectionName()
     return gAVBOITTransmittanceDirection == AVBOIT_TRANSMITTANCE_FRONT ? "front" : "legacy";
 }
 
+static const char* CurrentAVBOITWeightSourceName()
+{
+    switch (gAVBOITWeightSource)
+    {
+    case AVBOIT_WEIGHT_SOURCE_CONSTANT: return "constant";
+    case AVBOIT_WEIGHT_SOURCE_LAYER_ID: return "layer_id";
+    default: return "lut";
+    }
+}
+
 static const char* CurrentAVBOITTestSceneName()
 {
     switch (gAVBOITTestScene)
@@ -1606,8 +1642,14 @@ static void BuildAVBOITCaptureName(char* outName, size_t outNameSize, uint32_t f
     char diagnosticSuffix[192] = {};
     if (gAVBOITTestScene != AVBOIT_TEST_SCENE_DEFAULT)
     {
-        snprintf(diagnosticSuffix, sizeof(diagnosticSuffix), "_Scene%s_Case%s_Order%s_Layer%s", CurrentAVBOITTestSceneName(),
-                 gAVBOITTestCase, gAVBOITSubmitOrder, gAVBOITAnalyticLayerFilterName);
+        char weightSuffix[64] = {};
+        if (gAVBOITWeightSource == AVBOIT_WEIGHT_SOURCE_CONSTANT)
+            snprintf(weightSuffix, sizeof(weightSuffix), "_Weightconstant%.2f", gAVBOITWeightConstant);
+        else if (gAVBOITWeightSource == AVBOIT_WEIGHT_SOURCE_LAYER_ID)
+            snprintf(weightSuffix, sizeof(weightSuffix), "_Weightlayer%c", gAVBOITWeightPattern ? 'B' : 'A');
+
+        snprintf(diagnosticSuffix, sizeof(diagnosticSuffix), "_Scene%s_Case%s_Order%s_Layer%s%s", CurrentAVBOITTestSceneName(),
+                 gAVBOITTestCase, gAVBOITSubmitOrder, gAVBOITAnalyticLayerFilterName, weightSuffix);
     }
 
     if (gTransparencyType == TRANSPARENCY_TYPE_ADAPTIVE_VOXEL_BASED_OIT)
@@ -1650,14 +1692,19 @@ static void WriteAVBOITCaptureMetadata(uint32_t frameIndex, uint32_t width, uint
                      "  \"fixedDeltaEnabled\": %s,\n"
                      "  \"randomSeed\": %u,\n"
                      "  \"transmittanceDirection\": \"%s\",\n"
+                     "  \"weightSource\": \"%s\",\n"
+                     "  \"weightConstant\": %.6f,\n"
+                     "  \"weightPattern\": \"%c\",\n"
+                     "  \"rawAccumDumpRequested\": %s,\n"
                      "  \"testScene\": \"%s\",\n"
                      "  \"testCase\": \"%s\",\n"
                      "  \"submitOrder\": \"%s\",\n",
                      gAVBOITRequestedApiName, createdApi, gpuName, driver, width, height, gTransparencyType, gAVBOITDebugView,
                      gAVBOITDebugView < gAVBOITDebugViewCount ? gAVBOITDebugViewNames[gAVBOITDebugView] : "unknown",
                      gAVBOITMultiplier, frameIndex, gAVBOITFixedDelta, gAVBOITFixedDeltaEnabled ? "true" : "false",
-                     gAVBOITRandomSeed, CurrentAVBOITTransmittanceDirectionName(), CurrentAVBOITTestSceneName(), gAVBOITTestCase,
-                     gAVBOITSubmitOrder);
+                     gAVBOITRandomSeed, CurrentAVBOITTransmittanceDirectionName(), CurrentAVBOITWeightSourceName(),
+                     gAVBOITWeightConstant, gAVBOITWeightPattern ? 'B' : 'A', gAVBOITDumpRawAccum ? "true" : "false",
+                     CurrentAVBOITTestSceneName(), gAVBOITTestCase, gAVBOITSubmitOrder);
     AppendAVBOITAnalyticMetadataJson(json, sizeof(json), &jsonOffset, width, height);
     AppendAVBOITJson(json, sizeof(json), &jsonOffset,
                      "  \"commit\": \"%s\",\n"
@@ -1676,6 +1723,166 @@ static void WriteAVBOITCaptureMetadata(uint32_t frameIndex, uint32_t width, uint
     {
         LOGF(LogLevel::eERROR, "Failed to open AVBOIT capture metadata file: %s", metadataName);
     }
+}
+
+static bool WriteAVBOITRawFile(const char* fileName, const void* data, size_t size)
+{
+    FileStream stream = {};
+    if (!fsOpenStreamFromPath(RD_SCREENSHOTS, fileName, FM_WRITE, &stream))
+    {
+        LOGF(LogLevel::eERROR, "Failed to open AVBOIT raw dump file: %s", fileName);
+        return false;
+    }
+
+    bool ok = fsWriteToStream(&stream, data, size) == size;
+    fsCloseStream(&stream);
+    if (!ok)
+        LOGF(LogLevel::eERROR, "Failed to write AVBOIT raw dump file: %s", fileName);
+    return ok;
+}
+
+static uint32_t GetAVBOITReadbackRowAlignment()
+{
+    return pRenderer && pRenderer->pGpu ? max(1u, pRenderer->pGpu->mSettings.mUploadBufferTextureRowAlignment) : 1u;
+}
+
+static uint32_t GetAVBOITReadbackSliceAlignment(TinyImageFormat format)
+{
+    if (!pRenderer || !pRenderer->pGpu)
+        return 1u;
+
+    const uint32_t blockSize = max(1u, TinyImageFormat_BitSizeOfBlock(format) >> 3);
+    const uint32_t alignment = round_up(pRenderer->pGpu->mSettings.mUploadBufferTextureAlignment, blockSize);
+    return round_up(alignment, GetAVBOITReadbackRowAlignment());
+}
+
+static bool DumpAVBOITRenderTargetRaw(const char* label, RenderTarget* pRenderTarget)
+{
+    if (!label || !pRenderTarget || !pRenderTarget->pTexture)
+        return false;
+
+    const TinyImageFormat format = (TinyImageFormat)pRenderTarget->mFormat;
+    uint32_t              rowBytes = 0;
+    uint32_t              numRows = 0;
+    if (!util_get_surface_info(pRenderTarget->mWidth, pRenderTarget->mHeight, format, NULL, &rowBytes, &numRows))
+    {
+        LOGF(LogLevel::eERROR, "Failed to calculate AVBOIT raw dump surface info for %s.", label);
+        return false;
+    }
+
+    const uint32_t rowAlignment = GetAVBOITReadbackRowAlignment();
+    const uint32_t sliceAlignment = GetAVBOITReadbackSliceAlignment(format);
+    const uint32_t paddedSize = util_get_surface_size(format, pRenderTarget->mWidth, pRenderTarget->mHeight,
+                                                      max(1u, pRenderTarget->mDepth), rowAlignment, sliceAlignment, 0, 1, 0, 1);
+    if (!paddedSize)
+    {
+        LOGF(LogLevel::eERROR, "Failed to calculate AVBOIT raw dump staging size for %s.", label);
+        return false;
+    }
+
+    Buffer* readbackBuffer = NULL;
+    BufferLoadDesc bufferDesc = {};
+    bufferDesc.mDesc.mDescriptors = DESCRIPTOR_TYPE_BUFFER;
+    bufferDesc.mDesc.mMemoryUsage = RESOURCE_MEMORY_USAGE_GPU_TO_CPU;
+    bufferDesc.mDesc.mSize = paddedSize;
+    bufferDesc.mDesc.mFlags = BUFFER_CREATION_FLAG_NO_DESCRIPTOR_VIEW_CREATION | BUFFER_CREATION_FLAG_PERSISTENT_MAP_BIT;
+    bufferDesc.mDesc.mStartState = RESOURCE_STATE_COPY_DEST;
+    bufferDesc.mDesc.mFormat = format;
+    bufferDesc.ppBuffer = &readbackBuffer;
+    addResource(&bufferDesc, NULL);
+    waitForAllResourceLoads();
+
+    if (!readbackBuffer || !readbackBuffer->pCpuMappedAddress)
+    {
+        LOGF(LogLevel::eERROR, "Failed to allocate AVBOIT raw dump readback buffer for %s.", label);
+        if (readbackBuffer)
+            removeResource(readbackBuffer);
+        return false;
+    }
+
+    TextureCopyDesc copyDesc = {};
+    copyDesc.pTexture = pRenderTarget->pTexture;
+    copyDesc.pBuffer = readbackBuffer;
+    copyDesc.mTextureState = RESOURCE_STATE_PIXEL_SHADER_RESOURCE;
+    copyDesc.mQueueType = QUEUE_TYPE_GRAPHICS;
+    SyncToken token = {};
+    copyResource(&copyDesc, &token);
+    waitForToken(&token);
+
+    char rawName[FS_MAX_PATH] = {};
+    char jsonName[FS_MAX_PATH] = {};
+    snprintf(rawName, sizeof(rawName), "%s_raw_%s.bin", gAVBOITCaptureName, label);
+    snprintf(jsonName, sizeof(jsonName), "%s_raw_%s.json", gAVBOITCaptureName, label);
+
+    const bool rawOk = WriteAVBOITRawFile(rawName, readbackBuffer->pCpuMappedAddress, readbackBuffer->mSize);
+
+    char json[4096] = {};
+    snprintf(json, sizeof(json),
+             "{\n"
+             "  \"capture\": \"%s\",\n"
+             "  \"label\": \"%s\",\n"
+             "  \"file\": \"%s\",\n"
+             "  \"width\": %u,\n"
+             "  \"height\": %u,\n"
+             "  \"depth\": %u,\n"
+             "  \"format\": \"%s\",\n"
+             "  \"rowBytes\": %u,\n"
+             "  \"numRows\": %u,\n"
+             "  \"rowAlignment\": %u,\n"
+             "  \"sliceAlignment\": %u,\n"
+             "  \"bufferBytes\": %u,\n"
+             "  \"textureStateBeforeCopy\": \"PIXEL_SHADER_RESOURCE\",\n"
+             "  \"api\": \"%s\",\n"
+             "  \"mode\": %u,\n"
+             "  \"debugView\": %u,\n"
+             "  \"transmittanceDirection\": \"%s\",\n"
+             "  \"weightSource\": \"%s\",\n"
+             "  \"weightConstant\": %.6f,\n"
+             "  \"weightPattern\": \"%c\",\n"
+             "  \"testScene\": \"%s\",\n"
+             "  \"testCase\": \"%s\",\n"
+             "  \"submitOrder\": \"%s\",\n"
+             "  \"commit\": \"%s\"\n"
+             "}\n",
+             gAVBOITCaptureName, label, rawName, pRenderTarget->mWidth, pRenderTarget->mHeight, max(1u, pRenderTarget->mDepth),
+             TinyImageFormat_Name(format), rowBytes, numRows, rowAlignment, sliceAlignment, (uint32_t)readbackBuffer->mSize,
+             RendererApiToStringLocal(gPlatformParameters.mSelectedRendererApi), gTransparencyType, gAVBOITDebugView,
+             CurrentAVBOITTransmittanceDirectionName(), CurrentAVBOITWeightSourceName(), gAVBOITWeightConstant,
+             gAVBOITWeightPattern ? 'B' : 'A', CurrentAVBOITTestSceneName(), gAVBOITTestCase, gAVBOITSubmitOrder,
+             gAVBOITCommitShortSha);
+    const bool jsonOk = WriteAVBOITRawFile(jsonName, json, strlen(json));
+
+    removeResource(readbackBuffer);
+    LOGF(LogLevel::eINFO, "AVBOIT raw dump %s %s.", label, rawOk && jsonOk ? "completed" : "failed");
+    return rawOk && jsonOk;
+}
+
+static void DumpAVBOITRawAccumResources()
+{
+    if (!gAVBOITDumpRawAccum || gTransparencyType != TRANSPARENCY_TYPE_ADAPTIVE_VOXEL_BASED_OIT)
+        return;
+
+    avboitBootstrapStage("RAW_ACCUM_DUMP_START");
+    DumpAVBOITRenderTargetRaw("AVBOITAccumColorWeight", pRenderTargetAVBOIT[AVBOIT_RT_ACCUM_COLOR_WEIGHT]);
+    DumpAVBOITRenderTargetRaw("AVBOITAccumExtinction", pRenderTargetAVBOIT[AVBOIT_RT_ACCUM_EXTINCTION]);
+
+    char jsonName[FS_MAX_PATH] = {};
+    snprintf(jsonName, sizeof(jsonName), "%s_raw_AVBOITAccumDiagnostics.json", gAVBOITCaptureName);
+    const char* json =
+        "{\n"
+        "  \"label\": \"AVBOITAccumDiagnostics\",\n"
+        "  \"storage\": \"synthesized_from_existing_mrts\",\n"
+        "  \"channels\": {\n"
+        "    \"selectedWeightedColorRgb\": \"AVBOITAccumColorWeight.rgb\",\n"
+        "    \"selectedDenominator\": \"AVBOITAccumColorWeight.a\",\n"
+        "    \"totalExtinction\": \"AVBOITAccumExtinction.r\",\n"
+        "    \"legacyWeightTimesAlpha\": \"AVBOITAccumExtinction.g\",\n"
+        "    \"frontWeightTimesAlpha\": \"AVBOITAccumExtinction.b\",\n"
+        "    \"alphaSum\": \"AVBOITAccumExtinction.a\"\n"
+        "  }\n"
+        "}\n";
+    WriteAVBOITRawFile(jsonName, json, strlen(json));
+    avboitBootstrapStage("RAW_ACCUM_DUMP_END");
 }
 
 static void ParseAVBOITCaptureCommandLine()
@@ -1719,6 +1926,29 @@ static void ParseAVBOITCaptureCommandLine()
             gAVBOITTestScene = AVBOIT_TEST_SCENE_DEFAULT;
     }
 
+    gAVBOITWeightSource = AVBOIT_WEIGHT_SOURCE_LUT;
+    gAVBOITWeightConstant = 0.25f;
+    gAVBOITWeightPattern = 0;
+    if (CommandLineGetValue("--avboit-weight-source=", commandValue, sizeof(commandValue)))
+    {
+        if (StringEqualsNoCase(commandValue, "constant"))
+            gAVBOITWeightSource = AVBOIT_WEIGHT_SOURCE_CONSTANT;
+        else if (StringEqualsNoCase(commandValue, "layer_id"))
+            gAVBOITWeightSource = AVBOIT_WEIGHT_SOURCE_LAYER_ID;
+        else
+            gAVBOITWeightSource = AVBOIT_WEIGHT_SOURCE_LUT;
+    }
+    if (CommandLineGetValue("--avboit-weight-constant=", commandValue, sizeof(commandValue)))
+        gAVBOITWeightConstant = (float)atof(commandValue) >= 0.5f ? 0.75f : 0.25f;
+    if (CommandLineGetValue("--avboit-weight-pattern=", commandValue, sizeof(commandValue)))
+        gAVBOITWeightPattern = StringEqualsNoCase(commandValue, "b") ? 1u : 0u;
+    if (gAVBOITTestScene == AVBOIT_TEST_SCENE_DEFAULT && gAVBOITWeightSource != AVBOIT_WEIGHT_SOURCE_LUT)
+    {
+        LOGF(LogLevel::eWARNING, "AVBOIT forced weight source is only allowed for analytic scenes; falling back to LUT.");
+        gAVBOITWeightSource = AVBOIT_WEIGHT_SOURCE_LUT;
+    }
+    gAVBOITDumpRawAccum = CommandLineHasSwitch("--avboit-dump-raw-accum") && gAVBOITTestScene != AVBOIT_TEST_SCENE_DEFAULT;
+
     if (!CommandLineGetValue("--avboit-test-case=", gAVBOITTestCase, sizeof(gAVBOITTestCase)))
         strncpy(gAVBOITTestCase, "default", sizeof(gAVBOITTestCase) - 1);
     gAVBOITTestCase[sizeof(gAVBOITTestCase) - 1] = 0;
@@ -1754,6 +1984,8 @@ static void ParseAVBOITCaptureCommandLine()
     LOGF(LogLevel::eINFO, "AVBOIT transmittance direction: %s", CurrentAVBOITTransmittanceDirectionName());
     LOGF(LogLevel::eINFO, "AVBOIT test scene: %s case=%s submitOrder=%s layerFilter=%s", CurrentAVBOITTestSceneName(),
          gAVBOITTestCase, gAVBOITSubmitOrder, gAVBOITAnalyticLayerFilterName);
+    LOGF(LogLevel::eINFO, "AVBOIT weight source: %s constant=%.2f pattern=%c rawDump=%s", CurrentAVBOITWeightSourceName(),
+         gAVBOITWeightConstant, gAVBOITWeightPattern ? 'B' : 'A', gAVBOITDumpRawAccum ? "true" : "false");
     avboitBootstrapStage("COMMAND_LINE_CAPTURE_ARGS_PARSED");
 
     if (gAVBOITAutoCaptureEnabled)
@@ -5654,6 +5886,7 @@ void Draw() override
 
         if (gAVBOITAutoCaptureQueued && !gAVBOITAutoCaptureCaptured)
         {
+            DumpAVBOITRawAccumResources();
             captureScreenshot(pSwapChain, swapchainImageIndex, true, false);
             WriteAVBOITCaptureMetadata(gAVBOITAutoCaptureFrame, mSettings.mWidth, mSettings.mHeight);
             gAVBOITAutoCaptureCaptured = true;

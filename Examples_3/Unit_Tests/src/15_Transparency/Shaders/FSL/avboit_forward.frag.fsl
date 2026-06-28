@@ -58,6 +58,19 @@ PSOutput PS_MAIN(VSOutput In)
     float frontWeight = frontLutValue.r;
 
     float eventWeight = Get(avboitTransmittanceDirection) == AVBOIT_TRANSMITTANCE_FRONT ? frontWeight : legacyWeight;
+    uint weightSource = Get(avboitAnalyticFlags) & AVBOIT_ANALYTIC_FLAG_WEIGHT_SOURCE_MASK;
+    if (weightSource == AVBOIT_WEIGHT_SOURCE_CONSTANT)
+    {
+        eventWeight = (Get(avboitAnalyticFlags) & AVBOIT_ANALYTIC_FLAG_WEIGHT_CONSTANT_075) != 0u ? 0.75f : 0.25f;
+    }
+    else if (weightSource == AVBOIT_WEIGHT_SOURCE_LAYER_ID)
+    {
+        bool patternB = (Get(avboitAnalyticFlags) & AVBOIT_ANALYTIC_FLAG_WEIGHT_PATTERN_B) != 0u;
+        float frontLayerWeight = patternB ? 0.25f : 1.0f;
+        float middleLayerWeight = 0.5f;
+        float backLayerWeight = patternB ? 1.0f : 0.25f;
+        eventWeight = zIndex >= 40u ? frontLayerWeight : (zIndex >= 24u ? middleLayerWeight : backLayerWeight);
+    }
     eventWeight = max(eventWeight, 1e-6f);
 
     float alpha = min(baseColor.a, 0.99f);
@@ -65,6 +78,6 @@ PSOutput PS_MAIN(VSOutput In)
 
     Out.AccumColorWeight = float4(baseColor.rgb * alpha * eventWeight, alpha * eventWeight);
     float diagnosticG = Get(avboitDebugView) == 6u ? float(zIndex) / max(float(volumeDepth - 1u), 1.0f) : legacyWeight * alpha;
-    Out.AccumExtinction = float4(extinction, diagnosticG, frontWeight * alpha, 1.0f);
+    Out.AccumExtinction = float4(extinction, diagnosticG, frontWeight * alpha, alpha);
     RETURN(Out);
 }
