@@ -1,0 +1,21 @@
+{
+  "source": "Examples_3/Unit_Tests/src/15_Transparency/15_Transparency.cpp",
+  "views": [
+    { "id": 0, "name": "Final", "p2_6rInterpretation": "Final resolved AVBOIT output." },
+    { "id": 1, "name": "Low-resolution total transmittance", "p2_6rInterpretation": "Upsampled low-resolution total transmittance diagnostic." },
+    { "id": 2, "name": "Full-resolution transparent coverage", "p2_6rInterpretation": "Coverage from actual full-resolution transparent fragments." },
+    { "id": 3, "name": "Full-resolution accumulated extinction", "p2_6rInterpretation": "Full-resolution accumulated extinction diagnostic." },
+    { "id": 4, "name": "Full-resolution normalization denominator", "p2_6rInterpretation": "Full-resolution normalization denominator diagnostic." },
+    { "id": 5, "name": "Final resolve opacity", "p2_6rInterpretation": "Final resolve opacity diagnostic." },
+    { "id": 6, "name": "AVBOIT z slice", "p2_6rInterpretation": "Voxel z slice diagnostic." },
+    { "id": 7, "name": "AVBOIT legacy weight", "p2_6rInterpretation": "Current-run weight proxy for legacy mode; not a simultaneous legacy/front diff image." },
+    { "id": 8, "name": "AVBOIT candidate front weight", "p2_6rInterpretation": "Current-run weight proxy for front mode; not a simultaneous legacy/front diff image." },
+    { "id": 9, "name": "AVBOIT denominator", "p2_6rInterpretation": "AVBOIT denominator diagnostic." },
+    { "id": 10, "name": "AVBOIT opacity", "p2_6rInterpretation": "AVBOIT opacity diagnostic." },
+    { "id": 11, "name": "AVBOIT opacity denominator ratio", "p2_6rInterpretation": "Opacity/denominator ratio diagnostic." },
+    { "id": 12, "name": "AVBOIT weighted color sum", "p2_6rInterpretation": "Weighted color sum diagnostic." },
+    { "id": 13, "name": "AVBOIT front minus legacy weight", "p2_6rInterpretation": "Current-run direction proxy; true legacy/front difference is measured by paired captures." },
+    { "id": 14, "name": "AVBOIT analytic error proxy", "p2_6rInterpretation": "Analytic error proxy diagnostic." }
+  ],
+  "p2_6rConclusion": "Debug views 7 and 8 change with transmittance direction, but final view 0 is byte-identical for all paired legacy/front analytic captures in this result set."
+}

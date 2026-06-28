@@ -1,0 +1,38 @@
+[
+  {
+    "debugView": 0,
+    "front": {
+      "file": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layerall.png",
+      "sha256": "e409239861dd29a98d20f096c2f7f64c8a8966a21dc132a622b5dc7159726677"
+    },
+    "legacy": {
+      "file": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layerall.png",
+      "sha256": "e409239861dd29a98d20f096c2f7f64c8a8966a21dc132a622b5dc7159726677"
+    },
+    "legacyEqualsFront": true
+  },
+  {
+    "debugView": 7,
+    "front": {
+      "file": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug7_Dirfront_Mul1.0_Frame60_fd47644c_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layerall.png",
+      "sha256": "d992dc593b1930ad2a3cddcd7d2ed22e38386deb508c2a8d60c2484f697cec38"
+    },
+    "legacy": {
+      "file": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug7_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layerall.png",
+      "sha256": "b4561ff98317ad04f65f88344edc7512b201e3e60a2d3a5bed15a95df5c81664"
+    },
+    "legacyEqualsFront": false
+  },
+  {
+    "debugView": 8,
+    "front": {
+      "file": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug8_Dirfront_Mul1.0_Frame60_fd47644c_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layerall.png",
+      "sha256": "b4561ff98317ad04f65f88344edc7512b201e3e60a2d3a5bed15a95df5c81664"
+    },
+    "legacy": {
+      "file": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug8_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layerall.png",
+      "sha256": "d992dc593b1930ad2a3cddcd7d2ed22e38386deb508c2a8d60c2484f697cec38"
+    },
+    "legacyEqualsFront": false
+  }
+]

@@ -1,0 +1,20 @@
+{
+  "combinedMask": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\metrics\\overlap_validation\\two_a050_050_combined.png",
+  "combinedPixelCount": 22203,
+  "height": 1080,
+  "layerMaskCount": 2,
+  "layerMasks": [
+    "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug2_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layer0.png",
+    "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug2_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layer1.png"
+  ],
+  "overlapMask": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\metrics\\overlap_validation\\two_a050_050_overlap.png",
+  "overlapPixelCount": 12914,
+  "perLayerPixelCounts": [
+    22203,
+    12914
+  ],
+  "status": "PASS",
+  "threeWayOverlapPixelCount": 0,
+  "threshold": 0.00392156862745098,
+  "width": 1920
+}

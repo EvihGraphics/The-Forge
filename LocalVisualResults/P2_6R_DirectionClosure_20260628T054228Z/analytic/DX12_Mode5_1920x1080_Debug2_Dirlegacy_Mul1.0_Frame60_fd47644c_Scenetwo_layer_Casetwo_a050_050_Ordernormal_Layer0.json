@@ -1,0 +1,32 @@
+{
+  "requestedApi": "DX12",
+  "createdApi": "DX12",
+  "gpu": "NVIDIA GeForce RTX 4060 Ti",
+  "driver": "591.86",
+  "resolution": { "width": 1920, "height": 1080 },
+  "mode": 5,
+  "debugView": 2,
+  "debugViewName": "Full-resolution transparent coverage",
+  "multiplier": 1.000000,
+  "captureFrame": 60,
+  "fixedDelta": 0.0166666675,
+  "fixedDeltaEnabled": true,
+  "randomSeed": 1337,
+  "transmittanceDirection": "legacy",
+  "testScene": "two_layer",
+  "testCase": "two_a050_050",
+  "submitOrder": "normal",
+  "analyticLayerFilter": "0",
+  "analytic": {
+    "layerCount": 2,
+    "submitOrderIndices": [0, 1],
+    "layers": [
+      { "index": 0, "includedByLayerFilter": true, "color": [1.000000, 0.000000, 0.000000, 0.500000], "worldPosition": [-9.411764, 7.823529, 8.000000], "linearDepth": 41.180676, "normalizedDepth": 0.551731, "zIndex": 35, "screenBoundsApprox": { "left": 866.8, "top": 446.8, "right": 1053.2, "bottom": 633.2 } },
+      { "index": 1, "includedByLayerFilter": false, "color": [0.000000, 1.000000, 0.000000, 0.500000], "worldPosition": [0.000000, 5.000000, 0.000000], "linearDepth": 53.851646, "normalizedDepth": 0.519386, "zIndex": 33, "screenBoundsApprox": { "left": 888.7, "top": 468.7, "right": 1031.3, "bottom": 611.3 } }
+    ],
+    "expectedSortedOverBlack": { "rgba": [0.500000, 0.000000, 0.000000, 0.500000] },
+    "overlapRoiApprox": { "left": 866.8, "top": 446.8, "right": 1053.2, "bottom": 633.2 }
+  },
+  "commit": "fd47644c",
+  "screenshot": "DX12_Mode5_1920x1080_Debug2_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layer0.png"
+}

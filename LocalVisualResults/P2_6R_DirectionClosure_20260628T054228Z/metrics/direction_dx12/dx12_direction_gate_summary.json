@@ -1,0 +1,706 @@
+{
+  "api": "DX12",
+  "commit": "fd47644c",
+  "debug0LegacyFrontPairs": [
+    {
+      "case": "same_a050_050",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenesame_slice_Casesame_a050_050_Ordernormal_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenesame_slice_Casesame_a050_050_Ordernormal_Layerall.png",
+      "order": "normal",
+      "sameSha256": true,
+      "scene": "same_slice"
+    },
+    {
+      "case": "same_a050_050",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenesame_slice_Casesame_a050_050_Orderreverse_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenesame_slice_Casesame_a050_050_Orderreverse_Layerall.png",
+      "order": "reverse",
+      "sameSha256": true,
+      "scene": "same_slice"
+    },
+    {
+      "case": "same_three_a020_060_080",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenesame_slice_Casesame_three_a020_060_080_Orderperm012_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenesame_slice_Casesame_three_a020_060_080_Orderperm012_Layerall.png",
+      "order": "perm012",
+      "sameSha256": true,
+      "scene": "same_slice"
+    },
+    {
+      "case": "same_three_a020_060_080",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenesame_slice_Casesame_three_a020_060_080_Orderperm021_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenesame_slice_Casesame_three_a020_060_080_Orderperm021_Layerall.png",
+      "order": "perm021",
+      "sameSha256": true,
+      "scene": "same_slice"
+    },
+    {
+      "case": "same_three_a020_060_080",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenesame_slice_Casesame_three_a020_060_080_Orderperm102_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenesame_slice_Casesame_three_a020_060_080_Orderperm102_Layerall.png",
+      "order": "perm102",
+      "sameSha256": true,
+      "scene": "same_slice"
+    },
+    {
+      "case": "same_three_a020_060_080",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenesame_slice_Casesame_three_a020_060_080_Orderperm120_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenesame_slice_Casesame_three_a020_060_080_Orderperm120_Layerall.png",
+      "order": "perm120",
+      "sameSha256": true,
+      "scene": "same_slice"
+    },
+    {
+      "case": "same_three_a020_060_080",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenesame_slice_Casesame_three_a020_060_080_Orderperm201_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenesame_slice_Casesame_three_a020_060_080_Orderperm201_Layerall.png",
+      "order": "perm201",
+      "sameSha256": true,
+      "scene": "same_slice"
+    },
+    {
+      "case": "same_three_a020_060_080",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenesame_slice_Casesame_three_a020_060_080_Orderperm210_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenesame_slice_Casesame_three_a020_060_080_Orderperm210_Layerall.png",
+      "order": "perm210",
+      "sameSha256": true,
+      "scene": "same_slice"
+    },
+    {
+      "case": "single_a025",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenesingle_layer_Casesingle_a025_Ordernormal_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenesingle_layer_Casesingle_a025_Ordernormal_Layerall.png",
+      "order": "normal",
+      "sameSha256": true,
+      "scene": "single_layer"
+    },
+    {
+      "case": "single_a050",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenesingle_layer_Casesingle_a050_Ordernormal_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenesingle_layer_Casesingle_a050_Ordernormal_Layerall.png",
+      "order": "normal",
+      "sameSha256": true,
+      "scene": "single_layer"
+    },
+    {
+      "case": "single_a075",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenesingle_layer_Casesingle_a075_Ordernormal_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenesingle_layer_Casesingle_a075_Ordernormal_Layerall.png",
+      "order": "normal",
+      "sameSha256": true,
+      "scene": "single_layer"
+    },
+    {
+      "case": "three_a020_060_080",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a020_060_080_Orderperm012_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a020_060_080_Orderperm012_Layerall.png",
+      "order": "perm012",
+      "sameSha256": true,
+      "scene": "three_layer"
+    },
+    {
+      "case": "three_a020_060_080",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a020_060_080_Orderperm021_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a020_060_080_Orderperm021_Layerall.png",
+      "order": "perm021",
+      "sameSha256": true,
+      "scene": "three_layer"
+    },
+    {
+      "case": "three_a020_060_080",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a020_060_080_Orderperm102_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a020_060_080_Orderperm102_Layerall.png",
+      "order": "perm102",
+      "sameSha256": true,
+      "scene": "three_layer"
+    },
+    {
+      "case": "three_a020_060_080",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a020_060_080_Orderperm120_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a020_060_080_Orderperm120_Layerall.png",
+      "order": "perm120",
+      "sameSha256": true,
+      "scene": "three_layer"
+    },
+    {
+      "case": "three_a020_060_080",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a020_060_080_Orderperm201_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a020_060_080_Orderperm201_Layerall.png",
+      "order": "perm201",
+      "sameSha256": true,
+      "scene": "three_layer"
+    },
+    {
+      "case": "three_a020_060_080",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a020_060_080_Orderperm210_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a020_060_080_Orderperm210_Layerall.png",
+      "order": "perm210",
+      "sameSha256": true,
+      "scene": "three_layer"
+    },
+    {
+      "case": "three_a050_050_050",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a050_050_050_Orderperm012_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a050_050_050_Orderperm012_Layerall.png",
+      "order": "perm012",
+      "sameSha256": true,
+      "scene": "three_layer"
+    },
+    {
+      "case": "three_a050_050_050",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a050_050_050_Orderperm021_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a050_050_050_Orderperm021_Layerall.png",
+      "order": "perm021",
+      "sameSha256": true,
+      "scene": "three_layer"
+    },
+    {
+      "case": "three_a050_050_050",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a050_050_050_Orderperm102_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a050_050_050_Orderperm102_Layerall.png",
+      "order": "perm102",
+      "sameSha256": true,
+      "scene": "three_layer"
+    },
+    {
+      "case": "three_a050_050_050",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a050_050_050_Orderperm120_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a050_050_050_Orderperm120_Layerall.png",
+      "order": "perm120",
+      "sameSha256": true,
+      "scene": "three_layer"
+    },
+    {
+      "case": "three_a050_050_050",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a050_050_050_Orderperm201_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a050_050_050_Orderperm201_Layerall.png",
+      "order": "perm201",
+      "sameSha256": true,
+      "scene": "three_layer"
+    },
+    {
+      "case": "three_a050_050_050",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a050_050_050_Orderperm210_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a050_050_050_Orderperm210_Layerall.png",
+      "order": "perm210",
+      "sameSha256": true,
+      "scene": "three_layer"
+    },
+    {
+      "case": "three_a090_020_040",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a090_020_040_Orderperm012_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a090_020_040_Orderperm012_Layerall.png",
+      "order": "perm012",
+      "sameSha256": true,
+      "scene": "three_layer"
+    },
+    {
+      "case": "three_a090_020_040",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a090_020_040_Orderperm021_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a090_020_040_Orderperm021_Layerall.png",
+      "order": "perm021",
+      "sameSha256": true,
+      "scene": "three_layer"
+    },
+    {
+      "case": "three_a090_020_040",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a090_020_040_Orderperm102_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a090_020_040_Orderperm102_Layerall.png",
+      "order": "perm102",
+      "sameSha256": true,
+      "scene": "three_layer"
+    },
+    {
+      "case": "three_a090_020_040",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a090_020_040_Orderperm120_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a090_020_040_Orderperm120_Layerall.png",
+      "order": "perm120",
+      "sameSha256": true,
+      "scene": "three_layer"
+    },
+    {
+      "case": "three_a090_020_040",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a090_020_040_Orderperm201_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a090_020_040_Orderperm201_Layerall.png",
+      "order": "perm201",
+      "sameSha256": true,
+      "scene": "three_layer"
+    },
+    {
+      "case": "three_a090_020_040",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a090_020_040_Orderperm210_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a090_020_040_Orderperm210_Layerall.png",
+      "order": "perm210",
+      "sameSha256": true,
+      "scene": "three_layer"
+    },
+    {
+      "case": "two_a010_090",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenetwo_layer_Casetwo_a010_090_Ordernormal_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenetwo_layer_Casetwo_a010_090_Ordernormal_Layerall.png",
+      "order": "normal",
+      "sameSha256": true,
+      "scene": "two_layer"
+    },
+    {
+      "case": "two_a010_090",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenetwo_layer_Casetwo_a010_090_Orderreverse_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenetwo_layer_Casetwo_a010_090_Orderreverse_Layerall.png",
+      "order": "reverse",
+      "sameSha256": true,
+      "scene": "two_layer"
+    },
+    {
+      "case": "two_a025_025",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenetwo_layer_Casetwo_a025_025_Ordernormal_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenetwo_layer_Casetwo_a025_025_Ordernormal_Layerall.png",
+      "order": "normal",
+      "sameSha256": true,
+      "scene": "two_layer"
+    },
+    {
+      "case": "two_a025_025",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenetwo_layer_Casetwo_a025_025_Orderreverse_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenetwo_layer_Casetwo_a025_025_Orderreverse_Layerall.png",
+      "order": "reverse",
+      "sameSha256": true,
+      "scene": "two_layer"
+    },
+    {
+      "case": "two_a050_050",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layerall.png",
+      "order": "normal",
+      "sameSha256": true,
+      "scene": "two_layer"
+    },
+    {
+      "case": "two_a050_050",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenetwo_layer_Casetwo_a050_050_Orderreverse_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenetwo_layer_Casetwo_a050_050_Orderreverse_Layerall.png",
+      "order": "reverse",
+      "sameSha256": true,
+      "scene": "two_layer"
+    },
+    {
+      "case": "two_a075_050",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenetwo_layer_Casetwo_a075_050_Ordernormal_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenetwo_layer_Casetwo_a075_050_Ordernormal_Layerall.png",
+      "order": "normal",
+      "sameSha256": true,
+      "scene": "two_layer"
+    },
+    {
+      "case": "two_a075_050",
+      "front": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenetwo_layer_Casetwo_a075_050_Orderreverse_Layerall.png",
+      "legacy": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenetwo_layer_Casetwo_a075_050_Orderreverse_Layerall.png",
+      "order": "reverse",
+      "sameSha256": true,
+      "scene": "two_layer"
+    }
+  ],
+  "debugWeightHashes": [
+    {
+      "debugView": 0,
+      "front": {
+        "file": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_fd47644c_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layerall.png",
+        "sha256": "e409239861dd29a98d20f096c2f7f64c8a8966a21dc132a622b5dc7159726677"
+      },
+      "legacy": {
+        "file": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layerall.png",
+        "sha256": "e409239861dd29a98d20f096c2f7f64c8a8966a21dc132a622b5dc7159726677"
+      },
+      "legacyEqualsFront": true
+    },
+    {
+      "debugView": 7,
+      "front": {
+        "file": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug7_Dirfront_Mul1.0_Frame60_fd47644c_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layerall.png",
+        "sha256": "d992dc593b1930ad2a3cddcd7d2ed22e38386deb508c2a8d60c2484f697cec38"
+      },
+      "legacy": {
+        "file": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug7_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layerall.png",
+        "sha256": "b4561ff98317ad04f65f88344edc7512b201e3e60a2d3a5bed15a95df5c81664"
+      },
+      "legacyEqualsFront": false
+    },
+    {
+      "debugView": 8,
+      "front": {
+        "file": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug8_Dirfront_Mul1.0_Frame60_fd47644c_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layerall.png",
+        "sha256": "b4561ff98317ad04f65f88344edc7512b201e3e60a2d3a5bed15a95df5c81664"
+      },
+      "legacy": {
+        "file": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug8_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layerall.png",
+        "sha256": "d992dc593b1930ad2a3cddcd7d2ed22e38386deb508c2a8d60c2484f697cec38"
+      },
+      "legacyEqualsFront": false
+    }
+  ],
+  "directionDefaultDuringCapture": "legacy",
+  "gateDecision": "FAIL_DIRECTION_GATE_DO_NOT_PROMOTE_FRONT",
+  "gates": {
+    "allPairedFinalOutputsLegacyFrontIdentical": true,
+    "debugWeightsChangeWithDirection": true,
+    "frontDefaultPromotionPass": false,
+    "frontImprovesLegacyBy25Percent": false,
+    "overlapThreeLayerPass": true,
+    "overlapTwoLayerPass": true,
+    "singleLayerLinearStrictPass": false,
+    "singleLayerPngMaxPass": true
+  },
+  "legacyVsFrontDirection": {
+    "allPairedDebug0ImagesByteIdentical": true,
+    "frontAverageLinearRgbMae": "identical_to_legacy_for_all_paired_debug0_outputs",
+    "frontImprovementRatio": 0.0,
+    "legacyAverageLinearRgbMae": "not_redecoded_full_matrix",
+    "pairedDebug0CaptureCount": 37,
+    "pairedDebug0IdenticalCount": 37,
+    "requiredImprovementRatio": 0.25
+  },
+  "notes": [
+    "Debug7/8 weight proxy images differ between legacy and front, so the direction switch reaches shader debug output.",
+    "All paired Debug0 final legacy/front captures are byte-identical, so front cannot improve any final-output metric over legacy in this capture matrix.",
+    "The strict single-layer linear threshold is recorded separately from the PNG max threshold.",
+    "The default direction remains legacy; Vulkan/default-scene/performance closure was stopped by the failed DX12 direction gate."
+  ],
+  "overlapValidation": [
+    {
+      "combinedMask": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\metrics\\overlap_validation\\three_a050_050_050_combined.png",
+      "combinedPixelCount": 22203,
+      "height": 1080,
+      "layerMaskCount": 3,
+      "layerMasks": [
+        "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug2_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a050_050_050_Ordernormal_Layer0.png",
+        "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug2_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a050_050_050_Ordernormal_Layer1.png",
+        "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug2_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenethree_layer_Casethree_a050_050_050_Ordernormal_Layer2.png"
+      ],
+      "overlapMask": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\metrics\\overlap_validation\\three_a050_050_050_overlap.png",
+      "overlapPixelCount": 16649,
+      "perLayerPixelCounts": [
+        22203,
+        16649,
+        12914
+      ],
+      "status": "PASS",
+      "threeWayOverlapPixelCount": 12914,
+      "threshold": 0.00392156862745098,
+      "width": 1920
+    },
+    {
+      "combinedMask": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\metrics\\overlap_validation\\two_a050_050_combined.png",
+      "combinedPixelCount": 22203,
+      "height": 1080,
+      "layerMaskCount": 2,
+      "layerMasks": [
+        "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug2_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layer0.png",
+        "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\analytic\\DX12_Mode5_1920x1080_Debug2_Dirlegacy_Mul1.0_Frame60_fd47644c_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layer1.png"
+      ],
+      "overlapMask": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z\\metrics\\overlap_validation\\two_a050_050_overlap.png",
+      "overlapPixelCount": 12914,
+      "perLayerPixelCounts": [
+        22203,
+        12914
+      ],
+      "status": "PASS",
+      "threeWayOverlapPixelCount": 0,
+      "threshold": 0.00392156862745098,
+      "width": 1920
+    }
+  ],
+  "resultRoot": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6R_DirectionClosure_20260628T054228Z",
+  "singleLayerMode5VsMode0": [
+    {
+      "case": "single_a025",
+      "frontEqualsLegacy": true,
+      "frontVsMode0InferredSameAsLegacy": true,
+      "legacyVsMode0": {
+        "brightPixelCount": 0,
+        "darkPixelCount": 0,
+        "linearRgbMae": 0.00013201481272989113,
+        "lumaMae": 5.962897214974754e-05,
+        "pixelCount": 26244,
+        "psnr": 64.35767372051498,
+        "rgbMae": 9.349164651889275e-05,
+        "rgbMaxAbsDiff": 0.0039215686274509665,
+        "rgbP95AbsDiff": 0.0,
+        "rgbRmse": 0.0006055030205682048,
+        "signedLumaDiff": -5.962897214974754e-05,
+        "ssimLuma": 0.9999942764094399
+      },
+      "scene": "single_layer"
+    },
+    {
+      "case": "single_a050",
+      "frontEqualsLegacy": true,
+      "frontVsMode0InferredSameAsLegacy": true,
+      "legacyVsMode0": {
+        "brightPixelCount": 0,
+        "darkPixelCount": 0,
+        "linearRgbMae": 0.00027415937738574603,
+        "lumaMae": 9.975224962717336e-05,
+        "pixelCount": 26244,
+        "psnr": 62.123019965996285,
+        "rgbMae": 0.0001564005168190321,
+        "rgbMaxAbsDiff": 0.0039215686274510775,
+        "rgbP95AbsDiff": 0.0,
+        "rgbRmse": 0.0007831573022545501,
+        "signedLumaDiff": -9.975224962717336e-05,
+        "ssimLuma": 0.9999919135081314
+      },
+      "scene": "single_layer"
+    },
+    {
+      "case": "single_a075",
+      "frontEqualsLegacy": true,
+      "frontVsMode0InferredSameAsLegacy": true,
+      "legacyVsMode0": {
+        "brightPixelCount": 0,
+        "darkPixelCount": 0,
+        "linearRgbMae": 0.0010830787745685026,
+        "lumaMae": 0.0003383952111556117,
+        "pixelCount": 26244,
+        "psnr": 56.818004869059415,
+        "rgbMae": 0.0005305663392216586,
+        "rgbMaxAbsDiff": 0.0039215686274510775,
+        "rgbP95AbsDiff": 0.0039215686274509665,
+        "rgbRmse": 0.0014424466404943826,
+        "signedLumaDiff": 0.0003383952111556117,
+        "ssimLuma": 0.9999884811383551
+      },
+      "scene": "single_layer"
+    }
+  ],
+  "submitOrderShaSummary": [
+    {
+      "allOrdersByteIdentical": true,
+      "case": "same_a050_050",
+      "direction": "front",
+      "orders": [
+        "normal",
+        "reverse"
+      ],
+      "scene": "same_slice",
+      "uniqueShaCount": 1
+    },
+    {
+      "allOrdersByteIdentical": true,
+      "case": "same_a050_050",
+      "direction": "legacy",
+      "orders": [
+        "normal",
+        "reverse"
+      ],
+      "scene": "same_slice",
+      "uniqueShaCount": 1
+    },
+    {
+      "allOrdersByteIdentical": true,
+      "case": "same_three_a020_060_080",
+      "direction": "front",
+      "orders": [
+        "perm012",
+        "perm021",
+        "perm102",
+        "perm120",
+        "perm201",
+        "perm210"
+      ],
+      "scene": "same_slice",
+      "uniqueShaCount": 1
+    },
+    {
+      "allOrdersByteIdentical": true,
+      "case": "same_three_a020_060_080",
+      "direction": "legacy",
+      "orders": [
+        "perm012",
+        "perm021",
+        "perm102",
+        "perm120",
+        "perm201",
+        "perm210"
+      ],
+      "scene": "same_slice",
+      "uniqueShaCount": 1
+    },
+    {
+      "allOrdersByteIdentical": true,
+      "case": "three_a020_060_080",
+      "direction": "front",
+      "orders": [
+        "perm012",
+        "perm021",
+        "perm102",
+        "perm120",
+        "perm201",
+        "perm210"
+      ],
+      "scene": "three_layer",
+      "uniqueShaCount": 1
+    },
+    {
+      "allOrdersByteIdentical": true,
+      "case": "three_a020_060_080",
+      "direction": "legacy",
+      "orders": [
+        "perm012",
+        "perm021",
+        "perm102",
+        "perm120",
+        "perm201",
+        "perm210"
+      ],
+      "scene": "three_layer",
+      "uniqueShaCount": 1
+    },
+    {
+      "allOrdersByteIdentical": true,
+      "case": "three_a050_050_050",
+      "direction": "front",
+      "orders": [
+        "perm012",
+        "perm021",
+        "perm102",
+        "perm120",
+        "perm201",
+        "perm210"
+      ],
+      "scene": "three_layer",
+      "uniqueShaCount": 1
+    },
+    {
+      "allOrdersByteIdentical": true,
+      "case": "three_a050_050_050",
+      "direction": "legacy",
+      "orders": [
+        "perm012",
+        "perm021",
+        "perm102",
+        "perm120",
+        "perm201",
+        "perm210"
+      ],
+      "scene": "three_layer",
+      "uniqueShaCount": 1
+    },
+    {
+      "allOrdersByteIdentical": true,
+      "case": "three_a090_020_040",
+      "direction": "front",
+      "orders": [
+        "perm012",
+        "perm021",
+        "perm102",
+        "perm120",
+        "perm201",
+        "perm210"
+      ],
+      "scene": "three_layer",
+      "uniqueShaCount": 1
+    },
+    {
+      "allOrdersByteIdentical": true,
+      "case": "three_a090_020_040",
+      "direction": "legacy",
+      "orders": [
+        "perm012",
+        "perm021",
+        "perm102",
+        "perm120",
+        "perm201",
+        "perm210"
+      ],
+      "scene": "three_layer",
+      "uniqueShaCount": 1
+    },
+    {
+      "allOrdersByteIdentical": true,
+      "case": "two_a010_090",
+      "direction": "front",
+      "orders": [
+        "normal",
+        "reverse"
+      ],
+      "scene": "two_layer",
+      "uniqueShaCount": 1
+    },
+    {
+      "allOrdersByteIdentical": true,
+      "case": "two_a010_090",
+      "direction": "legacy",
+      "orders": [
+        "normal",
+        "reverse"
+      ],
+      "scene": "two_layer",
+      "uniqueShaCount": 1
+    },
+    {
+      "allOrdersByteIdentical": true,
+      "case": "two_a025_025",
+      "direction": "front",
+      "orders": [
+        "normal",
+        "reverse"
+      ],
+      "scene": "two_layer",
+      "uniqueShaCount": 1
+    },
+    {
+      "allOrdersByteIdentical": true,
+      "case": "two_a025_025",
+      "direction": "legacy",
+      "orders": [
+        "normal",
+        "reverse"
+      ],
+      "scene": "two_layer",
+      "uniqueShaCount": 1
+    },
+    {
+      "allOrdersByteIdentical": true,
+      "case": "two_a050_050",
+      "direction": "front",
+      "orders": [
+        "normal",
+        "reverse"
+      ],
+      "scene": "two_layer",
+      "uniqueShaCount": 1
+    },
+    {
+      "allOrdersByteIdentical": true,
+      "case": "two_a050_050",
+      "direction": "legacy",
+      "orders": [
+        "normal",
+        "reverse"
+      ],
+      "scene": "two_layer",
+      "uniqueShaCount": 1
+    },
+    {
+      "allOrdersByteIdentical": true,
+      "case": "two_a075_050",
+      "direction": "front",
+      "orders": [
+        "normal",
+        "reverse"
+      ],
+      "scene": "two_layer",
+      "uniqueShaCount": 1
+    },
+    {
+      "allOrdersByteIdentical": true,
+      "case": "two_a075_050",
+      "direction": "legacy",
+      "orders": [
+        "normal",
+        "reverse"
+      ],
+      "scene": "two_layer",
+      "uniqueShaCount": 1
+    }
+  ]
+}

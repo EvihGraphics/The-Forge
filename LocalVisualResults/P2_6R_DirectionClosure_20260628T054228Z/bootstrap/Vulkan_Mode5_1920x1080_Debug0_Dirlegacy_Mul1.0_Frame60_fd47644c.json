@@ -1,0 +1,23 @@
+{
+  "requestedApi": "Vulkan",
+  "createdApi": "Vulkan",
+  "gpu": "NVIDIA GeForce RTX 4060 Ti",
+  "driver": "591.86",
+  "resolution": { "width": 1920, "height": 1080 },
+  "mode": 5,
+  "debugView": 0,
+  "debugViewName": "Final",
+  "multiplier": 1.000000,
+  "captureFrame": 60,
+  "fixedDelta": 0.0166666675,
+  "fixedDeltaEnabled": true,
+  "randomSeed": 1337,
+  "transmittanceDirection": "legacy",
+  "testScene": "default",
+  "testCase": "default",
+  "submitOrder": "normal",
+  "analyticLayerFilter": "all",
+  "analytic": null,
+  "commit": "fd47644c",
+  "screenshot": "Vulkan_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_fd47644c.png"
+}

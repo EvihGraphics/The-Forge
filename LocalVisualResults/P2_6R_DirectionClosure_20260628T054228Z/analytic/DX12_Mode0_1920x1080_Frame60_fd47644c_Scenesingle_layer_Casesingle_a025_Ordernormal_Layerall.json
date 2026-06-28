@@ -1,0 +1,31 @@
+{
+  "requestedApi": "DX12",
+  "createdApi": "DX12",
+  "gpu": "NVIDIA GeForce RTX 4060 Ti",
+  "driver": "591.86",
+  "resolution": { "width": 1920, "height": 1080 },
+  "mode": 0,
+  "debugView": 0,
+  "debugViewName": "Final",
+  "multiplier": 1.000000,
+  "captureFrame": 60,
+  "fixedDelta": 0.0166666675,
+  "fixedDeltaEnabled": true,
+  "randomSeed": 1337,
+  "transmittanceDirection": "legacy",
+  "testScene": "single_layer",
+  "testCase": "single_a025",
+  "submitOrder": "normal",
+  "analyticLayerFilter": "all",
+  "analytic": {
+    "layerCount": 1,
+    "submitOrderIndices": [0],
+    "layers": [
+      { "index": 0, "includedByLayerFilter": true, "color": [1.000000, 0.000000, 0.000000, 0.250000], "worldPosition": [-4.705883, 6.411764, 4.000000], "linearDepth": 47.516159, "normalizedDepth": 0.534477, "zIndex": 34, "screenBoundsApprox": { "left": 879.2, "top": 459.2, "right": 1040.8, "bottom": 620.8 } }
+    ],
+    "expectedSortedOverBlack": { "rgba": [0.250000, 0.000000, 0.000000, 0.250000] },
+    "overlapRoiApprox": { "left": 879.2, "top": 459.2, "right": 1040.8, "bottom": 620.8 }
+  },
+  "commit": "fd47644c",
+  "screenshot": "DX12_Mode0_1920x1080_Frame60_fd47644c_Scenesingle_layer_Casesingle_a025_Ordernormal_Layerall.png"
+}
