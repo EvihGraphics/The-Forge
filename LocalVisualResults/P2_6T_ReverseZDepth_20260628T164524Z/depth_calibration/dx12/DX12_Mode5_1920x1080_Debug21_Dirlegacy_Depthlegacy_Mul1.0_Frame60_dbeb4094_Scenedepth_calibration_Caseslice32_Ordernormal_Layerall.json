@@ -1,0 +1,37 @@
+{
+  "requestedApi": "DX12",
+  "createdApi": "DX12",
+  "gpu": "NVIDIA GeForce RTX 4060 Ti",
+  "driver": "591.86",
+  "resolution": { "width": 1920, "height": 1080 },
+  "mode": 5,
+  "debugView": 21,
+  "debugViewName": "AVBOIT raw device depth",
+  "multiplier": 1.000000,
+  "captureFrame": 60,
+  "fixedDelta": 0.0166666675,
+  "fixedDeltaEnabled": true,
+  "randomSeed": 1337,
+  "transmittanceDirection": "legacy",
+  "depthMapping": "legacy",
+  "dualDirectionDiagnostic": false,
+  "weightSource": "lut",
+  "weightConstant": 0.250000,
+  "weightPattern": "A",
+  "rawAccumDumpRequested": true,
+  "testScene": "depth_calibration",
+  "testCase": "slice32",
+  "submitOrder": "normal",
+  "analyticLayerFilter": "all",
+  "analytic": {
+    "layerCount": 1,
+    "submitOrderIndices": [0],
+    "layers": [
+      { "index": 0, "includedByLayerFilter": true, "color": [1.000000, 0.000000, 0.000000, 0.500000], "analyticLayerId": 0, "worldPosition": [4.030117, 3.790964, -3.425602], "viewPosition": [-0.000006, -0.000002, 59.277363, 1.000000], "clipPosition": [-0.000006, -0.000004, 0.985425, 59.277363], "deviceDepth": 0.016623965, "legacyLinearDepth": 1.016901, "legacyNormalizedDepth": 0.997979403, "legacyZIndex": 63, "reverseLinearDepth": 59.277485, "reverseNormalizedDepth": 0.507812262, "reverseZIndex": 32, "activeDepthMapping": "legacy", "targetSlice": 32, "cpuExpectedZIndex": 63, "gpuCapturedZIndex": null, "screenBoundsApprox": { "left": 895.2, "top": 475.2, "right": 1024.8, "bottom": 604.8 } }
+    ],
+    "expectedSortedOverBlack": { "rgba": [0.500000, 0.000000, 0.000000, 0.500000] },
+    "overlapRoiApprox": { "left": 895.2, "top": 475.2, "right": 1024.8, "bottom": 604.8 }
+  },
+  "commit": "dbeb4094",
+  "screenshot": "DX12_Mode5_1920x1080_Debug21_Dirlegacy_Depthlegacy_Mul1.0_Frame60_dbeb4094_Scenedepth_calibration_Caseslice32_Ordernormal_Layerall.png"
+}

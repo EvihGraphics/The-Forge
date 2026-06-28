@@ -1,0 +1,147 @@
+[
+  {
+    "case": "near_1_1",
+    "worldPosition": [
+      -39.182941,
+      16.754883,
+      33.3055
+    ],
+    "viewPosition": [
+      0.0,
+      0.0,
+      1.100002,
+      1.0
+    ],
+    "clipPosition": [
+      0.0,
+      0.0,
+      0.999975,
+      1.100002
+    ],
+    "deviceDepth": 0.90906626,
+    "legacyLinearDepth": 10.969602,
+    "legacyNormalizedDepth": 0.711223364,
+    "legacyZIndex": 45,
+    "reverseLinearDepth": 1.100002,
+    "reverseNormalizedDepth": 0.988508344,
+    "reverseZIndex": 63,
+    "targetSlice": 63,
+    "activeDepthMapping": "legacy"
+  },
+  {
+    "case": "slice48",
+    "worldPosition": [
+      -34.463505,
+      15.339052,
+      29.29398
+    ],
+    "viewPosition": [
+      -2e-06,
+      0.0,
+      7.453735,
+      1.0
+    ],
+    "clipPosition": [
+      -2e-06,
+      2e-06,
+      0.998386,
+      7.453735
+    ],
+    "deviceDepth": 0.133944377,
+    "legacyLinearDepth": 1.154616,
+    "legacyNormalizedDepth": 0.982666194,
+    "legacyZIndex": 62,
+    "reverseLinearDepth": 7.453737,
+    "reverseNormalizedDepth": 0.7578125,
+    "reverseZIndex": 48,
+    "targetSlice": 48,
+    "activeDepthMapping": "legacy"
+  },
+  {
+    "case": "slice32",
+    "worldPosition": [
+      4.030117,
+      3.790964,
+      -3.425602
+    ],
+    "viewPosition": [
+      -6e-06,
+      -2e-06,
+      59.277363,
+      1.0
+    ],
+    "clipPosition": [
+      -6e-06,
+      -4e-06,
+      0.985425,
+      59.277363
+    ],
+    "deviceDepth": 0.016623965,
+    "legacyLinearDepth": 1.016901,
+    "legacyNormalizedDepth": 0.997979403,
+    "legacyZIndex": 63,
+    "reverseLinearDepth": 59.277485,
+    "reverseNormalizedDepth": 0.507812262,
+    "reverseZIndex": 32,
+    "targetSlice": 32,
+    "activeDepthMapping": "legacy"
+  },
+  {
+    "case": "slice16",
+    "worldPosition": [
+      310.158661,
+      -88.0476,
+      -263.634857
+    ],
+    "viewPosition": [
+      -7.6e-05,
+      -1.1e-05,
+      471.415527,
+      1.0
+    ],
+    "clipPosition": [
+      -7.6e-05,
+      -2.3e-05,
+      0.882349,
+      471.415527
+    ],
+    "deviceDepth": 0.0018717,
+    "legacyLinearDepth": 1.001875,
+    "legacyNormalizedDepth": 0.999774277,
+    "legacyZIndex": 63,
+    "reverseLinearDepth": 471.427734,
+    "reverseNormalizedDepth": 0.257809371,
+    "reverseZIndex": 16,
+    "targetSlice": 16,
+    "activeDepthMapping": "legacy"
+  },
+  {
+    "case": "far_3500",
+    "worldPosition": [
+      2559.734375,
+      -762.920349,
+      -2175.774414
+    ],
+    "viewPosition": [
+      -0.000244,
+      -0.000122,
+      3499.999512,
+      1.0
+    ],
+    "clipPosition": [
+      -0.000244,
+      -0.000183,
+      0.124896,
+      3499.999512
+    ],
+    "deviceDepth": 3.5685e-05,
+    "legacyLinearDepth": 1.000036,
+    "legacyNormalizedDepth": 0.999995768,
+    "legacyZIndex": 63,
+    "reverseLinearDepth": 3500.106934,
+    "reverseNormalizedDepth": 0.016095983,
+    "reverseZIndex": 1,
+    "targetSlice": 0,
+    "activeDepthMapping": "legacy"
+  }
+]

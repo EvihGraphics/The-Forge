@@ -1,0 +1,73 @@
+{
+  "raw": {
+    "default_scene/DX12/d3d12_default_legacy_depth_legacy_dir.stdout.txt": {
+      "mode": 5,
+      "ms": 0.607726
+    },
+    "default_scene/DX12/d3d12_default_mode0.stdout.txt": {
+      "mode": 0,
+      "ms": 0.158924
+    },
+    "default_scene/DX12/d3d12_default_reverse_depth_front_coverage.stdout.txt": {
+      "mode": 5,
+      "ms": 0.588356
+    },
+    "default_scene/DX12/d3d12_default_reverse_depth_front_dir.stdout.txt": {
+      "mode": 5,
+      "ms": 0.576665
+    },
+    "default_scene/DX12/d3d12_default_reverse_depth_front_opacity.stdout.txt": {
+      "mode": 5,
+      "ms": 0.576358
+    },
+    "default_scene/DX12/d3d12_default_reverse_depth_legacy_dir.stdout.txt": {
+      "mode": 5,
+      "ms": 0.613171
+    },
+    "default_scene/DX12_default_runtime/dx12_default_runtime.stdout.txt": {
+      "mode": 5,
+      "ms": 0.599125
+    },
+    "default_scene/Vulkan/vulkan_default_legacy_depth_legacy_dir.stdout.txt": {
+      "mode": 5,
+      "ms": 0.554316
+    },
+    "default_scene/Vulkan/vulkan_default_mode0.stdout.txt": {
+      "mode": 0,
+      "ms": 0.182322
+    },
+    "default_scene/Vulkan/vulkan_default_reverse_depth_front_coverage.stdout.txt": {
+      "mode": 5,
+      "ms": 0.528564
+    },
+    "default_scene/Vulkan/vulkan_default_reverse_depth_front_dir.stdout.txt": {
+      "mode": 5,
+      "ms": 0.520906
+    },
+    "default_scene/Vulkan/vulkan_default_reverse_depth_front_opacity.stdout.txt": {
+      "mode": 5,
+      "ms": 0.522023
+    },
+    "default_scene/Vulkan/vulkan_default_reverse_depth_legacy_dir.stdout.txt": {
+      "mode": 5,
+      "ms": 0.532282
+    }
+  },
+  "DX12": {
+    "mode0Ms": 0.158924,
+    "legacyDepthLegacyDirMs": 0.607726,
+    "reverseDepthLegacyDirMs": 0.613171,
+    "reverseDepthFrontDirMs": 0.576665,
+    "frontVsLegacyRegressionRatio": -0.051110204269687334,
+    "smokeNoRegression10Percent": true
+  },
+  "Vulkan": {
+    "mode0Ms": 0.182322,
+    "legacyDepthLegacyDirMs": 0.554316,
+    "reverseDepthLegacyDirMs": 0.532282,
+    "reverseDepthFrontDirMs": 0.520906,
+    "frontVsLegacyRegressionRatio": -0.06027247995728077,
+    "smokeNoRegression10Percent": true
+  },
+  "note": "Frame-240 auto-capture smoke values from OIT Performance Dump, not a 120 warmup / 300 frame benchmark."
+}

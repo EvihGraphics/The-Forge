@@ -1,0 +1,18 @@
+{
+  "capture": "DX12_Mode5_1920x1080_Debug15_Dirfront_Depthreverse_correct_Mul1.0_Frame60_dbeb4094_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layerall",
+  "captureHash": "f4185b54",
+  "label": "AVBOITAccumDiagnostics",
+  "storage": "synthesized_from_existing_mrts",
+  "channels": {
+    "selectedWeightedColorRgb": "AVBOITAccumColorWeight.rgb",
+    "selectedDenominator": "AVBOITAccumColorWeight.a",
+    "totalExtinction": "AVBOITAccumExtinction.r",
+    "legacyWeightTimesAlphaOrDepthDiagnosticTimesAlpha": "AVBOITAccumExtinction.g",
+    "frontWeightTimesAlpha": "AVBOITAccumExtinction.b",
+    "alphaSum": "AVBOITAccumExtinction.a",
+    "lutR": "selected event weight",
+    "lutG": "legacy event weight",
+    "lutB": "exclusive front event weight",
+    "lutA": "total voxel transmittance"
+  }
+}

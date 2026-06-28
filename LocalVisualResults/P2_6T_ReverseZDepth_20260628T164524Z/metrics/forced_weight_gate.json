@@ -1,0 +1,65 @@
+{
+  "patterns": [
+    {
+      "pattern": "A",
+      "coveragePixels": 15007,
+      "sumColorWeightMedian": [
+        0.5,
+        0.125,
+        0.0,
+        0.625
+      ],
+      "averageColorMedian": [
+        0.8,
+        0.2,
+        0.0
+      ],
+      "selectedWeightMedian": 0.625,
+      "legacyWeightMedian": 0.75,
+      "frontWeightMedian": 0.75,
+      "alphaSumMedian": 1.0,
+      "finalCoverageLinearRgbMedian": [
+        0.6724431569576875,
+        0.21223075741405523,
+        0.04091519690685319
+      ],
+      "png": "DX12_Mode5_1920x1080_Debug0_Dirlegacy_Depthreverse_correct_Mul1.0_Frame60_dbeb4094_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layerall_WeightlayerA.png"
+    },
+    {
+      "pattern": "B",
+      "coveragePixels": 15007,
+      "sumColorWeightMedian": [
+        0.125,
+        0.5,
+        0.0,
+        0.625
+      ],
+      "averageColorMedian": [
+        0.2,
+        0.8,
+        0.0
+      ],
+      "selectedWeightMedian": 0.625,
+      "legacyWeightMedian": 0.75,
+      "frontWeightMedian": 0.75,
+      "alphaSumMedian": 1.0,
+      "finalCoverageLinearRgbMedian": [
+        0.22696587351009836,
+        0.6583748172794485,
+        0.04091519690685319
+      ],
+      "png": "DX12_Mode5_1920x1080_Debug0_Dirlegacy_Depthreverse_correct_Mul1.0_Frame60_dbeb4094_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layerall_WeightlayerB.png"
+    }
+  ],
+  "commonRawCoveragePixels": 15007,
+  "patternABFinalCoverageLinearRgbMAE": 0.2982127473904721,
+  "patternABFinalCoverageLinearRgbP95": 0.2998793177407871,
+  "patternABFinalCoverageLinearChannelMAE": [
+    0.44742622310292063,
+    0.44721201906849567,
+    0.0
+  ],
+  "patternABRawAverageColorMedianMAE": 0.4000000000000001,
+  "gateFinalMaeAtLeast001": true,
+  "gateRawAverageDiffers": true
+}

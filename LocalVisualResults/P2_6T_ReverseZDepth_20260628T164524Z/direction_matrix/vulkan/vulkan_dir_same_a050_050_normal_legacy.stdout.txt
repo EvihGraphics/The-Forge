@@ -1,0 +1,124 @@
+2026-06-29 01:12:32 [MainThread     ]                   Log.c:195   INFO| Opened log file 15_Transparency.log
+2026-06-29 01:12:32 [MainThread     ]         WindowsBase.cpp:703   INFO| Operating System: Windows PC. Version: 10.0 (Build: 26200). Device Name: Unknown.
+2026-06-29 01:12:32 [MainThread     ]         WindowsBase.cpp:332   INFO| Requested Renderer API: Vulkan
+2026-06-29 01:12:32 [MainThread     ]         WindowsBase.cpp:378   INFO| Selected Renderer API before initialization: Vulkan
+2026-06-29 01:12:32 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-29 01:12:32 [MainThread     ]       WindowsWindow.cpp:636   INFO| Created window app 15_Transparency
+2026-06-29 01:12:32 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-29 01:12:32 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-29 01:12:32 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-29 01:12:32 [MainThread     ]     15_Transparency.cpp:2080  INFO| AVBOIT auto capture output dir: D:\HTC\avboit\The-Forge\LocalVisualResults\P2_6T_ReverseZDepth_20260628T164524Z\direction_matrix\vulkan
+2026-06-29 01:12:32 [MainThread     ]     15_Transparency.cpp:2174  INFO| AVBOIT transmittance direction: legacy
+2026-06-29 01:12:32 [MainThread     ]     15_Transparency.cpp:2175  INFO| AVBOIT depth mapping: reverse_correct
+2026-06-29 01:12:32 [MainThread     ]     15_Transparency.cpp:2177  INFO| AVBOIT test scene: same_slice case=same_a050_050 submitOrder=normal layerFilter=all
+2026-06-29 01:12:32 [MainThread     ]     15_Transparency.cpp:2180  INFO| AVBOIT weight source: lut constant=0.25 pattern=A rawDump=false dualDirection=true
+2026-06-29 01:12:32 [MainThread     ]     15_Transparency.cpp:2187  INFO| AVBOIT auto capture enabled: frame=60 fixedDelta=on 0.0166666675 seed=1337 commit=dbeb4094.
+2026-06-29 01:12:32 [MainThread     ]     15_Transparency.cpp:2189  INFO| AVBOIT auto capture will hide UI overlays.
+2026-06-29 01:12:32 [MainThread     ]     15_Transparency.cpp:2825  INFO| Transparency mode set via command line to: 5
+2026-06-29 01:12:32 [MainThread     ]     15_Transparency.cpp:2831  INFO| AVBOIT Multiplier set via command line to: 1.000000
+2026-06-29 01:12:32 [MainThread     ]     15_Transparency.cpp:2838  INFO| AVBOIT Debug View set via command line to: 0 (Final)
+2026-06-29 01:12:32 [MainThread     ]      GraphicsConfig.cpp:419   INFO| Default GPU Data:
+2026-06-29 01:12:32 [MainThread     ]      GraphicsConfig.cpp:420   INFO|     DefaultGPUPresetLevel set to low
+2026-06-29 01:12:32 [MainThread     ]      GraphicsConfig.cpp:422   INFO| GPU vendors:
+2026-06-29 01:12:32 [MainThread     ]      GraphicsConfig.cpp:440   INFO|     intel: 0x8086
+2026-06-29 01:12:32 [MainThread     ]      GraphicsConfig.cpp:440   INFO|     amd: 0x1002
+2026-06-29 01:12:32 [MainThread     ]      GraphicsConfig.cpp:440   INFO|     nvidia: 0x10de
+2026-06-29 01:12:32 [MainThread     ]      GraphicsConfig.cpp:440   INFO|     qualcomm: 0x5143
+2026-06-29 01:12:32 [MainThread     ]      GraphicsConfig.cpp:898    DBG| Extended Config| GPU Config invalid Field name: 'isheadless'.
+2026-06-29 01:12:32 [MainThread     ]      GraphicsConfig.cpp:723    DBG| Invalid GPU Selection rule: 'isHeadLess != 1;'.
+2026-06-29 01:12:32 [MainThread     ]      GraphicsConfig.cpp:552   INFO| GPU selection settings:
+2026-06-29 01:12:32 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: graphicqueuesupported == 1
+2026-06-29 01:12:32 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: deviceid == 0
+2026-06-29 01:12:32 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: rasterorderviewsupport
+2026-06-29 01:12:32 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: gpupresetlevel
+2026-06-29 01:12:32 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: vendorid != 32902 && vendorid != 32903 && vendorid != 5692
+2026-06-29 01:12:32 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: directxfeaturelevel
+2026-06-29 01:12:32 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: vram
+2026-06-29 01:12:32 [MainThread     ]      GraphicsConfig.cpp:561   INFO| Driver rejections:
+2026-06-29 01:12:32 [MainThread     ]      GraphicsConfig.cpp:579   INFO| GPU configuration settings:
+2026-06-29 01:12:32 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 4318: 64
+2026-06-29 01:12:32 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 4098: 13
+2026-06-29 01:12:32 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 4130: 13
+2026-06-29 01:12:32 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 5692: 64
+2026-06-29 01:12:32 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 32902: 64
+2026-06-29 01:12:32 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 32903: 64
+2026-06-29 01:12:32 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     dynamicrenderingenabled: vendorid == 5692: 0
+2026-06-29 01:12:32 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     dynamicrenderingenabled: vendorid == 32902: 0
+2026-06-29 01:12:32 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     dynamicrenderingenabled: vendorid == 32903: 0
+2026-06-29 01:12:32 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     tessellationsupported: vendorid == 5045: 0
+2026-06-29 01:12:32 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     xclipsetransferqueueworkaroundenabled: deviceid == 29600: 1
+2026-06-29 01:12:32 [MainThread     ]      GraphicsConfig.cpp:592   INFO| User settings:
+2026-06-29 01:12:32 [MainThread     ]      GraphicsConfig.cpp:602   INFO|     EnableAOIT: rasterorderviewsupport == 1: 1
+2026-06-29 01:12:32 [MainThread     ]      GraphicsConfig.cpp:602   INFO|     EnableAOIT: amdasicfamily == 9: 0
+2026-06-29 01:12:32 [MainThread     ]           NvApiHelper.h:50    INFO| NVIDIA Display Driver Version 59186
+2026-06-29 01:12:32 [MainThread     ]           NvApiHelper.h:51    INFO| NVIDIA Build Branch r590_00
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:3422  INFO| Creating VkInstance with 0 enabled instance layers:
+2026-06-29 01:12:32 [MainThread     ]      GraphicsConfig.cpp:1091  INFO| GPU: NVIDIA GeForce RTX 4060 Ti, setting maxrootsignaturedwords to 64
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:4130  INFO| GPU[0] detected. Vendor ID: 0x10de, Model ID: 0x2803, Preset: high, GPU Name: NVIDIA GeForce RTX 4060 Ti
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:3559  INFO| GPU[0] is selected as default GPU
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:3560  INFO| Name of selected gpu: NVIDIA GeForce RTX 4060 Ti
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:3561  INFO| Vendor id of selected gpu: 0x10de
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:3562  INFO| Model id of selected gpu: 0x2803
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:3563  INFO| Preset of selected gpu: high
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:3903  INFO| Successfully loaded Dedicated Allocation extension
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:3917  INFO| Successfully loaded Draw Indirect extension
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:3938  INFO| Successfully loaded Descriptor Indexing extension
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:3943  INFO| Successfully loaded Khronos Ray Pipeline extensions
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:3948  INFO| Successfully loaded Khronos Ray Query extensions
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:3953  INFO| Successfully loaded 64 bit Shader Atomic extension
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:3958  INFO| Successfully loaded Dynamic Rendering extension
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:3963  INFO| Successfully loaded Device Fault extension
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:4368  INFO| GPU supports texture array dynamic indexing
+2026-06-29 01:12:32 [MainThread     ]      GraphicsConfig.cpp:1122  INFO| Extended setting: setting EnableAOIT to 1
+2026-06-29 01:12:32 [MainThread     ]     15_Transparency.cpp:2469  INFO| AVBOIT analytic scene built: scene=same_slice case=same_a050_050 submitOrder=normal layerFilter=all layerCount=2
+2026-06-29 01:12:32 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-29 01:12:32 [MainThread     ]         WindowsBase.cpp:841   INFO| Created Renderer API: Vulkan
+2026-06-29 01:12:32 [MainThread     ]         WindowsBase.cpp:844   INFO| Selected GPU Name: NVIDIA GeForce RTX 4060 Ti
+2026-06-29 01:12:32 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-29 01:12:32 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:7201  INFO| Descriptor (SkySampler) : User specified Static Sampler
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:7201  INFO| Descriptor (LinearSampler) : User specified Static Sampler
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:7254  INFO| Descriptor (RootConstant) : User specified Push Constant
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:7254  INFO| Descriptor (DrawInfoRootConstant) : User specified Push Constant
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:7201  INFO| Descriptor (VSMSampler) : User specified Static Sampler
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:7201  INFO| Descriptor (LinearSampler) : User specified Static Sampler
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:7201  INFO| Descriptor (PointSampler) : User specified Static Sampler
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:7201  INFO| Descriptor (PointSampler) : User specified Static Sampler
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:7201  INFO| Descriptor (PointSampler) : User specified Static Sampler
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:7201  INFO| Descriptor (LinearSampler) : User specified Static Sampler
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:7201  INFO| Descriptor (PointSampler) : User specified Static Sampler
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:7254  INFO| Descriptor (RootConstant) : User specified Push Constant
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:7254  INFO| Descriptor (DrawInfoRootConstant) : User specified Push Constant
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:7201  INFO| Descriptor (VSMSampler) : User specified Static Sampler
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:7201  INFO| Descriptor (LinearSampler) : User specified Static Sampler
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:7254  INFO| Descriptor (DrawInfoRootConstant) : User specified Push Constant
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:7201  INFO| Descriptor (VSMSampler) : User specified Static Sampler
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:7201  INFO| Descriptor (LinearSampler) : User specified Static Sampler
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:7254  INFO| Descriptor (DrawInfoRootConstant) : User specified Push Constant
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:7201  INFO| Descriptor (VSMSampler) : User specified Static Sampler
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:7201  INFO| Descriptor (LinearSampler) : User specified Static Sampler
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:4842  INFO| Adding Vulkan swapchain @ 1920x1080
+2026-06-29 01:12:32 [MainThread     ]     15_Transparency.cpp:799   INFO| AVBOIT screen dimensions: 1920x1080
+2026-06-29 01:12:32 [MainThread     ]     15_Transparency.cpp:800   INFO| AVBOIT volume dimensions: 240x135x64
+2026-06-29 01:12:32 [MainThread     ]     15_Transparency.cpp:801   INFO| AVBOIT downsample factor: 8
+2026-06-29 01:12:32 [MainThread     ]     15_Transparency.cpp:802   INFO| AVBOIT depth slices: 64
+2026-06-29 01:12:32 [MainThread     ]     15_Transparency.cpp:803   INFO| AVBOIT extinction buffer: 7.91 MiB
+2026-06-29 01:12:32 [MainThread     ]     15_Transparency.cpp:804   INFO| AVBOIT transmittance LUT: 15.82 MiB
+2026-06-29 01:12:32 [MainThread     ]     15_Transparency.cpp:805   INFO| AVBOIT total volume resources: 23.73 MiB
+2026-06-29 01:12:32 [MainThread     ]     15_Transparency.cpp:8782  INFO| AVBOIT full-resolution accumulation render targets: 31.64 MiB
+2026-06-29 01:12:32 [MainThread     ]     15_Transparency.cpp:10125 INFO| Adding AVBOITSplat Pipeline... pShaderAVBOITSplat=0000027509D5A1A0
+2026-06-29 01:12:32 [MainThread     ]     15_Transparency.cpp:10141 INFO| Adding AVBOITClear Pipeline...
+2026-06-29 01:12:32 [MainThread     ]     15_Transparency.cpp:10153 INFO| Adding AVBOITIntegrate Pipeline...
+2026-06-29 01:12:32 [MainThread     ]     15_Transparency.cpp:10209 INFO| Adding AVBOITResolve Pipeline...
+2026-06-29 01:12:32 [MainThread     ]     15_Transparency.cpp:10244 INFO| Adding AVBOITAccumulate Pipeline...
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:7201  INFO| Descriptor (uSampler) : User specified Static Sampler
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:7254  INFO| Descriptor (uRootConstants) : User specified Push Constant
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:7201  INFO| Descriptor (uSampler0) : User specified Static Sampler
+2026-06-29 01:12:32 [MainThread     ]              Vulkan.cpp:7180  INFO| Descriptor (uniformBlock_rootcbv) : User specified VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC
+2026-06-29 01:12:32 [MainThread     ]         WindowsBase.cpp:865   INFO| Application Init+Load+Reload 0.369000ms
+2026-06-29 01:12:32 [MainThread     ]     15_Transparency.cpp:3494  INFO| AVBOIT auto capture queued at frame 60 as Vulkan_Mode5_1920x1080_Debug0_Dirlegacy_Depthreverse_correct_Mul1.0_Frame60_dbeb4094_Scenesame_slice_Casesame_a050_050_Ordernormal_Layerall.
+2026-06-29 01:12:32 [MainThread     ]          Screenshot.cpp:502   INFO| Writing screenshot to Vulkan_Mode5_1920x1080_Debug0_Dirlegacy_Depthreverse_correct_Mul1.0_Frame60_dbeb4094_Scenesame_slice_Casesame_a050_050_Ordernormal_Layerall.png
+2026-06-29 01:12:32 [MainThread     ]     15_Transparency.cpp:1870  INFO| AVBOIT capture metadata written to Vulkan_Mode5_1920x1080_Debug0_Dirlegacy_Depthreverse_correct_Mul1.0_Frame60_dbeb4094_Scenesame_slice_Casesame_a050_050_Ordernormal_Layerall.json.
+2026-06-29 01:12:32 [MainThread     ]     15_Transparency.cpp:6109  INFO| AVBOIT auto capture completed at frame 60.
+2026-06-29 01:12:32 [MainThread     ]     15_Transparency.cpp:3257  INFO| OIT Performance Dump [Mode 5]: 0.190009 ms
+2026-06-29 01:12:32 [MainThread     ]                   Log.c:153   INFO| Shutting down log system.

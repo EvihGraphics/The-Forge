@@ -439,3 +439,7 @@ LocalVisualResults/DESKTOP-KCK6JUT/NewMachineVerification_20260623T114619Z/
 !LocalVisualResults/**/*.webp
 !LocalVisualResults/**/*.gif
 !LocalVisualResults/**/*.txt
+!LocalVisualResults/**/*.json
+!LocalVisualResults/**/*.csv
+!LocalVisualResults/**/*.tsv
+LocalVisualResults/**/*.bin

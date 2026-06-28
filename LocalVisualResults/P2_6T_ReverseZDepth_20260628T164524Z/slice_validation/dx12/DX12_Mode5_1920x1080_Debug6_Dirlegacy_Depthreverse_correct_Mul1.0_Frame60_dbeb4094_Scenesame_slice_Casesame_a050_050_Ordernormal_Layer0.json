@@ -1,0 +1,38 @@
+{
+  "requestedApi": "DX12",
+  "createdApi": "DX12",
+  "gpu": "NVIDIA GeForce RTX 4060 Ti",
+  "driver": "591.86",
+  "resolution": { "width": 1920, "height": 1080 },
+  "mode": 5,
+  "debugView": 6,
+  "debugViewName": "AVBOIT z slice",
+  "multiplier": 1.000000,
+  "captureFrame": 60,
+  "fixedDelta": 0.0166666675,
+  "fixedDeltaEnabled": true,
+  "randomSeed": 1337,
+  "transmittanceDirection": "legacy",
+  "depthMapping": "reverse_correct",
+  "dualDirectionDiagnostic": false,
+  "weightSource": "lut",
+  "weightConstant": 0.250000,
+  "weightPattern": "A",
+  "rawAccumDumpRequested": false,
+  "testScene": "same_slice",
+  "testCase": "same_a050_050",
+  "submitOrder": "normal",
+  "analyticLayerFilter": "0",
+  "analytic": {
+    "layerCount": 2,
+    "submitOrderIndices": [0, 1],
+    "layers": [
+      { "index": 0, "includedByLayerFilter": true, "color": [1.000000, 0.000000, 0.000000, 0.500000], "analyticLayerId": 0, "worldPosition": [4.030121, 3.790963, -3.425606], "viewPosition": [-0.000006, -0.000002, 59.277367, 1.000000], "clipPosition": [-0.000006, -0.000003, 0.985425, 59.277367], "deviceDepth": 0.016623963, "legacyLinearDepth": 1.016901, "legacyNormalizedDepth": 0.997979403, "legacyZIndex": 63, "reverseLinearDepth": 59.277485, "reverseNormalizedDepth": 0.507812262, "reverseZIndex": 32, "activeDepthMapping": "reverse_correct", "targetSlice": 32, "cpuExpectedZIndex": 32, "gpuCapturedZIndex": null, "screenBoundsApprox": { "left": 895.2, "top": 475.2, "right": 1024.8, "bottom": 604.8 } },
+      { "index": 1, "includedByLayerFilter": false, "color": [0.000000, 1.000000, 0.000000, 0.500000], "analyticLayerId": 2, "worldPosition": [4.030121, 3.790963, -3.425606], "viewPosition": [-0.000006, -0.000002, 59.277367, 1.000000], "clipPosition": [-0.000006, -0.000003, 0.985425, 59.277367], "deviceDepth": 0.016623963, "legacyLinearDepth": 1.016901, "legacyNormalizedDepth": 0.997979403, "legacyZIndex": 63, "reverseLinearDepth": 59.277485, "reverseNormalizedDepth": 0.507812262, "reverseZIndex": 32, "activeDepthMapping": "reverse_correct", "targetSlice": 32, "cpuExpectedZIndex": 32, "gpuCapturedZIndex": null, "screenBoundsApprox": { "left": 895.2, "top": 475.2, "right": 1024.8, "bottom": 604.8 } }
+    ],
+    "expectedSortedOverBlack": { "rgba": [0.500000, 0.000000, 0.000000, 0.500000] },
+    "overlapRoiApprox": { "left": 895.2, "top": 475.2, "right": 1024.8, "bottom": 604.8 }
+  },
+  "commit": "dbeb4094",
+  "screenshot": "DX12_Mode5_1920x1080_Debug6_Dirlegacy_Depthreverse_correct_Mul1.0_Frame60_dbeb4094_Scenesame_slice_Casesame_a050_050_Ordernormal_Layer0.png"
+}

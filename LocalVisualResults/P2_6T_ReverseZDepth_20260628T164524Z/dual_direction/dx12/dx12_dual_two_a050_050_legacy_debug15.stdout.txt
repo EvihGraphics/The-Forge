@@ -1,0 +1,117 @@
+2026-06-29 01:02:37 [MainThread     ]                   Log.c:195   INFO| Opened log file 15_Transparency.log
+2026-06-29 01:02:37 [MainThread     ]         WindowsBase.cpp:703   INFO| Operating System: Windows PC. Version: 10.0 (Build: 26200). Device Name: Unknown.
+2026-06-29 01:02:37 [MainThread     ]         WindowsBase.cpp:332   INFO| Requested Renderer API: D3D12
+2026-06-29 01:02:37 [MainThread     ]         WindowsBase.cpp:378   INFO| Selected Renderer API before initialization: D3D12
+2026-06-29 01:02:37 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-29 01:02:37 [MainThread     ]       WindowsWindow.cpp:636   INFO| Created window app 15_Transparency
+2026-06-29 01:02:37 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-29 01:02:37 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-29 01:02:37 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-29 01:02:37 [MainThread     ]     15_Transparency.cpp:2080  INFO| AVBOIT auto capture output dir: D:\HTC\avboit\The-Forge\LocalVisualResults\P2_6T_ReverseZDepth_20260628T164524Z\dual_direction\dx12
+2026-06-29 01:02:37 [MainThread     ]     15_Transparency.cpp:2174  INFO| AVBOIT transmittance direction: legacy
+2026-06-29 01:02:37 [MainThread     ]     15_Transparency.cpp:2175  INFO| AVBOIT depth mapping: reverse_correct
+2026-06-29 01:02:37 [MainThread     ]     15_Transparency.cpp:2177  INFO| AVBOIT test scene: two_layer case=two_a050_050 submitOrder=normal layerFilter=all
+2026-06-29 01:02:37 [MainThread     ]     15_Transparency.cpp:2180  INFO| AVBOIT weight source: lut constant=0.25 pattern=A rawDump=true dualDirection=true
+2026-06-29 01:02:37 [MainThread     ]     15_Transparency.cpp:2187  INFO| AVBOIT auto capture enabled: frame=60 fixedDelta=on 0.0166666675 seed=1337 commit=dbeb4094.
+2026-06-29 01:02:37 [MainThread     ]     15_Transparency.cpp:2189  INFO| AVBOIT auto capture will hide UI overlays.
+2026-06-29 01:02:37 [MainThread     ]     15_Transparency.cpp:2825  INFO| Transparency mode set via command line to: 5
+2026-06-29 01:02:37 [MainThread     ]     15_Transparency.cpp:2831  INFO| AVBOIT Multiplier set via command line to: 1.000000
+2026-06-29 01:02:37 [MainThread     ]     15_Transparency.cpp:2838  INFO| AVBOIT Debug View set via command line to: 15 (AVBOIT selected event weight)
+2026-06-29 01:02:37 [MainThread     ]      GraphicsConfig.cpp:419   INFO| Default GPU Data:
+2026-06-29 01:02:37 [MainThread     ]      GraphicsConfig.cpp:420   INFO|     DefaultGPUPresetLevel set to low
+2026-06-29 01:02:37 [MainThread     ]      GraphicsConfig.cpp:422   INFO| GPU vendors:
+2026-06-29 01:02:37 [MainThread     ]      GraphicsConfig.cpp:440   INFO|     intel: 0x8086
+2026-06-29 01:02:37 [MainThread     ]      GraphicsConfig.cpp:440   INFO|     amd: 0x1002
+2026-06-29 01:02:37 [MainThread     ]      GraphicsConfig.cpp:440   INFO|     nvidia: 0x10de
+2026-06-29 01:02:37 [MainThread     ]      GraphicsConfig.cpp:440   INFO|     qualcomm: 0x5143
+2026-06-29 01:02:37 [MainThread     ]      GraphicsConfig.cpp:898    DBG| Extended Config| GPU Config invalid Field name: 'isheadless'.
+2026-06-29 01:02:37 [MainThread     ]      GraphicsConfig.cpp:723    DBG| Invalid GPU Selection rule: 'isHeadLess != 1;'.
+2026-06-29 01:02:37 [MainThread     ]      GraphicsConfig.cpp:552   INFO| GPU selection settings:
+2026-06-29 01:02:37 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: graphicqueuesupported == 1
+2026-06-29 01:02:37 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: deviceid == 0
+2026-06-29 01:02:37 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: rasterorderviewsupport
+2026-06-29 01:02:37 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: gpupresetlevel
+2026-06-29 01:02:37 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: vendorid != 32902 && vendorid != 32903 && vendorid != 5692
+2026-06-29 01:02:37 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: directxfeaturelevel
+2026-06-29 01:02:37 [MainThread     ]      GraphicsConfig.cpp:558   INFO|     Rule: vram
+2026-06-29 01:02:37 [MainThread     ]      GraphicsConfig.cpp:561   INFO| Driver rejections:
+2026-06-29 01:02:37 [MainThread     ]      GraphicsConfig.cpp:579   INFO| GPU configuration settings:
+2026-06-29 01:02:37 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 4318: 64
+2026-06-29 01:02:37 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 4098: 13
+2026-06-29 01:02:37 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 4130: 13
+2026-06-29 01:02:37 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 5692: 64
+2026-06-29 01:02:37 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 32902: 64
+2026-06-29 01:02:37 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     maxrootsignaturedwords: vendorid == 32903: 64
+2026-06-29 01:02:37 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     dynamicrenderingenabled: vendorid == 5692: 0
+2026-06-29 01:02:37 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     dynamicrenderingenabled: vendorid == 32902: 0
+2026-06-29 01:02:37 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     dynamicrenderingenabled: vendorid == 32903: 0
+2026-06-29 01:02:37 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     tessellationsupported: vendorid == 5045: 0
+2026-06-29 01:02:37 [MainThread     ]      GraphicsConfig.cpp:590   INFO|     xclipsetransferqueueworkaroundenabled: deviceid == 29600: 1
+2026-06-29 01:02:37 [MainThread     ]      GraphicsConfig.cpp:592   INFO| User settings:
+2026-06-29 01:02:37 [MainThread     ]      GraphicsConfig.cpp:602   INFO|     EnableAOIT: rasterorderviewsupport == 1: 1
+2026-06-29 01:02:37 [MainThread     ]      GraphicsConfig.cpp:602   INFO|     EnableAOIT: amdasicfamily == 9: 0
+2026-06-29 01:02:37 [MainThread     ]          Direct3D12.cpp:1310  INFO| Loading d3d12.dll
+2026-06-29 01:02:37 [MainThread     ]          Direct3D12.cpp:1322  INFO| Loading dxgi.dll
+2026-06-29 01:02:37 [MainThread     ]           NvApiHelper.h:50    INFO| NVIDIA Display Driver Version 59186
+2026-06-29 01:02:37 [MainThread     ]           NvApiHelper.h:51    INFO| NVIDIA Build Branch r590_00
+2026-06-29 01:02:38 [MainThread     ]      GraphicsConfig.cpp:1091  INFO| GPU: NVIDIA GeForce RTX 4060 Ti, setting maxrootsignaturedwords to 64
+2026-06-29 01:02:38 [MainThread     ]          Direct3D12.cpp:2659  INFO| GPU[0] detected. Vendor ID: 0x10de, Model ID: 0x2803, Revision ID: 0xa1, Preset: high, GPU Name: NVIDIA GeForce RTX 4060 Ti
+2026-06-29 01:02:39 [MainThread     ]      GraphicsConfig.cpp:1091  INFO| GPU: NVIDIA GeForce RTX 4060 Ti, setting maxrootsignaturedwords to 64
+2026-06-29 01:02:39 [MainThread     ]          Direct3D12.cpp:2659  INFO| GPU[1] detected. Vendor ID: 0x10de, Model ID: 0x2803, Revision ID: 0xa1, Preset: high, GPU Name: NVIDIA GeForce RTX 4060 Ti
+2026-06-29 01:02:39 [MainThread     ]      GraphicsConfig.cpp:1091  INFO| GPU: NVIDIA GeForce RTX 4060 Ti, setting maxrootsignaturedwords to 64
+2026-06-29 01:02:39 [MainThread     ]          Direct3D12.cpp:2659  INFO| GPU[2] detected. Vendor ID: 0x10de, Model ID: 0x2803, Revision ID: 0xa1, Preset: high, GPU Name: NVIDIA GeForce RTX 4060 Ti
+2026-06-29 01:02:39 [MainThread     ]          Direct3D12.cpp:2332  INFO| GPU[0] is selected as default GPU
+2026-06-29 01:02:39 [MainThread     ]          Direct3D12.cpp:2333  INFO| Name of selected gpu: NVIDIA GeForce RTX 4060 Ti
+2026-06-29 01:02:39 [MainThread     ]          Direct3D12.cpp:2334  INFO| Vendor id of selected gpu: 0x10de
+2026-06-29 01:02:39 [MainThread     ]          Direct3D12.cpp:2335  INFO| Model id of selected gpu: 0x2803
+2026-06-29 01:02:39 [MainThread     ]          Direct3D12.cpp:2336  INFO| Revision id of selected gpu: 0xa1
+2026-06-29 01:02:39 [MainThread     ]          Direct3D12.cpp:2337  INFO| Preset of selected gpu: high
+2026-06-29 01:02:39 [MainThread     ]      GraphicsConfig.cpp:1122  INFO| Extended setting: setting EnableAOIT to 1
+2026-06-29 01:02:39 [MainThread     ]     15_Transparency.cpp:2469  INFO| AVBOIT analytic scene built: scene=two_layer case=two_a050_050 submitOrder=normal layerFilter=all layerCount=2
+2026-06-29 01:02:39 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-29 01:02:39 [MainThread     ]         WindowsBase.cpp:841   INFO| Created Renderer API: D3D12
+2026-06-29 01:02:39 [MainThread     ]         WindowsBase.cpp:844   INFO| Selected GPU Name: NVIDIA GeForce RTX 4060 Ti
+2026-06-29 01:02:39 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-29 01:02:39 [MainThread     ]       WindowsWindow.cpp:1073   DBG| Monitor index [0] DPI scale = (1.25, 1.25)
+2026-06-29 01:02:39 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (SkySampler) : User specified Static Sampler
+2026-06-29 01:02:39 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (LinearSampler) : User specified Static Sampler
+2026-06-29 01:02:39 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (LinearSampler) : User specified Static Sampler
+2026-06-29 01:02:39 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (VSMSampler) : User specified Static Sampler
+2026-06-29 01:02:39 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (PointSampler) : User specified Static Sampler
+2026-06-29 01:02:39 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (PointSampler) : User specified Static Sampler
+2026-06-29 01:02:39 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (LinearSampler) : User specified Static Sampler
+2026-06-29 01:02:39 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (PointSampler) : User specified Static Sampler
+2026-06-29 01:02:39 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (LinearSampler) : User specified Static Sampler
+2026-06-29 01:02:39 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (VSMSampler) : User specified Static Sampler
+2026-06-29 01:02:39 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (LinearSampler) : User specified Static Sampler
+2026-06-29 01:02:39 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (LinearSampler) : User specified Static Sampler
+2026-06-29 01:02:39 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (VSMSampler) : User specified Static Sampler
+2026-06-29 01:02:39 [MainThread     ]          Direct3D12.cpp:3206  INFO| Adding D3D12 swapchain @ 1920x1080
+2026-06-29 01:02:39 [MainThread     ]     15_Transparency.cpp:799   INFO| AVBOIT screen dimensions: 1920x1080
+2026-06-29 01:02:39 [MainThread     ]     15_Transparency.cpp:800   INFO| AVBOIT volume dimensions: 240x135x64
+2026-06-29 01:02:39 [MainThread     ]     15_Transparency.cpp:801   INFO| AVBOIT downsample factor: 8
+2026-06-29 01:02:39 [MainThread     ]     15_Transparency.cpp:802   INFO| AVBOIT depth slices: 64
+2026-06-29 01:02:39 [MainThread     ]     15_Transparency.cpp:803   INFO| AVBOIT extinction buffer: 7.91 MiB
+2026-06-29 01:02:39 [MainThread     ]     15_Transparency.cpp:804   INFO| AVBOIT transmittance LUT: 15.82 MiB
+2026-06-29 01:02:39 [MainThread     ]     15_Transparency.cpp:805   INFO| AVBOIT total volume resources: 23.73 MiB
+2026-06-29 01:02:39 [MainThread     ]     15_Transparency.cpp:8782  INFO| AVBOIT full-resolution accumulation render targets: 31.64 MiB
+2026-06-29 01:02:39 [MainThread     ]     15_Transparency.cpp:10125 INFO| Adding AVBOITSplat Pipeline... pShaderAVBOITSplat=0000023CDF985F50
+2026-06-29 01:02:39 [MainThread     ]     15_Transparency.cpp:10141 INFO| Adding AVBOITClear Pipeline...
+2026-06-29 01:02:39 [MainThread     ]     15_Transparency.cpp:10153 INFO| Adding AVBOITIntegrate Pipeline...
+2026-06-29 01:02:39 [MainThread     ]     15_Transparency.cpp:10209 INFO| Adding AVBOITResolve Pipeline...
+2026-06-29 01:02:39 [MainThread     ]     15_Transparency.cpp:10244 INFO| Adding AVBOITAccumulate Pipeline...
+2026-06-29 01:02:39 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (uSampler) : User specified Static Sampler
+2026-06-29 01:02:39 [MainThread     ]          Direct3D12.cpp:4517  INFO| Descriptor (uSampler0) : User specified Static Sampler
+2026-06-29 01:02:39 [MainThread     ]          Direct3D12.cpp:4553  INFO| Descriptor (uniformBlock_rootcbv) : User specified D3D12_ROOT_PARAMETER_TYPE_CBV
+2026-06-29 01:02:39 [MainThread     ]          Direct3D12.cpp:4700  INFO| Root constant (uRootConstants) has (6) 32 bit values. It is recommended to have root constant number <= 4
+2026-06-29 01:02:39 [MainThread     ]         WindowsBase.cpp:865   INFO| Application Init+Load+Reload 1.502000ms
+2026-06-29 01:02:39 [MainThread     ]     15_Transparency.cpp:3494  INFO| AVBOIT auto capture queued at frame 60 as DX12_Mode5_1920x1080_Debug15_Dirlegacy_Depthreverse_correct_Mul1.0_Frame60_dbeb4094_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layerall.
+2026-06-29 01:02:39 [MainThread     ]     15_Transparency.cpp:2025  INFO| AVBOIT raw dump AVBOITAccumColorWeight completed.
+2026-06-29 01:02:39 [MainThread     ]     15_Transparency.cpp:2025  INFO| AVBOIT raw dump AVBOITAccumExtinction completed.
+2026-06-29 01:02:39 [MainThread     ]          Screenshot.cpp:502   INFO| Writing screenshot to DX12_Mode5_1920x1080_Debug15_Dirlegacy_Depthreverse_correct_Mul1.0_Frame60_dbeb4094_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layerall.png
+2026-06-29 01:02:39 [MainThread     ]     15_Transparency.cpp:1870  INFO| AVBOIT capture metadata written to DX12_Mode5_1920x1080_Debug15_Dirlegacy_Depthreverse_correct_Mul1.0_Frame60_dbeb4094_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layerall.json.
+2026-06-29 01:02:39 [MainThread     ]     15_Transparency.cpp:6109  INFO| AVBOIT auto capture completed at frame 60.
+2026-06-29 01:02:39 [MainThread     ]     15_Transparency.cpp:3257  INFO| OIT Performance Dump [Mode 5]: 0.268185 ms
+2026-06-29 01:02:39 [MainThread     ]          Direct3D12.cpp:1281  INFO| Unloading d3d12.dll
+2026-06-29 01:02:39 [MainThread     ]          Direct3D12.cpp:1292  INFO| Unloading dxgi.dll
+2026-06-29 01:02:39 [MainThread     ]                   Log.c:153   INFO| Shutting down log system.

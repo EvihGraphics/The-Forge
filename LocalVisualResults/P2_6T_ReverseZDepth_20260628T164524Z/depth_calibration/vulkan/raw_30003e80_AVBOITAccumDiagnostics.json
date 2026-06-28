@@ -1,0 +1,18 @@
+{
+  "capture": "Vulkan_Mode5_1920x1080_Debug21_Dirlegacy_Depthlegacy_Mul1.0_Frame60_dbeb4094_Scenedepth_calibration_Casefar_3500_Ordernormal_Layerall",
+  "captureHash": "30003e80",
+  "label": "AVBOITAccumDiagnostics",
+  "storage": "synthesized_from_existing_mrts",
+  "channels": {
+    "selectedWeightedColorRgb": "AVBOITAccumColorWeight.rgb",
+    "selectedDenominator": "AVBOITAccumColorWeight.a",
+    "totalExtinction": "AVBOITAccumExtinction.r",
+    "legacyWeightTimesAlphaOrDepthDiagnosticTimesAlpha": "AVBOITAccumExtinction.g",
+    "frontWeightTimesAlpha": "AVBOITAccumExtinction.b",
+    "alphaSum": "AVBOITAccumExtinction.a",
+    "lutR": "selected event weight",
+    "lutG": "legacy event weight",
+    "lutB": "exclusive front event weight",
+    "lutA": "total voxel transmittance"
+  }
+}

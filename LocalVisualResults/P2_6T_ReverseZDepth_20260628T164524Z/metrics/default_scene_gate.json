@@ -1,0 +1,62 @@
+{
+  "DX12": {
+    "createdApiAllOk": true,
+    "coveragePixels": 406795,
+    "rows": [
+      {
+        "variant": "depth_legacy_dir_legacy",
+        "coverageMae": 0.1488139973656602,
+        "globalMae": 0.029194053847590537,
+        "signedLumaVsMode0Coverage": -0.07722621489853773,
+        "outsideCoverageMae": 0.0
+      },
+      {
+        "variant": "depth_reverse_correct_dir_legacy",
+        "coverageMae": 0.1493985238603944,
+        "globalMae": 0.029308725170615904,
+        "signedLumaVsMode0Coverage": -0.07741407163296903,
+        "outsideCoverageMae": 0.0
+      },
+      {
+        "variant": "depth_reverse_correct_dir_front",
+        "coverageMae": 0.14840185501809294,
+        "globalMae": 0.02911320052666142,
+        "signedLumaVsMode0Coverage": -0.07704281821651476,
+        "outsideCoverageMae": 0.0
+      }
+    ],
+    "outsideCoverageNonZeroOpacityPixelCount": 0,
+    "outsideCoverageMaxOpacity": 0.0
+  },
+  "Vulkan": {
+    "createdApiAllOk": true,
+    "coveragePixels": 406795,
+    "rows": [
+      {
+        "variant": "depth_legacy_dir_legacy",
+        "coverageMae": 0.14881400112354734,
+        "globalMae": 0.029194054584805864,
+        "signedLumaVsMode0Coverage": -0.07722621197102077,
+        "outsideCoverageMae": 0.0
+      },
+      {
+        "variant": "depth_reverse_correct_dir_legacy",
+        "coverageMae": 0.14939856988743958,
+        "globalMae": 0.029308734200116215,
+        "signedLumaVsMode0Coverage": -0.07741407874679453,
+        "outsideCoverageMae": 0.0
+      },
+      {
+        "variant": "depth_reverse_correct_dir_front",
+        "coverageMae": 0.14840184066891096,
+        "globalMae": 0.029113197711665526,
+        "signedLumaVsMode0Coverage": -0.07704280696253829,
+        "outsideCoverageMae": 0.0
+      }
+    ],
+    "outsideCoverageNonZeroOpacityPixelCount": 0,
+    "outsideCoverageMaxOpacity": 0.0
+  },
+  "crossApiFrontMae": 7.518062609542952e-05,
+  "crossApiMaskPixels": 790266
+}
