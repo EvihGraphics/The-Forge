@@ -26,6 +26,8 @@
 #ifdef _WINDOWS
 
 #include <ctime>
+#include <exception>
+#include <signal.h>
 #include <ntverp.h>
 
 #include "../CPUConfig.h"
@@ -76,6 +78,173 @@ static ReloadDesc  gReloadDescriptor = { RELOAD_TYPE_ALL };
 /// CPU
 static CpuInfo     gCpu;
 static OSInfo      gOsInfo = {};
+
+static bool   gAVBOITBootstrapLogEnabled = false;
+static HANDLE gAVBOITBootstrapLogFile = INVALID_HANDLE_VALUE;
+static char   gAVBOITBootstrapLastStage[128] = "not-started";
+
+static bool AVBOITBootstrapArgEquals(const char* arg, const char* name)
+{
+    return arg && name && strcmp(arg, name) == 0;
+}
+
+static bool AVBOITBootstrapArgValue(const char* arg, const char* prefix, char* outValue, size_t outValueSize)
+{
+    if (!arg || !prefix || !outValue || outValueSize == 0)
+        return false;
+
+    const size_t prefixLength = strlen(prefix);
+    if (strncmp(arg, prefix, prefixLength) != 0)
+        return false;
+
+    strncpy(outValue, arg + prefixLength, outValueSize - 1);
+    outValue[outValueSize - 1] = 0;
+    return true;
+}
+
+static void AVBOITBootstrapMakeDirectory(const char* path)
+{
+    if (!path || !path[0])
+        return;
+
+    char partial[MAX_PATH] = {};
+    strncpy(partial, path, sizeof(partial) - 1);
+    partial[sizeof(partial) - 1] = 0;
+
+    for (char* cursor = partial; *cursor; ++cursor)
+    {
+        if (*cursor != '\\' && *cursor != '/')
+            continue;
+        if (cursor == partial || (cursor > partial && cursor[-1] == ':'))
+            continue;
+
+        const char separator = *cursor;
+        *cursor = 0;
+        CreateDirectoryA(partial, NULL);
+        *cursor = separator;
+    }
+
+    CreateDirectoryA(partial, NULL);
+}
+
+static void AVBOITBootstrapWriteRaw(const char* text)
+{
+    if (!gAVBOITBootstrapLogEnabled || gAVBOITBootstrapLogFile == INVALID_HANDLE_VALUE || !text)
+        return;
+
+    DWORD written = 0;
+    WriteFile(gAVBOITBootstrapLogFile, text, (DWORD)strlen(text), &written, NULL);
+    FlushFileBuffers(gAVBOITBootstrapLogFile);
+}
+
+static void AVBOITBootstrapWrite(const char* stage)
+{
+    if (!stage || !stage[0])
+        return;
+
+    strncpy(gAVBOITBootstrapLastStage, stage, sizeof(gAVBOITBootstrapLastStage) - 1);
+    gAVBOITBootstrapLastStage[sizeof(gAVBOITBootstrapLastStage) - 1] = 0;
+
+    SYSTEMTIME time = {};
+    GetLocalTime(&time);
+    char line[512] = {};
+    snprintf(line, sizeof(line), "%04u-%02u-%02uT%02u:%02u:%02u.%03u %s\n", (uint32_t)time.wYear, (uint32_t)time.wMonth,
+             (uint32_t)time.wDay, (uint32_t)time.wHour, (uint32_t)time.wMinute, (uint32_t)time.wSecond,
+             (uint32_t)time.wMilliseconds, stage);
+    AVBOITBootstrapWriteRaw(line);
+}
+
+void avboitBootstrapStage(const char* stage) { AVBOITBootstrapWrite(stage); }
+
+static LONG WINAPI AVBOITBootstrapUnhandledException(EXCEPTION_POINTERS* exceptionInfo)
+{
+    char line[512] = {};
+    const DWORD code = exceptionInfo && exceptionInfo->ExceptionRecord ? exceptionInfo->ExceptionRecord->ExceptionCode : 0;
+    const void* address = exceptionInfo && exceptionInfo->ExceptionRecord ? exceptionInfo->ExceptionRecord->ExceptionAddress : NULL;
+    snprintf(line, sizeof(line), "UNHANDLED_EXCEPTION code=0x%08x address=%p lastStage=%s\n", code, address, gAVBOITBootstrapLastStage);
+    AVBOITBootstrapWriteRaw(line);
+    return EXCEPTION_EXECUTE_HANDLER;
+}
+
+static void AVBOITBootstrapTerminate()
+{
+    char line[256] = {};
+    snprintf(line, sizeof(line), "TERMINATE lastStage=%s\n", gAVBOITBootstrapLastStage);
+    AVBOITBootstrapWriteRaw(line);
+    abort();
+}
+
+static void AVBOITBootstrapSignalHandler(int signalNumber)
+{
+    char line[256] = {};
+    snprintf(line, sizeof(line), "SIGNAL signal=%d lastStage=%s\n", signalNumber, gAVBOITBootstrapLastStage);
+    AVBOITBootstrapWriteRaw(line);
+    signal(signalNumber, SIG_DFL);
+    raise(signalNumber);
+}
+
+static void AVBOITBootstrapConfigure(int argc, char** argv, const char* appName)
+{
+    bool autoCapture = false;
+    char explicitLogDir[MAX_PATH] = {};
+    char outputDir[MAX_PATH] = {};
+
+    for (int i = 0; i < argc; ++i)
+    {
+        autoCapture = autoCapture || AVBOITBootstrapArgEquals(argv[i], "--avboit-auto-capture");
+        AVBOITBootstrapArgValue(argv[i], "--avboit-bootstrap-log-dir=", explicitLogDir, sizeof(explicitLogDir));
+        AVBOITBootstrapArgValue(argv[i], "--avboit-output-dir=", outputDir, sizeof(outputDir));
+    }
+
+    if (!explicitLogDir[0] && autoCapture && outputDir[0])
+        snprintf(explicitLogDir, sizeof(explicitLogDir), "%s\\bootstrap", outputDir);
+
+    if (!explicitLogDir[0])
+        return;
+
+    AVBOITBootstrapMakeDirectory(explicitLogDir);
+
+    SYSTEMTIME time = {};
+    GetLocalTime(&time);
+    char logPath[MAX_PATH] = {};
+    snprintf(logPath, sizeof(logPath), "%s\\avboit_bootstrap_%04u%02u%02uT%02u%02u%02u_%lu.log", explicitLogDir,
+             (uint32_t)time.wYear, (uint32_t)time.wMonth, (uint32_t)time.wDay, (uint32_t)time.wHour, (uint32_t)time.wMinute,
+             (uint32_t)time.wSecond, GetCurrentProcessId());
+
+    gAVBOITBootstrapLogFile = CreateFileA(logPath, GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+    gAVBOITBootstrapLogEnabled = gAVBOITBootstrapLogFile != INVALID_HANDLE_VALUE;
+    if (!gAVBOITBootstrapLogEnabled)
+        return;
+
+    SetUnhandledExceptionFilter(AVBOITBootstrapUnhandledException);
+    std::set_terminate(AVBOITBootstrapTerminate);
+    signal(SIGABRT, AVBOITBootstrapSignalHandler);
+    signal(SIGFPE, AVBOITBootstrapSignalHandler);
+    signal(SIGILL, AVBOITBootstrapSignalHandler);
+    signal(SIGSEGV, AVBOITBootstrapSignalHandler);
+    signal(SIGTERM, AVBOITBootstrapSignalHandler);
+
+    AVBOITBootstrapWrite("BOOTSTRAP_START");
+
+    char cwd[MAX_PATH] = {};
+    GetCurrentDirectoryA(sizeof(cwd), cwd);
+    char line[2048] = {};
+    snprintf(line, sizeof(line), "APP_NAME %s\nPROCESS_ID %lu\nWORKING_DIRECTORY %s\nCOMMAND_LINE %s\nOUTPUT_DIRECTORY %s\nLOG_DIRECTORY %s\n",
+             appName ? appName : "unknown", GetCurrentProcessId(), cwd, GetCommandLineA(), outputDir[0] ? outputDir : "(default)",
+             explicitLogDir);
+    AVBOITBootstrapWriteRaw(line);
+}
+
+static void AVBOITBootstrapClose()
+{
+    AVBOITBootstrapWrite("APP_EXITED");
+    if (gAVBOITBootstrapLogFile != INVALID_HANDLE_VALUE)
+    {
+        CloseHandle(gAVBOITBootstrapLogFile);
+        gAVBOITBootstrapLogFile = INVALID_HANDLE_VALUE;
+    }
+    gAVBOITBootstrapLogEnabled = false;
+}
 
 // UI
 static UIComponent* pAPISwitchingComponent = NULL;
@@ -489,13 +658,25 @@ const char** IApp::argv;
 
 int WindowsMain(int argc, char** argv, IApp* app)
 {
-    if (!initMemAlloc(app->GetName()))
-        return EXIT_FAILURE;
+    AVBOITBootstrapConfigure(argc, argv, app ? app->GetName() : "unknown");
 
+    AVBOITBootstrapWrite("MEM_ALLOC_INIT_BEGIN");
+    if (!initMemAlloc(app->GetName()))
+    {
+        AVBOITBootstrapWrite("MEM_ALLOC_INIT_FAILED");
+        return EXIT_FAILURE;
+    }
+    AVBOITBootstrapWrite("MEM_ALLOC_INIT_END");
+
+    AVBOITBootstrapWrite("FILESYSTEM_INIT_BEGIN");
     FileSystemInitDesc fsDesc = {};
     fsDesc.pAppName = app->GetName();
     if (!initFileSystem(&fsDesc))
+    {
+        AVBOITBootstrapWrite("FILESYSTEM_INIT_FAILED");
         return EXIT_FAILURE;
+    }
+    AVBOITBootstrapWrite("FILESYSTEM_INIT_END");
 
     fsSetPathForResourceDir(pSystemFileIO, RM_DEBUG, RD_LOG, "");
 
@@ -510,6 +691,7 @@ int WindowsMain(int argc, char** argv, IApp* app)
 #endif
 
     initLog(app->GetName(), DEFAULT_LOG_LEVEL);
+    AVBOITBootstrapWrite("FORGE_LOG_INIT_END");
 
     ULONG majorVersion = 0;
     ULONG minorVersion = 0;
@@ -528,10 +710,16 @@ int WindowsMain(int argc, char** argv, IApp* app)
     pApp = app;
     pWindowAppRef = app;
 
+    AVBOITBootstrapWrite("COMMAND_LINE_PARSE_BEGIN");
     if (!ParseRendererApiCommandLine(argc, argv))
+    {
+        AVBOITBootstrapWrite("COMMAND_LINE_PARSE_FAILED");
         return EXIT_FAILURE;
+    }
+    AVBOITBootstrapWrite("COMMAND_LINE_PARSED");
 
     initWindowClass();
+    AVBOITBootstrapWrite("WINDOW_CLASS_INIT_END");
 
     // Used for automated testing, if enabled app will exit after DEFAULT_AUTOMATION_FRAME_COUNT (240) frames
 #if defined(AUTOMATED_TESTING)
@@ -581,6 +769,7 @@ int WindowsMain(int argc, char** argv, IApp* app)
 
     if (!pSettings->mExternalWindow)
         openWindow(pApp->GetName(), gWindow);
+    AVBOITBootstrapWrite("WINDOW_OPEN_END");
 
     pSettings->mWidth = gWindow->fullScreen ? getRectWidth(&gWindow->fullscreenRect) : getRectWidth(&gWindow->clientRect);
     pSettings->mHeight = gWindow->fullScreen ? getRectHeight(&gWindow->fullscreenRect) : getRectHeight(&gWindow->clientRect);
@@ -617,13 +806,20 @@ int WindowsMain(int argc, char** argv, IApp* app)
 #endif
 
     {
+        AVBOITBootstrapWrite("BASE_SUBSYSTEMS_INIT_BEGIN");
         if (!initBaseSubsystems())
+        {
+            AVBOITBootstrapWrite("BASE_SUBSYSTEMS_INIT_FAILED");
             return EXIT_FAILURE;
+        }
+        AVBOITBootstrapWrite("BASE_SUBSYSTEMS_INIT_END");
 
         Timer t;
         initTimer(&t);
+        AVBOITBootstrapWrite("APP_INIT_BEGIN");
         if (!pApp->Init())
         {
+            AVBOITBootstrapWrite("APP_INIT_FAILED");
             const char* pRendererReason;
             if (hasRendererInitializationError(&pRendererReason))
             {
@@ -640,6 +836,7 @@ int WindowsMain(int argc, char** argv, IApp* app)
 
             return EXIT_FAILURE;
         }
+        AVBOITBootstrapWrite("APP_INIT_END");
 
         LOGF(LogLevel::eINFO, "Created Renderer API: %s", RendererApiToString(gPlatformParameters.mSelectedRendererApi));
         if (gPlatformParameters.mAvailableGpuCount > 0 && gPlatformParameters.mSelectedGpuIndex < gPlatformParameters.mAvailableGpuCount)
@@ -650,14 +847,20 @@ int WindowsMain(int argc, char** argv, IApp* app)
         {
             LOGF(eERROR, "Requested Renderer API %s but created %s.", RendererApiToString(gCommandLineRendererApi),
                  RendererApiToString(gPlatformParameters.mSelectedRendererApi));
+            AVBOITBootstrapWrite("RENDERER_API_MISMATCH");
             return EXIT_FAILURE;
         }
 
         setupPlatformUI(pSettings);
         pSettings->mInitialized = true;
 
+        AVBOITBootstrapWrite("APP_LOAD_BEGIN");
         if (!pApp->Load(&gReloadDescriptor))
+        {
+            AVBOITBootstrapWrite("APP_LOAD_FAILED");
             return EXIT_FAILURE;
+        }
+        AVBOITBootstrapWrite("APP_LOAD_END");
 
         LOGF(LogLevel::eINFO, "Application Init+Load+Reload %fms", getTimerMSec(&t, false) / 1000.0f);
     }
@@ -670,6 +873,7 @@ int WindowsMain(int argc, char** argv, IApp* app)
     bool    baseSubsystemAppDrawn = false;
     bool    quit = false;
     int64_t lastCounter = getUSec(false);
+    AVBOITBootstrapWrite("FRAME_LOOP_BEGIN");
     while (!quit)
     {
         int64_t counter = getUSec(false);
@@ -815,8 +1019,10 @@ int WindowsMain(int argc, char** argv, IApp* app)
 
     gReloadDescriptor.mType = RELOAD_TYPE_ALL;
     pApp->mSettings.mQuit = true;
+    AVBOITBootstrapWrite("APP_UNLOAD_BEGIN");
     pApp->Unload(&gReloadDescriptor);
     pApp->Exit();
+    AVBOITBootstrapWrite("APP_UNLOAD_END");
 
     exitWindowClass();
 
@@ -840,6 +1046,7 @@ int WindowsMain(int argc, char** argv, IApp* app)
     gWindow = NULL;
     gWindowDesc = NULL;
     gLogWindowHandle = NULL;
+    AVBOITBootstrapClose();
     return 0;
 }
 #endif
