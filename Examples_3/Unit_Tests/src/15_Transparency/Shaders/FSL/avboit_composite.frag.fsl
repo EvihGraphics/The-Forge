@@ -86,7 +86,7 @@ float4 PS_MAIN(VSOutput In)
     }
     if (Get(avboitDebugView) == 6u)
     {
-        float v = saturate(accumExtinction.g);
+        float v = saturate(accumExtinction.g / max(alphaSum, 1e-6f));
         RETURN(float4(v, v, v, 1.0f));
     }
     if (Get(avboitDebugView) == 7u)

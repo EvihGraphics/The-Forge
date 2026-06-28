@@ -77,7 +77,7 @@ PSOutput PS_MAIN(VSOutput In)
     float extinction = -log(max(1.0f - alpha, 1e-6f)) * Get(avboitMultiplier);
 
     Out.AccumColorWeight = float4(baseColor.rgb * alpha * eventWeight, alpha * eventWeight);
-    float diagnosticG = Get(avboitDebugView) == 6u ? float(zIndex) / max(float(volumeDepth - 1u), 1.0f) : legacyWeight * alpha;
+    float diagnosticG = Get(avboitDebugView) == 6u ? (float(zIndex) / max(float(volumeDepth - 1u), 1.0f)) * alpha : legacyWeight * alpha;
     Out.AccumExtinction = float4(extinction, diagnosticG, frontWeight * alpha, alpha);
     RETURN(Out);
 }
