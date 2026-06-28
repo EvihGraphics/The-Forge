@@ -190,7 +190,9 @@ typedef struct Material
 
     float  mCollimation;
 
-    float2 mPadding;
+    float  mPadding;
+
+    uint   mAnalyticLayerId;
 
     uint   mTextureFlags;
 
@@ -208,6 +210,7 @@ typedef struct Material
 
 static const uint MATERIAL_FLAG_ALBEDO_TEXTURE = 1u << 0;
 static const uint MATERIAL_FLAG_UNLIT = 1u << 1;
+static const uint AVBOIT_ANALYTIC_LAYER_INVALID = 0xFFFFFFFFu;
 
 
 
@@ -657,6 +660,7 @@ typedef enum AVBOITTestScene
     AVBOIT_TEST_SCENE_TWO_LAYER,
     AVBOIT_TEST_SCENE_THREE_LAYER,
     AVBOIT_TEST_SCENE_SAME_SLICE,
+    AVBOIT_TEST_SCENE_DEPTH_CALIBRATION,
 } AVBOITTestScene;
 
 typedef enum AVBOITWeightSource
@@ -666,11 +670,19 @@ typedef enum AVBOITWeightSource
     AVBOIT_WEIGHT_SOURCE_LAYER_ID = 2,
 } AVBOITWeightSource;
 
-uint32_t gAVBOITTransmittanceDirection = AVBOIT_TRANSMITTANCE_LEGACY;
+typedef enum AVBOITDepthMapping
+{
+    AVBOIT_DEPTH_MAPPING_LEGACY = 0,
+    AVBOIT_DEPTH_MAPPING_REVERSE_CORRECT = 1,
+} AVBOITDepthMapping;
+
+uint32_t gAVBOITTransmittanceDirection = AVBOIT_TRANSMITTANCE_FRONT;
+uint32_t gAVBOITDepthMapping = AVBOIT_DEPTH_MAPPING_REVERSE_CORRECT;
 uint32_t gAVBOITWeightSource = AVBOIT_WEIGHT_SOURCE_LUT;
 float    gAVBOITWeightConstant = 0.25f;
 uint32_t gAVBOITWeightPattern = 0;
 bool     gAVBOITDumpRawAccum = false;
+bool     gAVBOITDualDirectionDiagnostic = false;
 AVBOITTestScene gAVBOITTestScene = AVBOIT_TEST_SCENE_DEFAULT;
 char gAVBOITTestCase[64] = "default";
 char gAVBOITSubmitOrder[32] = "normal";
@@ -699,6 +711,11 @@ static const char* gAVBOITDebugViewNames[] = {
     "AVBOIT selected minus legacy",
     "AVBOIT selected minus front",
     "AVBOIT selected weight coverage",
+    "AVBOIT raw device depth",
+    "AVBOIT legacy normalized depth",
+    "AVBOIT reverse-Z normalized depth",
+    "AVBOIT legacy z slice",
+    "AVBOIT reverse-Z z slice",
 };
 
 static const uint32_t gAVBOITDebugViewCount = sizeof(gAVBOITDebugViewNames) / sizeof(gAVBOITDebugViewNames[0]);
@@ -739,6 +756,8 @@ static_assert(sizeof(AVBOITUniformData) == 32, "AVBOIT uniform layout must match
 static const uint32_t AVBOIT_ANALYTIC_FLAG_WEIGHT_SOURCE_MASK = 0xFu;
 static const uint32_t AVBOIT_ANALYTIC_FLAG_WEIGHT_CONSTANT_075 = 1u << 4;
 static const uint32_t AVBOIT_ANALYTIC_FLAG_WEIGHT_PATTERN_B = 1u << 5;
+static const uint32_t AVBOIT_ANALYTIC_FLAG_DEPTH_MAPPING_REVERSE_CORRECT = 1u << 6;
+static const uint32_t AVBOIT_ANALYTIC_FLAG_DUAL_DIRECTION_DIAGNOSTIC = 1u << 7;
 
 static const AVBOITVolumeConfig gAVBOITVolumeConfig = {};
 static AVBOITVolumeDimensions   gAVBOITVolumeDimensions = {};
@@ -801,6 +820,10 @@ static void UpdateAVBOITUniformBuffer(uint32_t frameIndex, const AVBOITVolumeDim
         uniformData.mAnalyticFlags |= AVBOIT_ANALYTIC_FLAG_WEIGHT_CONSTANT_075;
     if (gAVBOITWeightPattern == 1)
         uniformData.mAnalyticFlags |= AVBOIT_ANALYTIC_FLAG_WEIGHT_PATTERN_B;
+    if (gAVBOITDepthMapping == AVBOIT_DEPTH_MAPPING_REVERSE_CORRECT)
+        uniformData.mAnalyticFlags |= AVBOIT_ANALYTIC_FLAG_DEPTH_MAPPING_REVERSE_CORRECT;
+    if (gAVBOITDualDirectionDiagnostic)
+        uniformData.mAnalyticFlags |= AVBOIT_ANALYTIC_FLAG_DUAL_DIRECTION_DIAGNOSTIC;
 
     BufferUpdateDesc avboitUpdate = { pBufferAVBOITUniform[frameIndex] };
     beginUpdateResource(&avboitUpdate);
@@ -1403,6 +1426,11 @@ static const char* CurrentAVBOITTransmittanceDirectionName()
     return gAVBOITTransmittanceDirection == AVBOIT_TRANSMITTANCE_FRONT ? "front" : "legacy";
 }
 
+static const char* CurrentAVBOITDepthMappingName()
+{
+    return gAVBOITDepthMapping == AVBOIT_DEPTH_MAPPING_REVERSE_CORRECT ? "reverse_correct" : "legacy";
+}
+
 static const char* CurrentAVBOITWeightSourceName()
 {
     switch (gAVBOITWeightSource)
@@ -1421,6 +1449,7 @@ static const char* CurrentAVBOITTestSceneName()
     case AVBOIT_TEST_SCENE_TWO_LAYER: return "two_layer";
     case AVBOIT_TEST_SCENE_THREE_LAYER: return "three_layer";
     case AVBOIT_TEST_SCENE_SAME_SLICE: return "same_slice";
+    case AVBOIT_TEST_SCENE_DEPTH_CALIBRATION: return "depth_calibration";
     default: return "default";
     }
 }
@@ -1428,6 +1457,7 @@ static const char* CurrentAVBOITTestSceneName()
 static uint32_t SelectAVBOITAnalyticLayers(vec4* outLayers, uint32_t* outTargetSlices, uint32_t capacity);
 static void     GetAVBOITSubmitOrder(uint32_t layerCount, uint32_t* outOrder);
 static vec3     GetAVBOITAnalyticPositionForTargetSlice(uint32_t targetSlice);
+static bool     AVBOITCaseContains(const char* token);
 
 static void AppendAVBOITJson(char* buffer, size_t bufferSize, size_t* offset, const char* format, ...)
 {
@@ -1452,34 +1482,115 @@ static float ClampAVBOITFloat(float value, float lo, float hi)
     return value < lo ? lo : (value > hi ? hi : value);
 }
 
-static float ComputeAVBOITAnalyticLinearDepth(const vec3& position)
+struct AVBOITDepthProjectionSample
 {
-    const float dx = position.getX() - kAVBOITAnalyticCameraPosition.getX();
-    const float dy = position.getY() - kAVBOITAnalyticCameraPosition.getY();
-    const float dz = position.getZ() - kAVBOITAnalyticCameraPosition.getZ();
-    return sqrtf(dx * dx + dy * dy + dz * dz);
+    vec4     mViewPosition;
+    vec4     mClipPosition;
+    float    mDeviceDepth;
+    float    mLegacyLinearDepth;
+    float    mReverseLinearDepth;
+    float    mLegacyNormalizedDepth;
+    float    mReverseNormalizedDepth;
+    uint32_t mLegacyZIndex;
+    uint32_t mReverseZIndex;
+    uint32_t mSelectedZIndex;
+};
+
+static float GetAVBOITClipZFar()
+{
+    const float zFar = gCameraUniformData.mClipInfo.getZ();
+    return zFar > 0.0f ? zFar : kAVBOITAnalyticZFar;
 }
 
-static float ComputeAVBOITAnalyticNormalizedDepth(float linearDepth)
+static float GetAVBOITClipZNear()
 {
-    const float safeDepth = max(linearDepth, kAVBOITAnalyticZNear);
-    return ClampAVBOITFloat(logf(kAVBOITAnalyticZFar / safeDepth) / logf(kAVBOITAnalyticZFar / kAVBOITAnalyticZNear), 0.0f,
+    const float zFar = GetAVBOITClipZFar();
+    const float clipX = gCameraUniformData.mClipInfo.getX();
+    return clipX > 0.0f ? clipX / zFar : kAVBOITAnalyticZNear;
+}
+
+static float ComputeAVBOITLegacyLinearDepthFromDeviceDepth(float deviceDepth)
+{
+    const vec4  clipInfo = gCameraUniformData.mClipInfo;
+    const float numerator = clipInfo.getX() > 0.0f ? clipInfo.getX() : kAVBOITAnalyticZNear * kAVBOITAnalyticZFar;
+    const float denominator = clipInfo.getY() * deviceDepth + clipInfo.getZ();
+    return fabsf(denominator) > 1e-8f ? numerator / denominator : GetAVBOITClipZFar();
+}
+
+static float ComputeAVBOITReverseLinearDepthFromDeviceDepth(float deviceDepth)
+{
+    const vec4  clipInfo = gCameraUniformData.mClipInfo;
+    const float numerator = clipInfo.getX() > 0.0f ? clipInfo.getX() : kAVBOITAnalyticZNear * kAVBOITAnalyticZFar;
+    const float denominator = clipInfo.getY() * (1.0f - deviceDepth) + clipInfo.getZ();
+    return fabsf(denominator) > 1e-8f ? numerator / denominator : GetAVBOITClipZFar();
+}
+
+static float ComputeAVBOITAnalyticNormalizedDepthFromLinearDepth(float linearDepth)
+{
+    const float zNear = GetAVBOITClipZNear();
+    const float zFar = GetAVBOITClipZFar();
+    const float safeDepth = max(linearDepth, zNear);
+    return ClampAVBOITFloat(logf(zFar / safeDepth) / logf(zFar / zNear), 0.0f,
                             1.0f);
 }
 
-static uint32_t ComputeAVBOITAnalyticZIndex(float linearDepth)
+static uint32_t ComputeAVBOITZIndexFromNormalizedDepth(float normalizedDepth)
 {
-    const float normalized = ComputeAVBOITAnalyticNormalizedDepth(linearDepth);
     const uint32_t depth = gAVBOITVolumeConfig.mDepthSlices;
-    const uint32_t zIndex = (uint32_t)(normalized * (float)depth);
+    const uint32_t zIndex = (uint32_t)(ClampAVBOITFloat(normalizedDepth, 0.0f, 1.0f) * (float)depth);
     return min(zIndex, depth - 1);
+}
+
+static AVBOITDepthProjectionSample ComputeAVBOITDepthProjectionSample(const vec3& position)
+{
+    AVBOITDepthProjectionSample sample = {};
+    const vec4 worldPosition = vec4(position, 1.0f);
+    sample.mViewPosition = gCameraUniformData.mViewMat * worldPosition;
+    sample.mClipPosition = gCameraUniformData.mViewProject.mCamera * worldPosition;
+    sample.mDeviceDepth = fabsf(sample.mClipPosition.getW()) > 1e-8f ? sample.mClipPosition.getZ() / sample.mClipPosition.getW() : 0.0f;
+    sample.mLegacyLinearDepth = ComputeAVBOITLegacyLinearDepthFromDeviceDepth(sample.mDeviceDepth);
+    sample.mReverseLinearDepth = ComputeAVBOITReverseLinearDepthFromDeviceDepth(sample.mDeviceDepth);
+    sample.mLegacyNormalizedDepth = ComputeAVBOITAnalyticNormalizedDepthFromLinearDepth(sample.mLegacyLinearDepth);
+    sample.mReverseNormalizedDepth = ComputeAVBOITAnalyticNormalizedDepthFromLinearDepth(sample.mReverseLinearDepth);
+    sample.mLegacyZIndex = ComputeAVBOITZIndexFromNormalizedDepth(sample.mLegacyNormalizedDepth);
+    sample.mReverseZIndex = ComputeAVBOITZIndexFromNormalizedDepth(sample.mReverseNormalizedDepth);
+    sample.mSelectedZIndex = gAVBOITDepthMapping == AVBOIT_DEPTH_MAPPING_REVERSE_CORRECT ? sample.mReverseZIndex : sample.mLegacyZIndex;
+    return sample;
 }
 
 static float ComputeAVBOITAnalyticLinearDepthForTargetSlice(uint32_t targetSlice)
 {
     const uint32_t depth = max(gAVBOITVolumeConfig.mDepthSlices, 1u);
     const float normalizedTarget = ((float)min(targetSlice, depth - 1u) + 0.5f) / (float)depth;
-    return kAVBOITAnalyticZFar / powf(kAVBOITAnalyticZFar / kAVBOITAnalyticZNear, normalizedTarget);
+    const float zNear = GetAVBOITClipZNear();
+    const float zFar = GetAVBOITClipZFar();
+    return zFar / powf(zFar / zNear, normalizedTarget);
+}
+
+static float GetAVBOITDepthCalibrationLinearDepth()
+{
+    if (AVBOITCaseContains("slice48") || AVBOITCaseContains("48"))
+        return 7.453734f;
+    if (AVBOITCaseContains("slice32") || AVBOITCaseContains("32"))
+        return 59.277367f;
+    if (AVBOITCaseContains("slice16") || AVBOITCaseContains("16"))
+        return 471.415546f;
+    if (AVBOITCaseContains("far") || AVBOITCaseContains("3500"))
+        return 3500.0f;
+    return 1.1f;
+}
+
+static uint32_t GetAVBOITDepthCalibrationTargetSlice()
+{
+    if (AVBOITCaseContains("slice48") || AVBOITCaseContains("48"))
+        return 48;
+    if (AVBOITCaseContains("slice32") || AVBOITCaseContains("32"))
+        return 32;
+    if (AVBOITCaseContains("slice16") || AVBOITCaseContains("16"))
+        return 16;
+    if (AVBOITCaseContains("far") || AVBOITCaseContains("3500"))
+        return 0;
+    return 63;
 }
 
 static vec3 GetAVBOITAnalyticCameraForward()
@@ -1492,15 +1603,37 @@ static vec3 GetAVBOITAnalyticPositionForTargetSlice(uint32_t targetSlice)
     return kAVBOITAnalyticCameraPosition + GetAVBOITAnalyticCameraForward() * ComputeAVBOITAnalyticLinearDepthForTargetSlice(targetSlice);
 }
 
+static vec3 GetAVBOITAnalyticPositionForLinearDepth(float linearDepth)
+{
+    return kAVBOITAnalyticCameraPosition + GetAVBOITAnalyticCameraForward() * linearDepth;
+}
+
 static vec3 GetAVBOITAnalyticPlaneScale(uint32_t targetSlice, float minimumScale)
 {
     const float scale = max(minimumScale, ComputeAVBOITAnalyticLinearDepthForTargetSlice(targetSlice) * 0.08f);
     return vec3(scale, 1.0f, scale);
 }
 
+static vec3 GetAVBOITAnalyticPlaneScaleForLinearDepth(float linearDepth, float minimumScale)
+{
+    const float scale = max(minimumScale, linearDepth * 0.08f);
+    return vec3(scale, 1.0f, scale);
+}
+
 static bool IsAVBOITAnalyticLayerIncluded(uint32_t layer)
 {
     return gAVBOITAnalyticLayerFilter < 0 || gAVBOITAnalyticLayerFilter == (int32_t)layer;
+}
+
+static uint32_t GetAVBOITAnalyticLayerId(uint32_t layer, uint32_t layerCount)
+{
+    if (gAVBOITTestScene == AVBOIT_TEST_SCENE_DEPTH_CALIBRATION)
+        return 0u;
+    if (layerCount == 1)
+        return 0u;
+    if (layerCount == 2)
+        return layer == 0u ? 0u : 2u;
+    return min(layer, 2u);
 }
 
 static void ComputeAVBOITAnalyticExpectedColor(const vec4* layers, const uint32_t* targetSlices, uint32_t layerCount, vec4* outExpected)
@@ -1582,11 +1715,14 @@ static void AppendAVBOITAnalyticMetadataJson(char* json, size_t jsonSize, size_t
 
     for (uint32_t i = 0; i < layerCount; ++i)
     {
-        const vec3 position = GetAVBOITAnalyticPositionForTargetSlice(targetSlices[i]);
-        const float linearDepth = ComputeAVBOITAnalyticLinearDepth(position);
-        const float normalizedDepth = ComputeAVBOITAnalyticNormalizedDepth(linearDepth);
-        const uint32_t zIndex = ComputeAVBOITAnalyticZIndex(linearDepth);
-        const float halfPixels = ClampAVBOITFloat(((float)width * 2.0f) / max(linearDepth, 1.0f), 8.0f, (float)width * 0.5f);
+        const bool depthCalibration = gAVBOITTestScene == AVBOIT_TEST_SCENE_DEPTH_CALIBRATION;
+        const float calibrationDepth = GetAVBOITDepthCalibrationLinearDepth();
+        const vec3 position = depthCalibration ? GetAVBOITAnalyticPositionForLinearDepth(calibrationDepth) :
+                                                  GetAVBOITAnalyticPositionForTargetSlice(targetSlices[i]);
+        const float linearDepthForBounds = depthCalibration ? calibrationDepth : ComputeAVBOITAnalyticLinearDepthForTargetSlice(targetSlices[i]);
+        const AVBOITDepthProjectionSample depthSample = ComputeAVBOITDepthProjectionSample(position);
+        const uint32_t analyticLayerId = GetAVBOITAnalyticLayerId(i, layerCount);
+        const float halfPixels = ClampAVBOITFloat(((float)width * 2.0f) / max(linearDepthForBounds, 1.0f), 8.0f, (float)width * 0.5f);
         const float left = ClampAVBOITFloat(centerX - halfPixels, 0.0f, (float)width);
         const float top = ClampAVBOITFloat(centerY - halfPixels, 0.0f, (float)height);
         const float right = ClampAVBOITFloat(centerX + halfPixels, 0.0f, (float)width);
@@ -1613,13 +1749,24 @@ static void AppendAVBOITAnalyticMetadataJson(char* json, size_t jsonSize, size_t
 
         AppendAVBOITJson(json, jsonSize, offset,
                          "      { \"index\": %u, \"includedByLayerFilter\": %s, \"color\": [%.6f, %.6f, %.6f, %.6f], "
-                         "\"worldPosition\": [%.6f, %.6f, %.6f], \"linearDepth\": %.6f, \"normalizedDepth\": %.6f, "
+                         "\"analyticLayerId\": %u, \"worldPosition\": [%.6f, %.6f, %.6f], "
+                         "\"viewPosition\": [%.6f, %.6f, %.6f, %.6f], \"clipPosition\": [%.6f, %.6f, %.6f, %.6f], "
+                         "\"deviceDepth\": %.9f, \"legacyLinearDepth\": %.6f, \"legacyNormalizedDepth\": %.9f, "
+                         "\"legacyZIndex\": %u, \"reverseLinearDepth\": %.6f, \"reverseNormalizedDepth\": %.9f, "
+                         "\"reverseZIndex\": %u, \"activeDepthMapping\": \"%s\", "
                          "\"targetSlice\": %u, \"cpuExpectedZIndex\": %u, \"gpuCapturedZIndex\": null, "
                          "\"screenBoundsApprox\": { \"left\": %.1f, \"top\": %.1f, \"right\": %.1f, \"bottom\": %.1f } }%s\n",
                          i, IsAVBOITAnalyticLayerIncluded(i) ? "true" : "false", (float)layers[i].getX(),
-                         (float)layers[i].getY(), (float)layers[i].getZ(), (float)layers[i].getW(), (float)position.getX(),
-                         (float)position.getY(), (float)position.getZ(), linearDepth, normalizedDepth, targetSlices[i], zIndex, left, top,
-                         right, bottom, i + 1 < layerCount ? "," : "");
+                         (float)layers[i].getY(), (float)layers[i].getZ(), (float)layers[i].getW(), analyticLayerId,
+                         (float)position.getX(), (float)position.getY(), (float)position.getZ(),
+                         (float)depthSample.mViewPosition.getX(), (float)depthSample.mViewPosition.getY(),
+                         (float)depthSample.mViewPosition.getZ(), (float)depthSample.mViewPosition.getW(),
+                         (float)depthSample.mClipPosition.getX(), (float)depthSample.mClipPosition.getY(),
+                         (float)depthSample.mClipPosition.getZ(), (float)depthSample.mClipPosition.getW(), depthSample.mDeviceDepth,
+                         depthSample.mLegacyLinearDepth, depthSample.mLegacyNormalizedDepth, depthSample.mLegacyZIndex,
+                         depthSample.mReverseLinearDepth, depthSample.mReverseNormalizedDepth, depthSample.mReverseZIndex,
+                         CurrentAVBOITDepthMappingName(), targetSlices[i], depthSample.mSelectedZIndex, left, top, right, bottom,
+                         i + 1 < layerCount ? "," : "");
     }
 
     if (!haveOverlap || overlapRight < overlapLeft || overlapBottom < overlapTop)
@@ -1654,9 +1801,9 @@ static void BuildAVBOITCaptureName(char* outName, size_t outNameSize, uint32_t f
 
     if (gTransparencyType == TRANSPARENCY_TYPE_ADAPTIVE_VOXEL_BASED_OIT)
     {
-        snprintf(outName, outNameSize, "%s_Mode5_%ux%u_Debug%u_Dir%s_Mul%.1f_Frame%u_%s%s", createdApi, width, height,
-                 gAVBOITDebugView, CurrentAVBOITTransmittanceDirectionName(), gAVBOITMultiplier, frameIndex, gAVBOITCommitShortSha,
-                 diagnosticSuffix);
+        snprintf(outName, outNameSize, "%s_Mode5_%ux%u_Debug%u_Dir%s_Depth%s_Mul%.1f_Frame%u_%s%s", createdApi, width, height,
+                 gAVBOITDebugView, CurrentAVBOITTransmittanceDirectionName(), CurrentAVBOITDepthMappingName(), gAVBOITMultiplier,
+                 frameIndex, gAVBOITCommitShortSha, diagnosticSuffix);
     }
     else
     {
@@ -1692,6 +1839,8 @@ static void WriteAVBOITCaptureMetadata(uint32_t frameIndex, uint32_t width, uint
                      "  \"fixedDeltaEnabled\": %s,\n"
                      "  \"randomSeed\": %u,\n"
                      "  \"transmittanceDirection\": \"%s\",\n"
+                     "  \"depthMapping\": \"%s\",\n"
+                     "  \"dualDirectionDiagnostic\": %s,\n"
                      "  \"weightSource\": \"%s\",\n"
                      "  \"weightConstant\": %.6f,\n"
                      "  \"weightPattern\": \"%c\",\n"
@@ -1702,7 +1851,8 @@ static void WriteAVBOITCaptureMetadata(uint32_t frameIndex, uint32_t width, uint
                      gAVBOITRequestedApiName, createdApi, gpuName, driver, width, height, gTransparencyType, gAVBOITDebugView,
                      gAVBOITDebugView < gAVBOITDebugViewCount ? gAVBOITDebugViewNames[gAVBOITDebugView] : "unknown",
                      gAVBOITMultiplier, frameIndex, gAVBOITFixedDelta, gAVBOITFixedDeltaEnabled ? "true" : "false",
-                     gAVBOITRandomSeed, CurrentAVBOITTransmittanceDirectionName(), CurrentAVBOITWeightSourceName(),
+                     gAVBOITRandomSeed, CurrentAVBOITTransmittanceDirectionName(), CurrentAVBOITDepthMappingName(),
+                     gAVBOITDualDirectionDiagnostic ? "true" : "false", CurrentAVBOITWeightSourceName(),
                      gAVBOITWeightConstant, gAVBOITWeightPattern ? 'B' : 'A', gAVBOITDumpRawAccum ? "true" : "false",
                      CurrentAVBOITTestSceneName(), gAVBOITTestCase, gAVBOITSubmitOrder);
     AppendAVBOITAnalyticMetadataJson(json, sizeof(json), &jsonOffset, width, height);
@@ -1852,6 +2002,8 @@ static bool DumpAVBOITRenderTargetRaw(const char* label, RenderTarget* pRenderTa
              "  \"mode\": %u,\n"
              "  \"debugView\": %u,\n"
              "  \"transmittanceDirection\": \"%s\",\n"
+             "  \"depthMapping\": \"%s\",\n"
+             "  \"dualDirectionDiagnostic\": %s,\n"
              "  \"weightSource\": \"%s\",\n"
              "  \"weightConstant\": %.6f,\n"
              "  \"weightPattern\": \"%c\",\n"
@@ -1863,7 +2015,8 @@ static bool DumpAVBOITRenderTargetRaw(const char* label, RenderTarget* pRenderTa
              gAVBOITCaptureName, captureHash, label, rawName, pRenderTarget->mWidth, pRenderTarget->mHeight,
              max(1u, pRenderTarget->mDepth), TinyImageFormat_Name(format), rowBytes, numRows, rowAlignment, sliceAlignment,
              (uint32_t)readbackBuffer->mSize, RendererApiToStringLocal(gPlatformParameters.mSelectedRendererApi), gTransparencyType, gAVBOITDebugView,
-             CurrentAVBOITTransmittanceDirectionName(), CurrentAVBOITWeightSourceName(), gAVBOITWeightConstant,
+             CurrentAVBOITTransmittanceDirectionName(), CurrentAVBOITDepthMappingName(),
+             gAVBOITDualDirectionDiagnostic ? "true" : "false", CurrentAVBOITWeightSourceName(), gAVBOITWeightConstant,
              gAVBOITWeightPattern ? 'B' : 'A', CurrentAVBOITTestSceneName(), gAVBOITTestCase, gAVBOITSubmitOrder,
              gAVBOITCommitShortSha);
     const bool jsonOk = WriteAVBOITRawFile(jsonName, json, strlen(json));
@@ -1896,9 +2049,13 @@ static void DumpAVBOITRawAccumResources()
         "    \"selectedWeightedColorRgb\": \"AVBOITAccumColorWeight.rgb\",\n"
         "    \"selectedDenominator\": \"AVBOITAccumColorWeight.a\",\n"
         "    \"totalExtinction\": \"AVBOITAccumExtinction.r\",\n"
-        "    \"legacyWeightTimesAlpha\": \"AVBOITAccumExtinction.g\",\n"
+        "    \"legacyWeightTimesAlphaOrDepthDiagnosticTimesAlpha\": \"AVBOITAccumExtinction.g\",\n"
         "    \"frontWeightTimesAlpha\": \"AVBOITAccumExtinction.b\",\n"
-        "    \"alphaSum\": \"AVBOITAccumExtinction.a\"\n"
+        "    \"alphaSum\": \"AVBOITAccumExtinction.a\",\n"
+        "    \"lutR\": \"selected event weight\",\n"
+        "    \"lutG\": \"legacy event weight\",\n"
+        "    \"lutB\": \"exclusive front event weight\",\n"
+        "    \"lutA\": \"total voxel transmittance\"\n"
         "  }\n"
         "}\n",
         gAVBOITCaptureName, captureHash);
@@ -1933,6 +2090,15 @@ static void ParseAVBOITCaptureCommandLine()
             gAVBOITTransmittanceDirection = AVBOIT_TRANSMITTANCE_LEGACY;
     }
 
+    gAVBOITDepthMapping = AVBOIT_DEPTH_MAPPING_REVERSE_CORRECT;
+    if (CommandLineGetValue("--avboit-depth-mapping=", commandValue, sizeof(commandValue)))
+    {
+        if (StringEqualsNoCase(commandValue, "reverse_correct") || StringEqualsNoCase(commandValue, "reverse-correct"))
+            gAVBOITDepthMapping = AVBOIT_DEPTH_MAPPING_REVERSE_CORRECT;
+        else
+            gAVBOITDepthMapping = AVBOIT_DEPTH_MAPPING_LEGACY;
+    }
+
     if (CommandLineGetValue("--avboit-test-scene=", commandValue, sizeof(commandValue)))
     {
         if (StringEqualsNoCase(commandValue, "single_layer"))
@@ -1943,6 +2109,8 @@ static void ParseAVBOITCaptureCommandLine()
             gAVBOITTestScene = AVBOIT_TEST_SCENE_THREE_LAYER;
         else if (StringEqualsNoCase(commandValue, "same_slice"))
             gAVBOITTestScene = AVBOIT_TEST_SCENE_SAME_SLICE;
+        else if (StringEqualsNoCase(commandValue, "depth_calibration"))
+            gAVBOITTestScene = AVBOIT_TEST_SCENE_DEPTH_CALIBRATION;
         else
             gAVBOITTestScene = AVBOIT_TEST_SCENE_DEFAULT;
     }
@@ -1950,6 +2118,7 @@ static void ParseAVBOITCaptureCommandLine()
     gAVBOITWeightSource = AVBOIT_WEIGHT_SOURCE_LUT;
     gAVBOITWeightConstant = 0.25f;
     gAVBOITWeightPattern = 0;
+    gAVBOITDualDirectionDiagnostic = CommandLineHasSwitch("--avboit-dual-direction-diagnostic");
     if (CommandLineGetValue("--avboit-weight-source=", commandValue, sizeof(commandValue)))
     {
         if (StringEqualsNoCase(commandValue, "constant"))
@@ -2003,10 +2172,12 @@ static void ParseAVBOITCaptureCommandLine()
     gAVBOITAutoCaptureCaptured = false;
 
     LOGF(LogLevel::eINFO, "AVBOIT transmittance direction: %s", CurrentAVBOITTransmittanceDirectionName());
+    LOGF(LogLevel::eINFO, "AVBOIT depth mapping: %s", CurrentAVBOITDepthMappingName());
     LOGF(LogLevel::eINFO, "AVBOIT test scene: %s case=%s submitOrder=%s layerFilter=%s", CurrentAVBOITTestSceneName(),
          gAVBOITTestCase, gAVBOITSubmitOrder, gAVBOITAnalyticLayerFilterName);
-    LOGF(LogLevel::eINFO, "AVBOIT weight source: %s constant=%.2f pattern=%c rawDump=%s", CurrentAVBOITWeightSourceName(),
-         gAVBOITWeightConstant, gAVBOITWeightPattern ? 'B' : 'A', gAVBOITDumpRawAccum ? "true" : "false");
+    LOGF(LogLevel::eINFO, "AVBOIT weight source: %s constant=%.2f pattern=%c rawDump=%s dualDirection=%s",
+         CurrentAVBOITWeightSourceName(), gAVBOITWeightConstant, gAVBOITWeightPattern ? 'B' : 'A',
+         gAVBOITDumpRawAccum ? "true" : "false", gAVBOITDualDirectionDiagnostic ? "true" : "false");
     avboitBootstrapStage("COMMAND_LINE_CAPTURE_ARGS_PARSED");
 
     if (gAVBOITAutoCaptureEnabled)
@@ -2039,7 +2210,8 @@ void AddObject(MeshResource mesh, const vec3& position, const vec4& color, const
 
                                                mesh,
 
-                                               { v4ToF4(convert), float4(v3ToF3(translucency), 0.0f), eta, collimation } };
+                                               { v4ToF4(convert), float4(v3ToF3(translucency), 0.0f), eta, collimation, 0.0f,
+                                                 AVBOIT_ANALYTIC_LAYER_INVALID } };
 
 }
 
@@ -2061,15 +2233,15 @@ void AddObject(MeshResource mesh, const vec3& position, TextureResource texture,
 
                                                mesh,
 
-                                               { float4(1.0f), float4(0.0f), 1.0f, 0.0f, float2(0.0f), MATERIAL_FLAG_ALBEDO_TEXTURE,
-                                                 (uint)texture, 0, 0 } };
+                                               { float4(1.0f), float4(0.0f), 1.0f, 0.0f, 0.0f, AVBOIT_ANALYTIC_LAYER_INVALID,
+                                                 MATERIAL_FLAG_ALBEDO_TEXTURE, (uint)texture, 0, 0 } };
 
 }
 
 
 void AddUnlitObject(MeshResource mesh, const vec3& position, const vec4& color, const vec3& scale = vec3(1.0f),
 
-                    const vec3& orientation = vec3(0.0f))
+                    const vec3& orientation = vec3(0.0f), uint analyticLayerId = AVBOIT_ANALYTIC_LAYER_INVALID)
 
 {
 
@@ -2083,7 +2255,7 @@ void AddUnlitObject(MeshResource mesh, const vec3& position, const vec4& color, 
 
                                                mesh,
 
-                                               { v4ToF4(color), float4(0.0f), 1.0f, 0.0f, float2(0.0f), MATERIAL_FLAG_UNLIT, 0, 0, 0 } };
+                                               { v4ToF4(color), float4(0.0f), 1.0f, 0.0f, 0.0f, analyticLayerId, MATERIAL_FLAG_UNLIT, 0, 0, 0 } };
 
 }
 
@@ -2103,7 +2275,8 @@ void AddParticleSystem(const vec3& position, const vec4& color, const vec3& tran
 
         { NULL },
 
-        Object{ position, scale, orientation, MESH_PARTICLE_SYSTEM, { v4ToF4(color), float4(v3ToF3(translucency), 0.0f), 1.0f, 1.0f } },
+        Object{ position, scale, orientation, MESH_PARTICLE_SYSTEM,
+                { v4ToF4(color), float4(v3ToF3(translucency), 0.0f), 1.0f, 1.0f, 0.0f, AVBOIT_ANALYTIC_LAYER_INVALID } },
 
         {},
 
@@ -2163,6 +2336,13 @@ static uint32_t SelectAVBOITAnalyticLayers(vec4* outLayers, uint32_t* outTargetS
     const uint32_t middleSlice = 32;
     const uint32_t backSlice = 16;
     const uint32_t sameSlice = 32;
+
+    if (gAVBOITTestScene == AVBOIT_TEST_SCENE_DEPTH_CALIBRATION)
+    {
+        outLayers[0] = vec4(1.0f, 0.0f, 0.0f, AVBOITAnalyticAlphaFromCase(0.5f));
+        outTargetSlices[0] = GetAVBOITDepthCalibrationTargetSlice();
+        return 1;
+    }
 
     if (gAVBOITTestScene == AVBOIT_TEST_SCENE_SINGLE_LAYER)
     {
@@ -2252,9 +2432,12 @@ static void CreateAVBOITAnalyticScene()
     gAVBOITCaptureHideUI = true;
     gAVBOITMultiplier = 1.0f;
 
-    const uint32_t backgroundSlice = 8;
-    AddUnlitObject(MESH_PLANE, GetAVBOITAnalyticPositionForTargetSlice(backgroundSlice), vec4(0.0f, 0.0f, 0.0f, 1.0f),
-                   GetAVBOITAnalyticPlaneScale(backgroundSlice, 18.0f), vec3(-PI / 2.0f, 0.0f, 0.0f));
+    if (gAVBOITTestScene != AVBOIT_TEST_SCENE_DEPTH_CALIBRATION)
+    {
+        const uint32_t backgroundSlice = 8;
+        AddUnlitObject(MESH_PLANE, GetAVBOITAnalyticPositionForTargetSlice(backgroundSlice), vec4(0.0f, 0.0f, 0.0f, 1.0f),
+                       GetAVBOITAnalyticPlaneScale(backgroundSlice, 18.0f), vec3(-PI / 2.0f, 0.0f, 0.0f));
+    }
 
     vec4 layers[3] = {};
     uint32_t targetSlices[3] = {};
@@ -2267,8 +2450,19 @@ static void CreateAVBOITAnalyticScene()
         const uint32_t layer = order[i];
         if (!IsAVBOITAnalyticLayerIncluded(layer))
             continue;
-        AddUnlitObject(MESH_PLANE, GetAVBOITAnalyticPositionForTargetSlice(targetSlices[layer]), layers[layer],
-                       GetAVBOITAnalyticPlaneScale(targetSlices[layer], 4.0f), vec3(-PI / 2.0f, 0.0f, 0.0f));
+        if (gAVBOITTestScene == AVBOIT_TEST_SCENE_DEPTH_CALIBRATION)
+        {
+            const float linearDepth = GetAVBOITDepthCalibrationLinearDepth();
+            AddUnlitObject(MESH_PLANE, GetAVBOITAnalyticPositionForLinearDepth(linearDepth), layers[layer],
+                           GetAVBOITAnalyticPlaneScaleForLinearDepth(linearDepth, 0.5f), vec3(-PI / 2.0f, 0.0f, 0.0f),
+                           GetAVBOITAnalyticLayerId(layer, layerCount));
+        }
+        else
+        {
+            AddUnlitObject(MESH_PLANE, GetAVBOITAnalyticPositionForTargetSlice(targetSlices[layer]), layers[layer],
+                           GetAVBOITAnalyticPlaneScale(targetSlices[layer], 0.5f), vec3(-PI / 2.0f, 0.0f, 0.0f),
+                           GetAVBOITAnalyticLayerId(layer, layerCount));
+        }
     }
 
     LOGF(LogLevel::eINFO, "AVBOIT analytic scene built: scene=%s case=%s submitOrder=%s layerFilter=%s layerCount=%u",

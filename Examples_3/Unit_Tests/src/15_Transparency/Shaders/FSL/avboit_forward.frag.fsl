@@ -1,5 +1,6 @@
 #include "shaderDefs.h.fsl"
 #define AVBOIT_LUT_SRV
+#define AVBOIT_DEPTH_HELPERS
 #include "avboit.h.fsl"
 #include "shading.h.fsl"
 
@@ -29,6 +30,7 @@ PSOutput PS_MAIN(VSOutput In)
     Out.AccumColorWeight = float4(0.0f, 0.0f, 0.0f, 0.0f);
     Out.AccumExtinction = float4(0.0f, 0.0f, 0.0f, 0.0f);
 
+    Material material = Get(Materials)[In.MatID];
     float4 baseColor = Shade(In.MatID, In.UV.xy, In.WorldPosition.xyz, normalize(In.Normal.xyz), VR_VIEW_ID(In.ViewID));
     if (baseColor.a <= 0.01f)
     {
@@ -39,23 +41,18 @@ PSOutput PS_MAIN(VSOutput In)
     uint2 voxelXY = GetVolumeXY(uint2(In.Position.xy));
     float depth = In.Position.z;
 
-    float linearDepth = Get(camClipInfo)[0] / (Get(camClipInfo)[1] * depth + Get(camClipInfo)[2]);
-    float zFar = Get(camClipInfo)[2];
-    float zNear = Get(camClipInfo)[0] / zFar;
-    float normalizedLinearDepth = clamp(log2(zFar / linearDepth) / log2(zFar / zNear), 0.0f, 1.0f);
-    uint zIndex = clamp(uint(normalizedLinearDepth * volumeDepth), 0, volumeDepth - 1);
+    float legacyLinearDepth = AVBOITLinearizeLegacyDepth(depth);
+    float reverseLinearDepth = AVBOITLinearizeReverseZDepth(depth);
+    float legacyNormalizedDepth = AVBOITNormalizeLogDepth(legacyLinearDepth);
+    float reverseNormalizedDepth = AVBOITNormalizeLogDepth(reverseLinearDepth);
+    uint legacyZIndex = AVBOITZIndexFromNormalizedDepth(legacyNormalizedDepth);
+    uint reverseZIndex = AVBOITZIndexFromNormalizedDepth(reverseNormalizedDepth);
+    uint zIndex = ((Get(avboitAnalyticFlags) & AVBOIT_ANALYTIC_FLAG_DEPTH_MAPPING_REVERSE_CORRECT) != 0u) ? reverseZIndex : legacyZIndex;
 
-    float legacyWeight = 1.0f;
-    if (zIndex > 0)
-    {
-        uint3 prevCoords = uint3(voxelXY.x, voxelXY.y, zIndex - 1);
-        float4 lutValue = LoadTex3D(Get(VolumeTransmittanceLutSRV), NO_SAMPLER, prevCoords, 0);
-        legacyWeight = lutValue.r;
-    }
-
-    uint3 frontCoords = uint3(voxelXY.x, voxelXY.y, zIndex);
-    float4 frontLutValue = LoadTex3D(Get(VolumeTransmittanceLutSRV), NO_SAMPLER, frontCoords, 0);
-    float frontWeight = frontLutValue.r;
+    uint3 eventCoords = uint3(voxelXY.x, voxelXY.y, zIndex);
+    float4 eventLutValue = LoadTex3D(Get(VolumeTransmittanceLutSRV), NO_SAMPLER, eventCoords, 0);
+    float legacyWeight = eventLutValue.g;
+    float frontWeight = eventLutValue.b;
 
     float eventWeight = Get(avboitTransmittanceDirection) == AVBOIT_TRANSMITTANCE_FRONT ? frontWeight : legacyWeight;
     uint weightSource = Get(avboitAnalyticFlags) & AVBOIT_ANALYTIC_FLAG_WEIGHT_SOURCE_MASK;
@@ -69,7 +66,14 @@ PSOutput PS_MAIN(VSOutput In)
         float frontLayerWeight = patternB ? 0.25f : 1.0f;
         float middleLayerWeight = 0.5f;
         float backLayerWeight = patternB ? 1.0f : 0.25f;
-        eventWeight = zIndex >= 40u ? frontLayerWeight : (zIndex >= 24u ? middleLayerWeight : backLayerWeight);
+        if (material.AnalyticLayerId == 0u)
+            eventWeight = frontLayerWeight;
+        else if (material.AnalyticLayerId == 1u)
+            eventWeight = middleLayerWeight;
+        else if (material.AnalyticLayerId == 2u)
+            eventWeight = backLayerWeight;
+        else
+            eventWeight = 1.0f;
     }
     eventWeight = max(eventWeight, 1e-6f);
 
@@ -77,7 +81,19 @@ PSOutput PS_MAIN(VSOutput In)
     float extinction = -log(max(1.0f - alpha, 1e-6f)) * Get(avboitMultiplier);
 
     Out.AccumColorWeight = float4(baseColor.rgb * alpha * eventWeight, alpha * eventWeight);
-    float diagnosticG = Get(avboitDebugView) == 6u ? (float(zIndex) / max(float(volumeDepth - 1u), 1.0f)) * alpha : legacyWeight * alpha;
+    float diagnosticG = legacyWeight * alpha;
+    if (Get(avboitDebugView) == 6u)
+        diagnosticG = (float(zIndex) / max(float(volumeDepth - 1u), 1.0f)) * alpha;
+    else if (Get(avboitDebugView) == 21u)
+        diagnosticG = saturate(depth) * alpha;
+    else if (Get(avboitDebugView) == 22u)
+        diagnosticG = saturate(legacyNormalizedDepth) * alpha;
+    else if (Get(avboitDebugView) == 23u)
+        diagnosticG = saturate(reverseNormalizedDepth) * alpha;
+    else if (Get(avboitDebugView) == 24u)
+        diagnosticG = (float(legacyZIndex) / max(float(volumeDepth - 1u), 1.0f)) * alpha;
+    else if (Get(avboitDebugView) == 25u)
+        diagnosticG = (float(reverseZIndex) / max(float(volumeDepth - 1u), 1.0f)) * alpha;
     Out.AccumExtinction = float4(extinction, diagnosticG, frontWeight * alpha, alpha);
     RETURN(Out);
 }

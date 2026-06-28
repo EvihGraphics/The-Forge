@@ -1,5 +1,6 @@
 #include "shaderDefs.h.fsl"
 #define AVBOIT_EXTINCTION_UAV
+#define AVBOIT_DEPTH_HELPERS
 #include "avboit.h.fsl"
 #include "shading.h.fsl"
 
@@ -18,21 +19,15 @@ STRUCT(VSOutput)
 void DrawTransparent(float4 position, float4 color)
 {
     uint2 voxelXY = GetVolumeXY(uint2(position.xy));
-    float depth = position.z;
-
-    // Linearize Reverse-Z depth using camClipInfo
-    // clipInfo = (zNear * zFar, zNear - zFar, zFar, 0.0f)
-    float linearDepth = Get(camClipInfo)[0] / (Get(camClipInfo)[1] * depth + Get(camClipInfo)[2]);
-    float zFar = Get(camClipInfo)[2];
-    float zNear = Get(camClipInfo)[0] / zFar;
-    float normalizedLinearDepth = clamp(log2(zFar / linearDepth) / log2(zFar / zNear), 0.0f, 1.0f);
-
-    uint zIndex = clamp(uint(normalizedLinearDepth * volumeDepth), 0, volumeDepth - 1);
+    uint zIndex = AVBOITComputeZIndex(position.z);
 
     uint3 coords = uint3(voxelXY.x, voxelXY.y, zIndex);
 
-    // Physically correct extinction from alpha
-    float ext = -log(1.0f - min(color.w, 0.99f));
+    // The low-res AVBOIT volume is an event-weight lookup for a full-res
+    // resolve. Average extinction over the XY cell instead of treating every
+    // covered full-res sample in the cell as another layer on the same ray.
+    float cellSampleCount = max(float(downsampleFactor * downsampleFactor), 1.0f);
+    float ext = -log(1.0f - min(color.w, 0.99f)) / cellSampleCount;
     uint packedExt = PackExtinction(ext);
 
     uint flatIdx = GetVolumeIndex(coords);

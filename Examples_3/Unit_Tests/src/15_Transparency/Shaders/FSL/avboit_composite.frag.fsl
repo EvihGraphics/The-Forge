@@ -63,7 +63,7 @@ float4 PS_MAIN(VSOutput In)
     {
         uint2 voxelXY = GetVolumeXY(pixel);
         uint3 coords = uint3(voxelXY.x, voxelXY.y, volumeDepth - 1);
-        float transmittance = LoadTex3D(Get(VolumeTransmittanceLutSRV), NO_SAMPLER, coords, 0).r;
+        float transmittance = LoadTex3D(Get(VolumeTransmittanceLutSRV), NO_SAMPLER, coords, 0).a;
         RETURN(float4(transmittance, transmittance, transmittance, 1.0f));
     }
     if (Get(avboitDebugView) == 2u)
@@ -155,6 +155,11 @@ float4 PS_MAIN(VSOutput In)
     if (Get(avboitDebugView) == 20u)
     {
         RETURN(float4(coverage, coverage, coverage, 1.0f));
+    }
+    if (Get(avboitDebugView) >= 21u && Get(avboitDebugView) <= 25u)
+    {
+        float v = saturate(accumExtinction.g / max(alphaSum, 1e-6f));
+        RETURN(float4(v, v, v, 1.0f));
     }
 
     if (denominator <= 1e-6f && totalExtinction <= 1e-6f)

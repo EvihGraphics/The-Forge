@@ -69,7 +69,8 @@ STRUCT(Material)
 	DATA(float4, Transmission, None);
 	DATA(float, RefractionRatio, None);
 	DATA(float, Collimation, None);
-	DATA(float2, Padding, None);
+	DATA(float, Padding, None);
+	DATA(uint, AnalyticLayerId, None);
 	DATA(uint, TextureFlags, None);
 	DATA(uint, AlbedoTexID, None);
 	DATA(uint, MetallicTexID, None);
