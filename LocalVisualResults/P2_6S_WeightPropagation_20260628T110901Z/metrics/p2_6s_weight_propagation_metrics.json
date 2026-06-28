@@ -1,0 +1,425 @@
+{
+  "resultRoot": "LocalVisualResults\\P2_6S_WeightPropagation_20260628T110901Z",
+  "head": "1022f43f",
+  "sliceGate": {
+    "perLayer": [
+      {
+        "scene": "same_slice",
+        "case": "same_a050_050",
+        "layer": "0",
+        "targetSlice": 32,
+        "cpuExpectedZIndex": 32,
+        "gpuCapturedZIndex": 63,
+        "medianDebugValue": 1.0,
+        "coveragePixelCount": 15007,
+        "pass": false,
+        "png": "LocalVisualResults\\P2_6S_WeightPropagation_20260628T110901Z\\slice_validation\\DX12_Mode5_1920x1080_Debug6_Dirlegacy_Mul1.0_Frame60_1022f43f_Scenesame_slice_Casesame_a050_050_Ordernormal_Layer0.png",
+        "commit": "1022f43f"
+      },
+      {
+        "scene": "same_slice",
+        "case": "same_a050_050",
+        "layer": "1",
+        "targetSlice": 32,
+        "cpuExpectedZIndex": 32,
+        "gpuCapturedZIndex": 63,
+        "medianDebugValue": 1.0,
+        "coveragePixelCount": 15007,
+        "pass": false,
+        "png": "LocalVisualResults\\P2_6S_WeightPropagation_20260628T110901Z\\slice_validation\\DX12_Mode5_1920x1080_Debug6_Dirlegacy_Mul1.0_Frame60_1022f43f_Scenesame_slice_Casesame_a050_050_Ordernormal_Layer1.png",
+        "commit": "1022f43f"
+      },
+      {
+        "scene": "three_layer",
+        "case": "three_a050_050_050",
+        "layer": "0",
+        "targetSlice": 48,
+        "cpuExpectedZIndex": 48,
+        "gpuCapturedZIndex": 63,
+        "medianDebugValue": 0.9921568627450981,
+        "coveragePixelCount": 824338,
+        "pass": false,
+        "png": "LocalVisualResults\\P2_6S_WeightPropagation_20260628T110901Z\\slice_validation\\DX12_Mode5_1920x1080_Debug6_Dirlegacy_Mul1.0_Frame60_1022f43f_Scenethree_layer_Casethree_a050_050_050_Ordernormal_Layer0.png",
+        "commit": "1022f43f"
+      },
+      {
+        "scene": "three_layer",
+        "case": "three_a050_050_050",
+        "layer": "1",
+        "targetSlice": 32,
+        "cpuExpectedZIndex": 32,
+        "gpuCapturedZIndex": 63,
+        "medianDebugValue": 1.0,
+        "coveragePixelCount": 15007,
+        "pass": false,
+        "png": "LocalVisualResults\\P2_6S_WeightPropagation_20260628T110901Z\\slice_validation\\DX12_Mode5_1920x1080_Debug6_Dirlegacy_Mul1.0_Frame60_1022f43f_Scenethree_layer_Casethree_a050_050_050_Ordernormal_Layer1.png",
+        "commit": "1022f43f"
+      },
+      {
+        "scene": "three_layer",
+        "case": "three_a050_050_050",
+        "layer": "2",
+        "targetSlice": 16,
+        "cpuExpectedZIndex": 16,
+        "gpuCapturedZIndex": 63,
+        "medianDebugValue": 1.0,
+        "coveragePixelCount": 15007,
+        "pass": false,
+        "png": "LocalVisualResults\\P2_6S_WeightPropagation_20260628T110901Z\\slice_validation\\DX12_Mode5_1920x1080_Debug6_Dirlegacy_Mul1.0_Frame60_1022f43f_Scenethree_layer_Casethree_a050_050_050_Ordernormal_Layer2.png",
+        "commit": "1022f43f"
+      },
+      {
+        "scene": "two_layer",
+        "case": "two_a050_050",
+        "layer": "0",
+        "targetSlice": 48,
+        "cpuExpectedZIndex": 48,
+        "gpuCapturedZIndex": 63,
+        "medianDebugValue": 0.9921568627450981,
+        "coveragePixelCount": 824338,
+        "pass": false,
+        "png": "LocalVisualResults\\P2_6S_WeightPropagation_20260628T110901Z\\slice_validation\\DX12_Mode5_1920x1080_Debug6_Dirlegacy_Mul1.0_Frame60_1022f43f_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layer0.png",
+        "commit": "1022f43f"
+      },
+      {
+        "scene": "two_layer",
+        "case": "two_a050_050",
+        "layer": "1",
+        "targetSlice": 16,
+        "cpuExpectedZIndex": 16,
+        "gpuCapturedZIndex": 63,
+        "medianDebugValue": 1.0,
+        "coveragePixelCount": 15007,
+        "pass": false,
+        "png": "LocalVisualResults\\P2_6S_WeightPropagation_20260628T110901Z\\slice_validation\\DX12_Mode5_1920x1080_Debug6_Dirlegacy_Mul1.0_Frame60_1022f43f_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layer1.png",
+        "commit": "1022f43f"
+      }
+    ],
+    "twoLayerDistinct": false,
+    "threeLayerDistinct": false,
+    "sameSliceShared": true,
+    "pass": false
+  },
+  "selectedWeightGate": {
+    "perCapture": [
+      {
+        "direction": "front",
+        "layer": "0",
+        "debugView": 15,
+        "meanObserved": 0.9929670577255598,
+        "expectedForLayerFilteredLut": 1,
+        "note": "Selected weight under layer-filtered LUT.",
+        "coveragePixelCount": 824338,
+        "png": "LocalVisualResults\\P2_6S_WeightPropagation_20260628T110901Z\\selected_weight\\DX12_Mode5_1920x1080_Debug15_Dirfront_Mul1.0_Frame60_8482cd69_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layer0.png"
+      },
+      {
+        "direction": "front",
+        "layer": "1",
+        "debugView": 15,
+        "meanObserved": 1.0,
+        "expectedForLayerFilteredLut": 1,
+        "note": "Selected weight under layer-filtered LUT.",
+        "coveragePixelCount": 15007,
+        "png": "LocalVisualResults\\P2_6S_WeightPropagation_20260628T110901Z\\selected_weight\\DX12_Mode5_1920x1080_Debug15_Dirfront_Mul1.0_Frame60_8482cd69_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layer1.png"
+      },
+      {
+        "direction": "legacy",
+        "layer": "0",
+        "debugView": 15,
+        "meanObserved": 0.992996133938777,
+        "expectedForLayerFilteredLut": 1,
+        "note": "Selected weight under layer-filtered LUT.",
+        "coveragePixelCount": 824338,
+        "png": "LocalVisualResults\\P2_6S_WeightPropagation_20260628T110901Z\\selected_weight\\DX12_Mode5_1920x1080_Debug15_Dirlegacy_Mul1.0_Frame60_8482cd69_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layer0.png"
+      },
+      {
+        "direction": "legacy",
+        "layer": "1",
+        "debugView": 15,
+        "meanObserved": 1.0,
+        "expectedForLayerFilteredLut": 1,
+        "note": "Selected weight under layer-filtered LUT.",
+        "coveragePixelCount": 15007,
+        "png": "LocalVisualResults\\P2_6S_WeightPropagation_20260628T110901Z\\selected_weight\\DX12_Mode5_1920x1080_Debug15_Dirlegacy_Mul1.0_Frame60_8482cd69_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layer1.png"
+      },
+      {
+        "direction": "front",
+        "layer": "0",
+        "debugView": 16,
+        "meanObserved": 8.805164110533566e-05,
+        "expectedForLayerFilteredLut": null,
+        "note": "Layer filter affects the LUT; debug16/17 are current-direction LUT proxies, not simultaneous legacy/front truth.",
+        "coveragePixelCount": 824338,
+        "png": "LocalVisualResults\\P2_6S_WeightPropagation_20260628T110901Z\\selected_weight\\DX12_Mode5_1920x1080_Debug16_Dirfront_Mul1.0_Frame60_8482cd69_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layer0.png"
+      },
+      {
+        "direction": "front",
+        "layer": "1",
+        "debugView": 16,
+        "meanObserved": 0.00020069065808505052,
+        "expectedForLayerFilteredLut": null,
+        "note": "Layer filter affects the LUT; debug16/17 are current-direction LUT proxies, not simultaneous legacy/front truth.",
+        "coveragePixelCount": 15007,
+        "png": "LocalVisualResults\\P2_6S_WeightPropagation_20260628T110901Z\\selected_weight\\DX12_Mode5_1920x1080_Debug16_Dirfront_Mul1.0_Frame60_8482cd69_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layer1.png"
+      },
+      {
+        "direction": "legacy",
+        "layer": "0",
+        "debugView": 16,
+        "meanObserved": 0.992996133938777,
+        "expectedForLayerFilteredLut": null,
+        "note": "Layer filter affects the LUT; debug16/17 are current-direction LUT proxies, not simultaneous legacy/front truth.",
+        "coveragePixelCount": 824338,
+        "png": "LocalVisualResults\\P2_6S_WeightPropagation_20260628T110901Z\\selected_weight\\DX12_Mode5_1920x1080_Debug16_Dirlegacy_Mul1.0_Frame60_8482cd69_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layer0.png"
+      },
+      {
+        "direction": "legacy",
+        "layer": "1",
+        "debugView": 16,
+        "meanObserved": 1.0,
+        "expectedForLayerFilteredLut": null,
+        "note": "Layer filter affects the LUT; debug16/17 are current-direction LUT proxies, not simultaneous legacy/front truth.",
+        "coveragePixelCount": 15007,
+        "png": "LocalVisualResults\\P2_6S_WeightPropagation_20260628T110901Z\\selected_weight\\DX12_Mode5_1920x1080_Debug16_Dirlegacy_Mul1.0_Frame60_8482cd69_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layer1.png"
+      },
+      {
+        "direction": "front",
+        "layer": "0",
+        "debugView": 17,
+        "meanObserved": 0.9929670577255598,
+        "expectedForLayerFilteredLut": null,
+        "note": "Layer filter affects the LUT; debug16/17 are current-direction LUT proxies, not simultaneous legacy/front truth.",
+        "coveragePixelCount": 824338,
+        "png": "LocalVisualResults\\P2_6S_WeightPropagation_20260628T110901Z\\selected_weight\\DX12_Mode5_1920x1080_Debug17_Dirfront_Mul1.0_Frame60_8482cd69_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layer0.png"
+      },
+      {
+        "direction": "front",
+        "layer": "1",
+        "debugView": 17,
+        "meanObserved": 1.0,
+        "expectedForLayerFilteredLut": null,
+        "note": "Layer filter affects the LUT; debug16/17 are current-direction LUT proxies, not simultaneous legacy/front truth.",
+        "coveragePixelCount": 15007,
+        "png": "LocalVisualResults\\P2_6S_WeightPropagation_20260628T110901Z\\selected_weight\\DX12_Mode5_1920x1080_Debug17_Dirfront_Mul1.0_Frame60_8482cd69_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layer1.png"
+      },
+      {
+        "direction": "legacy",
+        "layer": "0",
+        "debugView": 17,
+        "meanObserved": 8.706213646705646e-05,
+        "expectedForLayerFilteredLut": null,
+        "note": "Layer filter affects the LUT; debug16/17 are current-direction LUT proxies, not simultaneous legacy/front truth.",
+        "coveragePixelCount": 824338,
+        "png": "LocalVisualResults\\P2_6S_WeightPropagation_20260628T110901Z\\selected_weight\\DX12_Mode5_1920x1080_Debug17_Dirlegacy_Mul1.0_Frame60_8482cd69_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layer0.png"
+      },
+      {
+        "direction": "legacy",
+        "layer": "1",
+        "debugView": 17,
+        "meanObserved": 0.00020069065808505052,
+        "expectedForLayerFilteredLut": null,
+        "note": "Layer filter affects the LUT; debug16/17 are current-direction LUT proxies, not simultaneous legacy/front truth.",
+        "coveragePixelCount": 15007,
+        "png": "LocalVisualResults\\P2_6S_WeightPropagation_20260628T110901Z\\selected_weight\\DX12_Mode5_1920x1080_Debug17_Dirlegacy_Mul1.0_Frame60_8482cd69_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layer1.png"
+      }
+    ],
+    "pass": false,
+    "reason": "P2.6S simultaneous selected/legacy/front diagnostic was not proven because layer filter rebuilds the LUT and debug16/17 remain current-direction proxies."
+  },
+  "rawMrtGate": {
+    "legacyColorWeight": {
+      "capture": "DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_cc625c64_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layerall",
+      "captureHash": "23e2a571",
+      "label": "AVBOITAccumColorWeight",
+      "file": "raw_23e2a571_AVBOITAccumColorWeight.bin",
+      "width": 1920,
+      "height": 1080,
+      "depth": 1,
+      "format": "R16G16B16A16_SFLOAT",
+      "rowBytes": 15360,
+      "numRows": 1080,
+      "rowAlignment": 256,
+      "sliceAlignment": 512,
+      "bufferBytes": 16588800,
+      "textureStateBeforeCopy": "PIXEL_SHADER_RESOURCE",
+      "api": "DX12",
+      "mode": 5,
+      "debugView": 0,
+      "transmittanceDirection": "legacy",
+      "weightSource": "lut",
+      "weightConstant": 0.25,
+      "weightPattern": "A",
+      "testScene": "two_layer",
+      "testCase": "two_a050_050",
+      "submitOrder": "normal",
+      "commit": "cc625c64",
+      "_jsonPath": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6S_WeightPropagation_20260628T110901Z\\raw_mrt\\raw_23e2a571_AVBOITAccumColorWeight.json",
+      "_folder": "raw_mrt",
+      "_mtime": 1782645290.52929,
+      "_binPath": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6S_WeightPropagation_20260628T110901Z\\raw_mrt\\raw_23e2a571_AVBOITAccumColorWeight.bin",
+      "_sha256": "40ac2957ed1e16886e4d0f56c10a4d1de11f0162870f1ed4c6a3dd106d7ea454",
+      "_bytes": 16588800
+    },
+    "frontColorWeight": {
+      "capture": "DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_cc625c64_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layerall",
+      "captureHash": "359e18ff",
+      "label": "AVBOITAccumColorWeight",
+      "file": "raw_359e18ff_AVBOITAccumColorWeight.bin",
+      "width": 1920,
+      "height": 1080,
+      "depth": 1,
+      "format": "R16G16B16A16_SFLOAT",
+      "rowBytes": 15360,
+      "numRows": 1080,
+      "rowAlignment": 256,
+      "sliceAlignment": 512,
+      "bufferBytes": 16588800,
+      "textureStateBeforeCopy": "PIXEL_SHADER_RESOURCE",
+      "api": "DX12",
+      "mode": 5,
+      "debugView": 0,
+      "transmittanceDirection": "front",
+      "weightSource": "lut",
+      "weightConstant": 0.25,
+      "weightPattern": "A",
+      "testScene": "two_layer",
+      "testCase": "two_a050_050",
+      "submitOrder": "normal",
+      "commit": "cc625c64",
+      "_jsonPath": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6S_WeightPropagation_20260628T110901Z\\raw_mrt\\raw_359e18ff_AVBOITAccumColorWeight.json",
+      "_folder": "raw_mrt",
+      "_mtime": 1782645292.4832053,
+      "_binPath": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6S_WeightPropagation_20260628T110901Z\\raw_mrt\\raw_359e18ff_AVBOITAccumColorWeight.bin",
+      "_sha256": "60dc8b708e99123f8c36937cac756c7f5586117c99fa16a1ac4e634cbab2bdd1",
+      "_bytes": 16588800
+    },
+    "legacyExtinction": {
+      "capture": "DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_cc625c64_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layerall",
+      "captureHash": "23e2a571",
+      "label": "AVBOITAccumExtinction",
+      "file": "raw_23e2a571_AVBOITAccumExtinction.bin",
+      "width": 1920,
+      "height": 1080,
+      "depth": 1,
+      "format": "R16G16B16A16_SFLOAT",
+      "rowBytes": 15360,
+      "numRows": 1080,
+      "rowAlignment": 256,
+      "sliceAlignment": 512,
+      "bufferBytes": 16588800,
+      "textureStateBeforeCopy": "PIXEL_SHADER_RESOURCE",
+      "api": "DX12",
+      "mode": 5,
+      "debugView": 0,
+      "transmittanceDirection": "legacy",
+      "weightSource": "lut",
+      "weightConstant": 0.25,
+      "weightPattern": "A",
+      "testScene": "two_layer",
+      "testCase": "two_a050_050",
+      "submitOrder": "normal",
+      "commit": "cc625c64",
+      "_jsonPath": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6S_WeightPropagation_20260628T110901Z\\raw_mrt\\raw_23e2a571_AVBOITAccumExtinction.json",
+      "_folder": "raw_mrt",
+      "_mtime": 1782645290.5338593,
+      "_binPath": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6S_WeightPropagation_20260628T110901Z\\raw_mrt\\raw_23e2a571_AVBOITAccumExtinction.bin",
+      "_sha256": "fb9b0ff04bbb6febe9c60e94f5d0d7b678c5d4cca46b0abbf8c46852be915eb4",
+      "_bytes": 16588800
+    },
+    "frontExtinction": {
+      "capture": "DX12_Mode5_1920x1080_Debug0_Dirfront_Mul1.0_Frame60_cc625c64_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layerall",
+      "captureHash": "359e18ff",
+      "label": "AVBOITAccumExtinction",
+      "file": "raw_359e18ff_AVBOITAccumExtinction.bin",
+      "width": 1920,
+      "height": 1080,
+      "depth": 1,
+      "format": "R16G16B16A16_SFLOAT",
+      "rowBytes": 15360,
+      "numRows": 1080,
+      "rowAlignment": 256,
+      "sliceAlignment": 512,
+      "bufferBytes": 16588800,
+      "textureStateBeforeCopy": "PIXEL_SHADER_RESOURCE",
+      "api": "DX12",
+      "mode": 5,
+      "debugView": 0,
+      "transmittanceDirection": "front",
+      "weightSource": "lut",
+      "weightConstant": 0.25,
+      "weightPattern": "A",
+      "testScene": "two_layer",
+      "testCase": "two_a050_050",
+      "submitOrder": "normal",
+      "commit": "cc625c64",
+      "_jsonPath": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6S_WeightPropagation_20260628T110901Z\\raw_mrt\\raw_359e18ff_AVBOITAccumExtinction.json",
+      "_folder": "raw_mrt",
+      "_mtime": 1782645292.4893296,
+      "_binPath": "D:\\HTC\\avboit\\The-Forge\\LocalVisualResults\\P2_6S_WeightPropagation_20260628T110901Z\\raw_mrt\\raw_359e18ff_AVBOITAccumExtinction.bin",
+      "_sha256": "fa38e6e564ee0c6e8002afbbc41959a78eec770369b1ab712a8dbf20c8458ade",
+      "_bytes": 16588800
+    },
+    "colorWeightDiffers": true,
+    "extinctionDiffers": true,
+    "finalPngMetrics": {
+      "rgb_mae": 0.003506831603526051,
+      "rgb_max": 0.7098039215686275,
+      "pixel_count": 2073600
+    },
+    "firstDifferingStage": "accumulation_color_weight",
+    "pass": true
+  },
+  "forcedWeightGate": {
+    "constantFinal": {
+      "rgb_mae": 0.0,
+      "rgb_max": 0,
+      "pixel_count": 2073600
+    },
+    "layerPatternFinalOverlap": {
+      "rgb_mae": 0.0,
+      "rgb_max": 0,
+      "pixel_count": 324
+    },
+    "rawHashes": {
+      "constant025": {
+        "colorWeightSha256": "ab987a1d44146ade1abf60d6af42d0667d24645a77dbd67e5cd2a9ff5a495731",
+        "extinctionSha256": "fb9b0ff04bbb6febe9c60e94f5d0d7b678c5d4cca46b0abbf8c46852be915eb4"
+      },
+      "constant075": {
+        "colorWeightSha256": "310b4383d1453a8852bbc7fbe2b2096ac487279eb11f184cd64a8c08b954726c",
+        "extinctionSha256": "fb9b0ff04bbb6febe9c60e94f5d0d7b678c5d4cca46b0abbf8c46852be915eb4"
+      },
+      "layerA": {
+        "colorWeightSha256": "a4220a7971813df1b56cb4aa60cc84f22dab8e41a425b1ba6a198f3c9c7fd5f5",
+        "extinctionSha256": "fb9b0ff04bbb6febe9c60e94f5d0d7b678c5d4cca46b0abbf8c46852be915eb4"
+      },
+      "layerB": {
+        "colorWeightSha256": "ab987a1d44146ade1abf60d6af42d0667d24645a77dbd67e5cd2a9ff5a495731",
+        "extinctionSha256": "fb9b0ff04bbb6febe9c60e94f5d0d7b678c5d4cca46b0abbf8c46852be915eb4"
+      }
+    },
+    "constantFinalNormalizesAway": true,
+    "layerPatternChangesFinal": false,
+    "layerRawDiffers": true,
+    "pass": false
+  },
+  "launchSummary": [
+    {
+      "file": "LocalVisualResults\\P2_6S_WeightPropagation_20260628T110901Z\\launch_matrix.tsv",
+      "rows": 32
+    },
+    {
+      "file": "LocalVisualResults\\P2_6S_WeightPropagation_20260628T110901Z\\launch_matrix_raw_rerun.tsv",
+      "rows": 0
+    },
+    {
+      "file": "LocalVisualResults\\P2_6S_WeightPropagation_20260628T110901Z\\launch_matrix_raw_rerun2.tsv",
+      "rows": 0
+    },
+    {
+      "file": "LocalVisualResults\\P2_6S_WeightPropagation_20260628T110901Z\\launch_matrix_slice_z_rerun.tsv",
+      "rows": 7
+    }
+  ],
+  "stopDecision": "STOP_BEFORE_DIRECTION_MATRIX"
+}

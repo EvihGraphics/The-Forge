@@ -1,0 +1,36 @@
+{
+  "requestedApi": "DX12",
+  "createdApi": "DX12",
+  "gpu": "NVIDIA GeForce RTX 4060 Ti",
+  "driver": "591.86",
+  "resolution": { "width": 1920, "height": 1080 },
+  "mode": 5,
+  "debugView": 6,
+  "debugViewName": "AVBOIT z slice",
+  "multiplier": 1.000000,
+  "captureFrame": 60,
+  "fixedDelta": 0.0166666675,
+  "fixedDeltaEnabled": true,
+  "randomSeed": 1337,
+  "transmittanceDirection": "legacy",
+  "weightSource": "lut",
+  "weightConstant": 0.250000,
+  "weightPattern": "A",
+  "rawAccumDumpRequested": false,
+  "testScene": "same_slice",
+  "testCase": "same_a050_050",
+  "submitOrder": "normal",
+  "analyticLayerFilter": "0",
+  "analytic": {
+    "layerCount": 2,
+    "submitOrderIndices": [0, 1],
+    "layers": [
+      { "index": 0, "includedByLayerFilter": true, "color": [1.000000, 0.000000, 0.000000, 0.500000], "worldPosition": [4.030121, 3.790963, -3.425606], "linearDepth": 59.277367, "normalizedDepth": 0.507812, "targetSlice": 32, "cpuExpectedZIndex": 32, "gpuCapturedZIndex": null, "screenBoundsApprox": { "left": 895.2, "top": 475.2, "right": 1024.8, "bottom": 604.8 } },
+      { "index": 1, "includedByLayerFilter": false, "color": [0.000000, 1.000000, 0.000000, 0.500000], "worldPosition": [4.030121, 3.790963, -3.425606], "linearDepth": 59.277367, "normalizedDepth": 0.507812, "targetSlice": 32, "cpuExpectedZIndex": 32, "gpuCapturedZIndex": null, "screenBoundsApprox": { "left": 895.2, "top": 475.2, "right": 1024.8, "bottom": 604.8 } }
+    ],
+    "expectedSortedOverBlack": { "rgba": [0.500000, 0.000000, 0.000000, 0.500000] },
+    "overlapRoiApprox": { "left": 895.2, "top": 475.2, "right": 1024.8, "bottom": 604.8 }
+  },
+  "commit": "1022f43f",
+  "screenshot": "DX12_Mode5_1920x1080_Debug6_Dirlegacy_Mul1.0_Frame60_1022f43f_Scenesame_slice_Casesame_a050_050_Ordernormal_Layer0.png"
+}

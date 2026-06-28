@@ -1,0 +1,14 @@
+{
+  "capture": "DX12_Mode5_1920x1080_Debug0_Dirlegacy_Mul1.0_Frame60_cc625c64_Scenetwo_layer_Casetwo_a050_050_Ordernormal_Layerall_WeightlayerB",
+  "captureHash": "927906e7",
+  "label": "AVBOITAccumDiagnostics",
+  "storage": "synthesized_from_existing_mrts",
+  "channels": {
+    "selectedWeightedColorRgb": "AVBOITAccumColorWeight.rgb",
+    "selectedDenominator": "AVBOITAccumColorWeight.a",
+    "totalExtinction": "AVBOITAccumExtinction.r",
+    "legacyWeightTimesAlpha": "AVBOITAccumExtinction.g",
+    "frontWeightTimesAlpha": "AVBOITAccumExtinction.b",
+    "alphaSum": "AVBOITAccumExtinction.a"
+  }
+}

@@ -12,38 +12,40 @@ Current lab skill: `docs/skill/theforge-avboit-lab-skill/SKILL.md`
 
 `baseline/theforge-1.58-windows-vs-dx12`
 
-Verified P2.6R start point: `91163ff9d7956a670d8562e73376de3ad9b789db`
+Verified P2.6S start point: `4120b7e5b8c79f843086e7ed6b83c1e6075959e0`
 
 ## Latest Checkpoint
 
-`docs/checkpoints/archive/CHECKPOINT-0009-20260628T054228Z-p2-6r-direction-closure.md`
+`docs/checkpoints/archive/CHECKPOINT-0010-20260628T110901Z-p2-6s-weight-propagation.md`
 
 Status: `blocked-local`
 
 ## Latest State
 
-P2.6R restored runtime auto-capture and captured overlapping DX12 analytic evidence in `LocalVisualResults/P2_6R_DirectionClosure_20260628T054228Z/`.
+P2.6S added explicit analytic target-slice placement, selected-weight debug views, forced analytic weights, and raw MRT dumps in `LocalVisualResults/P2_6S_WeightPropagation_20260628T110901Z/`.
 
-Overlap validation passes (`12914` two-layer overlap pixels and `12914` three-way overlap pixels). Direction plumbing is visible in debug views `7` and `8`, but all `37 / 37` paired `Debug0` final legacy/front captures are byte-identical. The default direction remains `legacy`; no front-default commit was made.
+Raw MRT tracing shows legacy/front first differ at `AVBOITAccumColorWeight`, with final Debug0 RGB MAE `0.00350683`. However, the hard gates failed: GPU zIndex remained `63` for expected target slices `48/32/16`, selected/legacy/front simultaneous weights were not proven, and forced layer-id A/B changed raw accumulation but not final overlap output. The default direction remains `legacy`; no front-default commit was made.
 
 ## Current Plan
 
-`docs/plan/phase_p2_6r_runtime_direction_closure.md`
+`docs/plan/phase_p2_6s_weight_propagation.md`
 
 ## Validation Snapshot
 
 - Build: PASS with Release x64 MSBuild after setting `FSL_COMPILER_DXC` to Windows Kits `10.0.26100.0\x64`.
-- Runtime auto-capture: PASS.
-- Two-layer and three-layer overlap: PASS.
-- Direction debug plumbing: PASS.
-- Direction final-output improvement: FAIL, final legacy/front outputs are byte-identical.
+- Runtime auto-capture/raw dump: PASS enough for evidence; launcher exit code is noisy but files are written.
+- Slice target placement: FAIL, GPU zIndex is `63` for expected slices `48/32/16`.
+- Selected-weight diagnostic: FAIL, current layer filter changes the LUT under test.
+- Raw MRT stage trace: PASS, first differing stage is `AVBOITAccumColorWeight`.
+- Forced layer-id final sensitivity: FAIL, raw differs but final overlap RGB MAE is `0.0`.
 - Front-default switch: NOT COMMITTED.
-- Vulkan analytic, default scene, cross-API, coverage, and performance gates: NOT RUN after the DX12 direction gate failed.
+- Vulkan analytic, default scene, cross-API, coverage, and performance gates: NOT RUN after P2.6S hard gates failed.
 
 ## Resume Entry
 
 1. Stay on branch `baseline/theforge-1.58-windows-vs-dx12`.
-2. Confirm latest local P2.6R commits with `git log -8 --oneline`.
-3. Use `LocalVisualResults/P2_6R_DirectionClosure_20260628T054228Z/metrics/direction_dx12/dx12_direction_gate_summary.json` as the current blocked evidence.
-4. Investigate why direction-dependent weights alter debug views but not final resolved Debug0 output.
-5. Do not switch default direction to `front` until final output improves against Mode0 and the Vulkan/default/perf gates run.
+2. Confirm latest local P2.6S commits with `git log -8 --oneline`.
+3. Use `LocalVisualResults/P2_6S_WeightPropagation_20260628T110901Z/metrics/p2_6s_weight_propagation_metrics.json` as the current blocked evidence.
+4. Fix analytic target-slice placement against the actual GPU depth path before rerunning the direction matrix.
+5. Add a diagnostic that observes selected, legacy, and front weights without rebuilding the low-res LUT differently for each layer.
+6. Do not switch default direction to `front` until all DX12/Vulkan/default/perf gates pass.

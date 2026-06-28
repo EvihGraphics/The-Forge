@@ -1,0 +1,37 @@
+{
+  "requestedApi": "DX12",
+  "createdApi": "DX12",
+  "gpu": "NVIDIA GeForce RTX 4060 Ti",
+  "driver": "591.86",
+  "resolution": { "width": 1920, "height": 1080 },
+  "mode": 5,
+  "debugView": 2,
+  "debugViewName": "Full-resolution transparent coverage",
+  "multiplier": 1.000000,
+  "captureFrame": 60,
+  "fixedDelta": 0.0166666675,
+  "fixedDeltaEnabled": true,
+  "randomSeed": 1337,
+  "transmittanceDirection": "legacy",
+  "weightSource": "lut",
+  "weightConstant": 0.250000,
+  "weightPattern": "A",
+  "rawAccumDumpRequested": false,
+  "testScene": "three_layer",
+  "testCase": "three_a050_050_050",
+  "submitOrder": "normal",
+  "analyticLayerFilter": "0",
+  "analytic": {
+    "layerCount": 3,
+    "submitOrderIndices": [0, 1, 2],
+    "layers": [
+      { "index": 0, "includedByLayerFilter": true, "color": [1.000000, 0.000000, 0.000000, 0.500000], "worldPosition": [-34.463505, 15.339051, 29.293980], "linearDepth": 7.453734, "normalizedDepth": 0.757813, "targetSlice": 48, "cpuExpectedZIndex": 48, "gpuCapturedZIndex": null, "screenBoundsApprox": { "left": 444.8, "top": 24.8, "right": 1475.2, "bottom": 1055.2 } },
+      { "index": 1, "includedByLayerFilter": false, "color": [0.000000, 1.000000, 0.000000, 0.500000], "worldPosition": [4.030121, 3.790963, -3.425606], "linearDepth": 59.277367, "normalizedDepth": 0.507812, "targetSlice": 32, "cpuExpectedZIndex": 32, "gpuCapturedZIndex": null, "screenBoundsApprox": { "left": 895.2, "top": 475.2, "right": 1024.8, "bottom": 604.8 } },
+      { "index": 2, "includedByLayerFilter": false, "color": [0.000000, 0.000000, 1.000000, 0.500000], "worldPosition": [310.158661, -88.047600, -263.634857], "linearDepth": 471.415527, "normalizedDepth": 0.257813, "targetSlice": 16, "cpuExpectedZIndex": 16, "gpuCapturedZIndex": null, "screenBoundsApprox": { "left": 951.9, "top": 531.9, "right": 968.1, "bottom": 548.1 } }
+    ],
+    "expectedSortedOverBlack": { "rgba": [0.500000, 0.000000, 0.000000, 0.500000] },
+    "overlapRoiApprox": { "left": 444.8, "top": 24.8, "right": 1475.2, "bottom": 1055.2 }
+  },
+  "commit": "8482cd69",
+  "screenshot": "DX12_Mode5_1920x1080_Debug2_Dirlegacy_Mul1.0_Frame60_8482cd69_Scenethree_layer_Casethree_a050_050_050_Ordernormal_Layer0.png"
+}
