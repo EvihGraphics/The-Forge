@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\15_Transparency\15_Transparency.cpp" />
+    <ClCompile Include="..\src\15_Transparency\avboit_bootstrap_win32.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FSLShader Include="..\src\15_Transparency\Shaders\FSL\AdaptiveOIT.frag.fsl" />
@@ -47,6 +48,14 @@
     <None Include="..\src\15_Transparency\Scripts\Test_Phenomenological.lua" />
     <None Include="..\src\15_Transparency\Scripts\Test_WeightedBlendedOIT.lua" />
     <None Include="..\src\15_Transparency\Scripts\Test_WeightedBlendedOITVolition.lua" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\src\15_Transparency\Shaders\FSL\AVBOIT.frag.fsl" />
+    <Content Include="..\src\15_Transparency\Shaders\FSL\avboit.h.fsl" />
+    <Content Include="..\src\15_Transparency\Shaders\FSL\avboit_clear.comp.fsl" />
+    <Content Include="..\src\15_Transparency\Shaders\FSL\avboit_composite.frag.fsl" />
+    <Content Include="..\src\15_Transparency\Shaders\FSL\avboit_forward.frag.fsl" />
+    <Content Include="..\src\15_Transparency\Shaders\FSL\avboit_integrate.comp.fsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{69CBDFA9-4368-4749-9417-08F68C856C94}</ProjectGuid>

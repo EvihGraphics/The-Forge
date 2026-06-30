@@ -12,40 +12,41 @@ Current lab skill: `docs/skill/theforge-avboit-lab-skill/SKILL.md`
 
 `baseline/theforge-1.58-windows-vs-dx12`
 
-Verified P2.6T start point: `dbeb4094409c34f2bf67721d93aa727ef4e073da`
+HEAD: `8d94c9caf2f4a6abb54ebbf81967f8a84e5b5b9c`
 
 ## Latest Checkpoint
 
-`docs/checkpoints/archive/CHECKPOINT-0011-20260628T164524Z-p2-6t-reverse-z-depth.md`
+`docs/checkpoints/archive/CHECKPOINT-0012-20260630T043500Z-p2-7a-xy-z-resolution-attribution.md`
 
-Status: `passed-local`
+Status: `partial`
 
 ## Latest State
 
-P2.6T fixed the reverse-Z depth mapping used by AVBOIT, normalized low-resolution splat extinction by `downsampleFactor^2`, and closed explicit selected-weight propagation. Evidence is stored in `LocalVisualResults/KeyResults/P2_6T_ReverseZDepth_20260628T164524Z/`.
+P2.7A implemented CLI arguments `--avboit-downsample-factor=` (2/4/8, default 8) and `--avboit-depth-slices=` (32/64/128/256, default 64). The shader constant `AVBOIT_MAX_VOLUME_DEPTH` was expanded from 64 to 256 and the integrate shader's fixed-size arrays were updated accordingly. A 1536 MiB budget gate was added around AVBOIT resource creation. Build gate, default-behaviour gate, CLI gate, invalid-arg gate, and budget gate all passed.
 
-DX12 and Vulkan target slices now hit 48/32/16, forced layer-id A/B changes raw and final coverage color, and the analytic front direction matrix improves against Mode0 by about 97%. The validated defaults are now `reverse_correct` depth mapping and `front` transmittance direction, with legacy command-line overrides preserved.
+The experiment matrix (XY axis, Z axis, combination, attribution decision) has not been executed yet.
 
 ## Current Plan
 
-`docs/plan/phase_p2_6t_reverse_z_depth.md`
+`docs/plan/phase_p2_7a_xy_z_resolution_attribution.md`
 
 ## Validation Snapshot
 
-- Build: PASS with Release x64 MSBuild after setting `FSL_COMPILER_DXC` to Windows Kits `10.0.26100.0\x64`.
-- Reverse-Z calibration: PASS, near device depth is high and far device depth is low.
-- Target slices: PASS, DX12/Vulkan raw medians hit 48/32/16 within tolerance.
-- Explicit layer IDs and forced weight sensitivity: PASS.
-- Dual legacy/front diagnostics: PASS with simultaneous LUT channels.
-- DX12 analytic direction matrix: PASS, front improves average MAE by about 97%.
-- Vulkan minimal gate and cross-API front parity: PASS minimal.
-- Coverage invariant: PASS.
-- Performance: PASS smoke; full 300-frame benchmark not run.
-- Renderer validation layer gate: NOT RUN.
+- Build: PASS (Release x64, WholeProgramOptimization=false, MSBuild v143)
+- Default behaviour (D8 Z64): PASS — volume 240×135×64, 23.73 MiB, budget OK
+- CLI override (D4 Z128): PASS — volume 480×270×128, 189.84 MiB, budget OK
+- Invalid arg fallback (D3 Z99): PASS — WARNING printed, fallback to D8 Z64
+- Experiment matrix: NOT RUN
+- Attribution conclusion: PENDING
 
 ## Resume Entry
 
 1. Stay on branch `baseline/theforge-1.58-windows-vs-dx12`.
-2. Use `LocalVisualResults/KeyResults/P2_6T_ReverseZDepth_20260628T164524Z/metrics/final_summary.md` as the current evidence index.
-3. Treat remaining default-scene darkening as low-resolution volume/resolve approximation, not depth direction failure.
-4. If continuing, start a later reconstruction/resolve phase; do not revisit Depth Warp until default-scene residuals are attributed with an XY/Z matrix.
+2. Read CHECKPOINT-0012.
+3. Read `docs/plan/phase_p2_7a_xy_z_resolution_attribution.md`.
+4. Build with `/p:WholeProgramOptimization=false` to ensure fresh exe.
+5. Create `LocalVisualResults/TempResults/P2_7A_XYZAttribution_<UTC>/` output layout.
+6. Run experiment matrix: Group A (regression), B (XY axis DX12), C (Z axis DX12), then Vulkan for key configs.
+7. Compute all required metrics per config.
+8. Apply attribution rules (≥15% relative improvement threshold).
+9. Create CHECKPOINT-0013 with attribution conclusion.

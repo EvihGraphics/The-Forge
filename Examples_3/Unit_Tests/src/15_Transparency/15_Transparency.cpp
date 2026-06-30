@@ -759,8 +759,8 @@ static const uint32_t AVBOIT_ANALYTIC_FLAG_WEIGHT_PATTERN_B = 1u << 5;
 static const uint32_t AVBOIT_ANALYTIC_FLAG_DEPTH_MAPPING_REVERSE_CORRECT = 1u << 6;
 static const uint32_t AVBOIT_ANALYTIC_FLAG_DUAL_DIRECTION_DIAGNOSTIC = 1u << 7;
 
-static const AVBOITVolumeConfig gAVBOITVolumeConfig = {};
-static AVBOITVolumeDimensions   gAVBOITVolumeDimensions = {};
+static AVBOITVolumeConfig     gAVBOITVolumeConfig = {};
+static AVBOITVolumeDimensions gAVBOITVolumeDimensions = {};
 
 Texture* pTextureAVBOITVolumeTransmittanceLut = NULL;
 
@@ -803,6 +803,56 @@ static void LogAVBOITVolumeDimensions(const AVBOITVolumeDimensions& dimensions)
     LOGF(eINFO, "AVBOIT extinction buffer: %.2f MiB", BytesToMiB(extinctionBytes));
     LOGF(eINFO, "AVBOIT transmittance LUT: %.2f MiB", BytesToMiB(transmittanceBytes));
     LOGF(eINFO, "AVBOIT total volume resources: %.2f MiB", BytesToMiB(extinctionBytes + transmittanceBytes));
+}
+
+// P2.7A: XY/Z Resolution Attribution — startup-time config parsing.
+// Allowed downsample factors: 2, 4, 8.  Default: 8.
+// Allowed depth slice counts: 32, 64, 128, 256.  Default: 64.
+// Budget cap: AVBOIT volume resources must not exceed 1536 MiB.
+// Uses 64-bit arithmetic throughout to avoid overflow for large configs.
+static const uint64_t AVBOIT_SAFE_BUDGET_MIB = 1536ULL;
+
+static bool IsValidAVBOITDownsampleFactor(uint32_t f)
+{
+    return f == 2 || f == 4 || f == 8;
+}
+
+static bool IsValidAVBOITDepthSlices(uint32_t z)
+{
+    return z == 32 || z == 64 || z == 128 || z == 256;
+}
+
+
+// Validates that the resolved AVBOIT volume dimensions fit within the safe
+// memory budget.  Returns false if creation should be aborted.
+static bool CheckAVBOITVolumeBudget(const AVBOITVolumeDimensions& dimensions)
+{
+    const uint64_t voxelCount        = GetAVBOITVoxelCount(dimensions);
+    const uint64_t extinctionBytes   = voxelCount * (uint64_t)sizeof(uint32_t);
+    const uint64_t transmittanceBytes = voxelCount * (uint64_t)sizeof(uint16_t) * 4ULL;
+    const uint64_t totalBytes        = extinctionBytes + transmittanceBytes;
+    const uint64_t totalMiB          = totalBytes / (1024ULL * 1024ULL);
+
+    LOGF(eINFO, "AVBOIT volume budget check: screen=%ux%u volume=%ux%ux%u voxels=%llu",
+         dimensions.mScreenWidth, dimensions.mScreenHeight,
+         dimensions.mVolumeWidth, dimensions.mVolumeHeight, dimensions.mVolumeDepth,
+         (unsigned long long)voxelCount);
+    LOGF(eINFO, "AVBOIT volume budget check: extinctionBuffer=%.2f MiB transmittanceLUT=%.2f MiB total=%.2f MiB cap=%llu MiB",
+         BytesToMiB(extinctionBytes), BytesToMiB(transmittanceBytes), BytesToMiB(totalBytes),
+         (unsigned long long)AVBOIT_SAFE_BUDGET_MIB);
+
+    if (totalMiB > AVBOIT_SAFE_BUDGET_MIB)
+    {
+        LOGF(LogLevel::eERROR,
+             "AVBOIT BUDGET EXCEEDED: requested %.2f MiB exceeds safe cap of %llu MiB. "
+             "Aborting AVBOIT resource creation. Use a smaller downsample factor or fewer depth slices.",
+             BytesToMiB(totalBytes), (unsigned long long)AVBOIT_SAFE_BUDGET_MIB);
+        return false;
+    }
+
+    LOGF(eINFO, "AVBOIT volume budget OK (%.2f / %llu MiB).",
+         BytesToMiB(totalBytes), (unsigned long long)AVBOIT_SAFE_BUDGET_MIB);
+    return true;
 }
 
 static void UpdateAVBOITUniformBuffer(uint32_t frameIndex, const AVBOITVolumeDimensions& dimensions)
@@ -1361,6 +1411,58 @@ static float CommandLineGetFloat(const char* optionName, float defaultValue)
 {
     char value[64] = {};
     return CommandLineGetValue(optionName, value, sizeof(value)) ? (float)atof(value) : defaultValue;
+}
+
+// P2.7A: Parse --avboit-downsample-factor= and --avboit-depth-slices= at startup.
+// Must be called after gAVBOITCommandLine is set (i.e. inside Init()).
+// Sets defaults unconditionally so callers never see uninitialised values.
+static void ParseAVBOITVolumeConfig()
+{
+    // Defaults preserved from P2.6T baseline.
+    gAVBOITVolumeConfig.mDownsampleFactor = 8;
+    gAVBOITVolumeConfig.mDepthSlices      = 64;
+
+    if (gAVBOITCommandLine)
+    {
+        char commandValue[64] = {};
+
+        if (CommandLineGetValue("--avboit-downsample-factor=", commandValue, sizeof(commandValue)))
+        {
+            const uint32_t requested = (uint32_t)atoi(commandValue);
+            if (IsValidAVBOITDownsampleFactor(requested))
+            {
+                gAVBOITVolumeConfig.mDownsampleFactor = requested;
+                LOGF(LogLevel::eINFO, "AVBOIT downsample factor set via command line to: %u", requested);
+            }
+            else
+            {
+                LOGF(LogLevel::eWARNING,
+                     "AVBOIT invalid --avboit-downsample-factor=%u (allowed: 2, 4, 8); falling back to default 8.",
+                     requested);
+                gAVBOITVolumeConfig.mDownsampleFactor = 8;
+            }
+        }
+
+        if (CommandLineGetValue("--avboit-depth-slices=", commandValue, sizeof(commandValue)))
+        {
+            const uint32_t requested = (uint32_t)atoi(commandValue);
+            if (IsValidAVBOITDepthSlices(requested))
+            {
+                gAVBOITVolumeConfig.mDepthSlices = requested;
+                LOGF(LogLevel::eINFO, "AVBOIT depth slices set via command line to: %u", requested);
+            }
+            else
+            {
+                LOGF(LogLevel::eWARNING,
+                     "AVBOIT invalid --avboit-depth-slices=%u (allowed: 32, 64, 128, 256); falling back to default 64.",
+                     requested);
+                gAVBOITVolumeConfig.mDepthSlices = 64;
+            }
+        }
+    }
+
+    LOGF(LogLevel::eINFO, "AVBOIT volume config: downsampleFactor=%u depthSlices=%u",
+         gAVBOITVolumeConfig.mDownsampleFactor, gAVBOITVolumeConfig.mDepthSlices);
 }
 
 static bool StringEqualsNoCase(const char* lhs, const char* rhs)
@@ -2838,6 +2940,9 @@ public:
                      gAVBOITDebugViewNames[gAVBOITDebugView]);
             }
         }
+
+        // P2.7A: Parse volume resolution overrides after all other AVBOIT args.
+        ParseAVBOITVolumeConfig();
 
 
 
@@ -8833,10 +8938,12 @@ void Draw() override
 
         // Create AVBOIT resources
 
+        if (CheckAVBOITVolumeBudget(gAVBOITVolumeDimensions))
         {
 
             const AVBOITVolumeDimensions& dimensions = gAVBOITVolumeDimensions;
-            const uint32_t voxelCount = (uint32_t)GetAVBOITVoxelCount(dimensions);
+            const uint64_t voxelCount64 = GetAVBOITVoxelCount(dimensions);
+            const uint32_t voxelCount = (uint32_t)voxelCount64;
 
 
 

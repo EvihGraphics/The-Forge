@@ -10,8 +10,8 @@ void CS_MAIN( SV_DispatchThreadID(uint3) DTid )
     if(DTid.x >= volumeWidth || DTid.y >= volumeHeight) return;
 
     uint activeDepth = min(volumeDepth, AVBOIT_MAX_VOLUME_DEPTH);
-    float legacyEventWeights[64];
-    float frontEventWeights[64];
+    float legacyEventWeights[AVBOIT_MAX_VOLUME_DEPTH];
+    float frontEventWeights[AVBOIT_MAX_VOLUME_DEPTH];
 
     float legacyTransmittance = 1.0f;
     for(uint z = 0; z < activeDepth; ++z)
