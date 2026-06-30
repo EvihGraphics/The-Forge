@@ -38,7 +38,7 @@ So device depth `1` maps to `zNear`, and device depth `0` maps to `zFar`.
 Evidence root:
 
 ```text
-LocalVisualResults/P2_6T_ReverseZDepth_20260628T164524Z/
+LocalVisualResults/KeyResults/P2_6T_ReverseZDepth_20260628T164524Z/
 ```
 
 Key parsed metrics:

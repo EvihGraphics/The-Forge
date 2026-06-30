@@ -35,14 +35,14 @@ Created a clean checkpoint branch from the remote The Forge 1.58 DX12 baseline a
 
 ## Validation
 
-`git check-ignore -v --no-index` verified all required local-only paths are ignored, including `Art/cameraPath.txt`, `Screenshots/foo.png`, `Local_Egaku/somefile`, `LocalVisualResults/HIVE_4090x2/...`, scratch files, patch/inject scripts, and `Unit_Tests.sln.metaproj`.
+`git check-ignore -v --no-index` verified all required local-only paths are ignored, including `Art/cameraPath.txt`, `Screenshots/foo.png`, `Local_Egaku/somefile`, `LocalVisualResults/KeyResults/HIVE_4090x2/...`, scratch files, patch/inject scripts, and `Unit_Tests.sln.metaproj`.
 
 `git diff --stat` and forbidden-path checks confirmed no `Art`, screenshots, local visual results, `Local_Egaku`, or scratch files are part of the checkpoint diff.
 
 Build command:
 
 ```powershell
-msbuild 'Examples_3\Unit_Tests\PC Visual Studio 2019\Unit_Tests.sln' /m '/t:Examples\15_Transparency' /p:Configuration=Release /p:Platform=x64 /p:WindowsTargetPlatformVersion=10.0.26100.0 /p:PlatformToolset=v143 /v:m /fl /flp:"logfile=LocalVisualResults\HIVE_4090x2\Build\Unit_Tests_15_Transparency_MSBuild.log;verbosity=normal"
+msbuild 'Examples_3\Unit_Tests\PC Visual Studio 2019\Unit_Tests.sln' /m '/t:Examples\15_Transparency' /p:Configuration=Release /p:Platform=x64 /p:WindowsTargetPlatformVersion=10.0.26100.0 /p:PlatformToolset=v143 /v:m /fl /flp:"logfile=LocalVisualResults/KeyResults/HIVE_4090x2\Build\Unit_Tests_15_Transparency_MSBuild.log;verbosity=normal"
 ```
 
 Build result: success, exit code 0. The log contains an optional copy message for `*.lua`, but MSBuild completed successfully.
@@ -50,14 +50,14 @@ Build result: success, exit code 0. The log contains an optional copy message fo
 Runtime capture command:
 
 ```powershell
-.\Run-ForgeModeCapture.ps1 -ExePath 'Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\15_Transparency\15_Transparency.exe' -OutputDir 'LocalVisualResults\HIVE_4090x2\VisualResults\15_Transparency\Mode_5_CleanCheckpoint_4' -ScreenshotPath 'LocalVisualResults\HIVE_4090x2\VisualResults\Screenshots\UT_15_Transparency_DX12_Mode_5_AVBOIT_CleanCheckpoint.png' -ModeIndex 5 -Arguments '--d3d12 --no-auto-exit' -StartupWaitSeconds 10 -StabilizeSeconds 5 -CloseWaitSeconds 5
+.\Run-ForgeModeCapture.ps1 -ExePath 'Examples_3\Unit_Tests\PC Visual Studio 2019\x64\Release\15_Transparency\15_Transparency.exe' -OutputDir 'LocalVisualResults/KeyResults/HIVE_4090x2\VisualResults\15_Transparency\Mode_5_CleanCheckpoint_4' -ScreenshotPath 'LocalVisualResults/KeyResults/HIVE_4090x2\VisualResults\Screenshots\UT_15_Transparency_DX12_Mode_5_AVBOIT_CleanCheckpoint.png' -ModeIndex 5 -Arguments '--d3d12 --no-auto-exit' -StartupWaitSeconds 10 -StabilizeSeconds 5 -CloseWaitSeconds 5
 ```
 
 Runtime result: success. `CaptureStatus=CAPTURED_CLIENT_PRINTWINDOW`, `Status=WINDOW_READY;CLOSED`.
 
 Screenshot validation:
 
-- Path: `LocalVisualResults/HIVE_4090x2/VisualResults/Screenshots/UT_15_Transparency_DX12_Mode_5_AVBOIT_CleanCheckpoint.png`
+- Path: `LocalVisualResults/KeyResults/HIVE_4090x2/VisualResults/Screenshots/UT_15_Transparency_DX12_Mode_5_AVBOIT_CleanCheckpoint.png`
 - Size: 1536 x 864
 - Mean RGB: `[24.74224703 24.82059884 22.64817904]`
 - Max RGB: `[255 255 255]`
@@ -67,8 +67,8 @@ Capture note: the UI confirms `(AVBOIT) Adaptive voxel-based order independent t
 
 Reference images supplied by the user:
 
-- Current AVBOIT: `LocalVisualResults/HIVE_4090x2/VisualResults/Screenshots/UT_15_Transparency_DX12_Mode_5_AVBOIT.png`
-- Baseline: `LocalVisualResults/HIVE_4090x2/VisualResults/Screenshots/UT_15_Transparency_DX12_Default_01.png`
+- Current AVBOIT: `LocalVisualResults/KeyResults/HIVE_4090x2/VisualResults/Screenshots/UT_15_Transparency_DX12_Mode_5_AVBOIT.png`
+- Baseline: `LocalVisualResults/KeyResults/HIVE_4090x2/VisualResults/Screenshots/UT_15_Transparency_DX12_Default_01.png`
 
 User reference comparison: the AVBOIT screenshot has the skybox, ground, and opaque objects visible, but most transparent objects are absent compared with the baseline. That missing-transparency delta is the active development issue.
 

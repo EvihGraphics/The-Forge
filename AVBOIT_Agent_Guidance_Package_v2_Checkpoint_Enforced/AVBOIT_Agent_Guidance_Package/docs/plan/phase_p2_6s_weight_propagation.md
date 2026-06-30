@@ -21,7 +21,7 @@ No `fix(avboit): propagate selected transmittance weight correctly` commit was m
 
 Result directory:
 
-`LocalVisualResults/P2_6S_WeightPropagation_20260628T110901Z/`
+`LocalVisualResults/KeyResults/P2_6S_WeightPropagation_20260628T110901Z/`
 
 Key files:
 

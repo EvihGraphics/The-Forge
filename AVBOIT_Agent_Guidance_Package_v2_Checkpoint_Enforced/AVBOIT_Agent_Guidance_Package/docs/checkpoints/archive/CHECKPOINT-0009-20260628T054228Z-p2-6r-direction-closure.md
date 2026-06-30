@@ -26,7 +26,7 @@ No front-default commit was created.
 
 Directory:
 
-`LocalVisualResults/P2_6R_DirectionClosure_20260628T054228Z/`
+`LocalVisualResults/KeyResults/P2_6R_DirectionClosure_20260628T054228Z/`
 
 Primary evidence:
 

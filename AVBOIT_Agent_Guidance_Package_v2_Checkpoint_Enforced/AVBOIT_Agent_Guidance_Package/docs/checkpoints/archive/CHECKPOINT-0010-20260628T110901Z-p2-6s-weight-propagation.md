@@ -19,7 +19,7 @@ End HEAD: `1022f43f`
 
 ## Evidence
 
-`LocalVisualResults/P2_6S_WeightPropagation_20260628T110901Z/`
+`LocalVisualResults/KeyResults/P2_6S_WeightPropagation_20260628T110901Z/`
 
 Primary metric files:
 
@@ -45,7 +45,7 @@ Primary metric files:
 
 Continue from `1022f43f` on `baseline/theforge-1.58-windows-vs-dx12`.
 
-Use `LocalVisualResults/P2_6S_WeightPropagation_20260628T110901Z/metrics/p2_6s_weight_propagation_metrics.json` as the latest evidence. Do not proceed to P2.7/P3 or default-front promotion until:
+Use `LocalVisualResults/KeyResults/P2_6S_WeightPropagation_20260628T110901Z/metrics/p2_6s_weight_propagation_metrics.json` as the latest evidence. Do not proceed to P2.7/P3 or default-front promotion until:
 
 - analytic target-slice placement produces distinct GPU zIndex values,
 - the selected/legacy/front diagnostic can observe all three weights without altering the LUT contents under test,

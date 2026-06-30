@@ -8,7 +8,7 @@
 
 - Branch: `baseline/theforge-1.58-windows-vs-dx12`
 - Start HEAD: `dbeb4094409c34f2bf67721d93aa727ef4e073da`
-- Result root: `LocalVisualResults/P2_6T_ReverseZDepth_20260628T164524Z/`
+- Result root: `LocalVisualResults/KeyResults/P2_6T_ReverseZDepth_20260628T164524Z/`
 
 ## Summary
 

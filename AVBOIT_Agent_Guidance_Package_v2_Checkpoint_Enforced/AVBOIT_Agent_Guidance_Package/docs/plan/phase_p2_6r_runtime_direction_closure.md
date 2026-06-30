@@ -20,7 +20,7 @@ No `fix(avboit): make exclusive front transmittance the default` commit was crea
 
 Result directory:
 
-`LocalVisualResults/P2_6R_DirectionClosure_20260628T054228Z/`
+`LocalVisualResults/KeyResults/P2_6R_DirectionClosure_20260628T054228Z/`
 
 Key files:
 

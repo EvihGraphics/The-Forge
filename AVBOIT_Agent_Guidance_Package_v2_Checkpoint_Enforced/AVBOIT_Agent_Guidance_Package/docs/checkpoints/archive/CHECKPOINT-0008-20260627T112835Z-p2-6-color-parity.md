@@ -46,7 +46,7 @@ P2.6 capture and analytic infrastructure was implemented, but the transmittance 
 
 Results directory:
 
-`LocalVisualResults/P2_6_ColorParity_20260627T112835Z`
+`LocalVisualResults/KeyResults/P2_6_ColorParity_20260627T112835Z`
 
 Build command:
 

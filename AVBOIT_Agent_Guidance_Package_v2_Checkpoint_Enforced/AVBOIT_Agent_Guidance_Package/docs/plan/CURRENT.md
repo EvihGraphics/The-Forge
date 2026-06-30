@@ -22,7 +22,7 @@ Status: `passed-local`
 
 ## Latest State
 
-P2.6T fixed the reverse-Z depth mapping used by AVBOIT, normalized low-resolution splat extinction by `downsampleFactor^2`, and closed explicit selected-weight propagation. Evidence is stored in `LocalVisualResults/P2_6T_ReverseZDepth_20260628T164524Z/`.
+P2.6T fixed the reverse-Z depth mapping used by AVBOIT, normalized low-resolution splat extinction by `downsampleFactor^2`, and closed explicit selected-weight propagation. Evidence is stored in `LocalVisualResults/KeyResults/P2_6T_ReverseZDepth_20260628T164524Z/`.
 
 DX12 and Vulkan target slices now hit 48/32/16, forced layer-id A/B changes raw and final coverage color, and the analytic front direction matrix improves against Mode0 by about 97%. The validated defaults are now `reverse_correct` depth mapping and `front` transmittance direction, with legacy command-line overrides preserved.
 
@@ -46,6 +46,6 @@ DX12 and Vulkan target slices now hit 48/32/16, forced layer-id A/B changes raw 
 ## Resume Entry
 
 1. Stay on branch `baseline/theforge-1.58-windows-vs-dx12`.
-2. Use `LocalVisualResults/P2_6T_ReverseZDepth_20260628T164524Z/metrics/final_summary.md` as the current evidence index.
+2. Use `LocalVisualResults/KeyResults/P2_6T_ReverseZDepth_20260628T164524Z/metrics/final_summary.md` as the current evidence index.
 3. Treat remaining default-scene darkening as low-resolution volume/resolve approximation, not depth direction failure.
 4. If continuing, start a later reconstruction/resolve phase; do not revisit Depth Warp until default-scene residuals are attributed with an XY/Z matrix.

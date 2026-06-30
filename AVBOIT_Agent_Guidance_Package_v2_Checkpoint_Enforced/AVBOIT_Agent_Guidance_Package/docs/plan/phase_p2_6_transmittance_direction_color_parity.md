@@ -8,7 +8,7 @@ Start guard:
 
 - Branch: `baseline/theforge-1.58-windows-vs-dx12`
 - Required start HEAD: `83b3f8e4e47e7272441a9fb53f6cfc7fd4eda4af`
-- Historical P2 results: `LocalVisualResults/P2_FullResResolve_20260627`
+- Historical P2 results: `LocalVisualResults/KeyResults/P2_FullResResolve_20260627`
 
 ## Implemented
 
@@ -45,7 +45,7 @@ The direction gate did not pass in this run.
 
 Archived at:
 
-`LocalVisualResults/P2_6_ColorParity_20260627T112835Z`
+`LocalVisualResults/KeyResults/P2_6_ColorParity_20260627T112835Z`
 
 Important subdirectories:
 
