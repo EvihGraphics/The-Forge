@@ -389,10 +389,18 @@ static void stbiw_func(void* context, void* data, int size)
 void captureScreenshot(SwapChain* pSwapChain, uint32_t swapChainRtIndex, bool noAlpha, bool forceFlipRedBlue)
 {
     if (!gCaptureFlag)
+    {
+        LOGF(LogLevel::eINFO, "captureScreenshot: gCaptureFlag is FALSE. Returning.");
         return;
+    }
 
     if (!prepareScreenshot(pSwapChain))
+    {
+        LOGF(LogLevel::eINFO, "captureScreenshot: prepareScreenshot returned FALSE. Returning.");
         return;
+    }
+    
+    LOGF(LogLevel::eINFO, "captureScreenshot: proceeding to capture screenshot...");
 
     ASSERT(pRendererRef);
     ASSERT(pSwapChain);

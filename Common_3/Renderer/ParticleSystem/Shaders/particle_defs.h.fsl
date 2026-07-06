@@ -178,6 +178,7 @@ CBUFFER(ParticleConstantBufferData, UPDATE_FREQ_PER_FRAME, b10, binding = 2)
 	DATA(uint2, ScreenSize, None);
 	// Point to follow when flocking
 	DATA(float3, SeekPosition, None);
+	DATA(uint, ReferencePreset, None);
 	
 	DATA(float4x4, ViewTransform, None);
 	DATA(float4x4, ProjTransform, None);

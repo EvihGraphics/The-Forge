@@ -59,24 +59,6 @@
 #define RETINA_SCALING 1.0f
 #define SHADOWMAP_SIZE 1024
 
-#ifndef NUM_GEOMETRY_SETS
-#define NUM_GEOMETRY_SETS 2
-#define GEOMSET_OPAQUE 0
-#define GEOMSET_ALPHA_CUTOUT 1
-#endif
-
-#ifndef SHADOW_COUNT
-#define SHADOW_COUNT 8
-#endif
-
-#ifndef STANDARD_COUNT
-#define STANDARD_COUNT 4002000
-#endif
-
-#ifndef LIGHT_COUNT
-#define LIGHT_COUNT (10000 + SHADOW_COUNT)
-#endif
-
 #define FOREACH_SETTING(X)       \
     X(BindlessSupported, 1)      \
     X(AddGeometryPassThrough, 0) \
@@ -360,6 +342,10 @@ float        gTotalElpasedTime;
 bool         gCameraWalking = false;
 float        gCameraWalkingSpeed = 1.0;
 
+bool gParticleOnlyReference = false;
+int gReferencePreset = 3;
+
+
 class Particle_System: public IApp
 {
 public:
@@ -583,10 +569,22 @@ public:
         /************************************************************************/
         // Load the scene
         /************************************************************************/
-        Scene* loadedScene = nullptr; // LoadGeometry();
-        // Finish the resource loading process since the next code depends on the loaded resources
+        if (pCommandLine && strstr(pCommandLine, "--particle-only-reference"))
+        {
+            gParticleOnlyReference = true;
+            if (strstr(pCommandLine, "--preset=EmberOnly"))
+                gReferencePreset = 1;
+            else if (strstr(pCommandLine, "--preset=FogOnly"))
+                gReferencePreset = 2;
+            else if (strstr(pCommandLine, "--preset=Original"))
+                gReferencePreset = 0;
+            else
+                gReferencePreset = 3;
+        }
+        
+        Scene* loadedScene = LoadGeometry();
         waitForAllResourceLoads();
-        // exitSanMiguel(loadedScene);
+        exitSanMiguel(loadedScene);
 
         HiresTimer setupBuffersTimer;
         initHiresTimer(&setupBuffersTimer);
@@ -758,6 +756,7 @@ public:
 
         initScreenshotInterface(pRenderer, pGraphicsQueue);
 
+        LOGF(LogLevel::eINFO, "Init() returning true!");
         return true;
     }
 
@@ -769,7 +768,7 @@ public:
         SyncToken        token = {};
         GeometryLoadDesc sceneLoadDesc = {};
         sceneLoadDesc.mFlags = GEOMETRY_LOAD_FLAG_SHADOWED; // To compute CPU clusters
-        Scene* pScene = nullptr; // initSanMiguel(&sceneLoadDesc, token, false);
+        Scene* pScene = initSanMiguel(&sceneLoadDesc, token, false);
         waitForToken(&token);
 
         LOGF(LogLevel::eINFO, "Load scene : %f ms", getHiresTimerUSec(&sceneLoadTimer, true) / 1000.0f);
@@ -850,12 +849,12 @@ public:
         }
 
         // Destroy scene buffers
-        removeResource(pGeom);
-        tf_free(pVBMeshInstances);
+        if (pGeom) removeResource(pGeom);
+        if (pVBMeshInstances) tf_free(pVBMeshInstances);
 
-        tf_free(gDiffuseMapsStorage);
-        tf_free(gNormalMapsStorage);
-        tf_free(gSpecularMapsStorage);
+        if (gDiffuseMapsStorage) tf_free(gDiffuseMapsStorage);
+        if (gNormalMapsStorage) tf_free(gNormalMapsStorage);
+        if (gSpecularMapsStorage) tf_free(gSpecularMapsStorage);
 
         /************************************************************************/
         /************************************************************************/
@@ -1025,6 +1024,7 @@ public:
         loadFontSystem(&fontLoad);
 
         gJustLoaded = true;
+        LOGF(LogLevel::eINFO, "Load() returning true!");
         return true;
     }
 
@@ -1068,9 +1068,8 @@ public:
     void Update(float deltaTime)
     {
         // Make screenshot testing deterministic and simulate at a stable 30 FPS
-#if defined(AUTOMATED_TESTING)
-        deltaTime = 0.033f;
-#endif
+        deltaTime = 0.033333f;
+
         updateInputSystem(deltaTime, mSettings.mWidth, mSettings.mHeight);
         if (gCameraWalking)
         {
@@ -1112,7 +1111,10 @@ public:
 
         static Fence* pPrevFence;
         if (gFrameCount == 0)
+        {
             pPrevFence = NULL;
+            LOGF(LogLevel::eINFO, "First frame of Draw() reached!");
+        }
         uint32_t          presentIndex = 0;
         uint32_t          frameIdx = gFrameCount % gDataBufferCount;
         GpuCmdRingElement graphicsElem = getNextGpuCmdRingElement(&gGraphicsCmdRing, true, 2);
@@ -1173,7 +1175,7 @@ public:
             };
             cmdResourceBarrier(graphicsCmd, 4, bufBarriers, 1, texBarriers, 0, NULL);
 
-            cmdVBTriangleFilteringPass(pVisibilityBuffer, graphicsCmd, &triangleFilteringDesc);
+            if (!gParticleOnlyReference) cmdVBTriangleFilteringPass(pVisibilityBuffer, graphicsCmd, &triangleFilteringDesc);
 
             // Clear shadow collector
             cmdBindPipeline(graphicsCmd, pPipelineCleanTexture);
@@ -1346,6 +1348,7 @@ public:
 
                 cmdBeginGpuTimestampQuery(graphicsCmd, gGraphicsProfileToken, "Draw UI");
                 // Draw UI
+                if (!gParticleOnlyReference)
                 {
                     bindDesc.mRenderTargets[0].mLoadAction = LOAD_ACTION_LOAD;
                     bindDesc.mDepthStencil = {};
@@ -1381,16 +1384,23 @@ public:
 
             pPrevFence = graphicsElem.pFence;
 
-            if (gFrameCount == 100)
+            static uint32_t sCaptureFrameCount = 0;
+            if (gParticleOnlyReference) sCaptureFrameCount++;
+
+            if (gParticleOnlyReference && sCaptureFrameCount == 500)
             {
-                LOGF(LogLevel::eINFO, "REACHED FRAME 100! CALLING setCaptureScreenshot!");
-                setCaptureScreenshot("forge_particle_reference");
-                gTakeScreenshot = true;
+                char screenshotName[128];
+                sprintf(screenshotName, "ParticleOnly_Ref_Preset%d", gReferencePreset);
+                setCaptureScreenshot(screenshotName);
             }
 
-            if (gTakeScreenshot)
+            if (gParticleOnlyReference && sCaptureFrameCount > 505)
             {
-                LOGF(LogLevel::eINFO, "CALLING captureScreenshot!");
+                mSettings.mQuit = true;
+            }
+
+            if (gTakeScreenshot || (gParticleOnlyReference && sCaptureFrameCount == 500))
+            {
                 gTakeScreenshot = false;
                 captureScreenshot(pSwapChain, presentIndex, false, false);
             }
@@ -1402,11 +1412,6 @@ public:
             presentDesc.pSwapChain = pSwapChain;
             presentDesc.mSubmitDone = true;
             queuePresent(pGraphicsQueue, &presentDesc);
-
-            if (gFrameCount == 105)
-            {
-                requestShutdown();
-            }
 
             flipProfiler();
         }
@@ -1500,9 +1505,9 @@ public:
             DescriptorData filterParams[5] = {};
             uint32_t       paramsCount = 0;
             filterParams[paramsCount].pName = "vertexPositionBuffer";
-            filterParams[paramsCount++].ppBuffers = &pGeom->pVertexBuffers[0];
+            filterParams[paramsCount++].ppBuffers = pGeom ? pGeom ? &pGeom->pVertexBuffers[0] : NULL : NULL;
             filterParams[paramsCount].pName = "indexDataBuffer";
-            filterParams[paramsCount++].ppBuffers = &pGeom->pIndexBuffer;
+            filterParams[paramsCount++].ppBuffers = pGeom ? pGeom ? &pGeom->pIndexBuffer : NULL : NULL;
             filterParams[paramsCount].pName = "meshConstantsBuffer";
             filterParams[paramsCount++].ppBuffers = &pMeshConstantsBuffer;
             filterParams[paramsCount].pName = "VBConstantBuffer";
@@ -1584,9 +1589,9 @@ public:
             params[0].mCount = gMaterialCount;
             params[0].ppTextures = gDiffuseMapsStorage;
             params[1].pName = "vertexPositionBuffer";
-            params[1].ppBuffers = &pGeom->pVertexBuffers[0];
+            params[1].ppBuffers = pGeom ? pGeom ? &pGeom->pVertexBuffers[0] : NULL : NULL;
             params[2].pName = "vertexTexCoordBuffer";
-            params[2].ppBuffers = &pGeom->pVertexBuffers[1];
+            params[2].ppBuffers = pGeom ? pGeom ? &pGeom->pVertexBuffers[1] : NULL : NULL;
             updateDescriptorSet(pRenderer, 0, pDescriptorSetVBPass[0], 3, params);
 
             params[0] = {};
@@ -1614,11 +1619,11 @@ public:
             vbShadeParams[0].pName = "vbTex";
             vbShadeParams[0].ppTextures = &pRenderTargetVBPass->pTexture;
             vbShadeParams[1].pName = "vertexPos";
-            vbShadeParams[1].ppBuffers = &pGeom->pVertexBuffers[0];
+            vbShadeParams[1].ppBuffers = pGeom ? pGeom ? &pGeom->pVertexBuffers[0] : NULL : NULL;
             vbShadeParams[2].pName = "vertexTexCoord";
-            vbShadeParams[2].ppBuffers = &pGeom->pVertexBuffers[1];
+            vbShadeParams[2].ppBuffers = pGeom ? pGeom ? &pGeom->pVertexBuffers[1] : NULL : NULL;
             vbShadeParams[3].pName = "vertexNormal";
-            vbShadeParams[3].ppBuffers = &pGeom->pVertexBuffers[2];
+            vbShadeParams[3].ppBuffers = pGeom ? pGeom ? &pGeom->pVertexBuffers[2] : NULL : NULL;
             vbShadeParams[4].pName = "shadowMap";
             vbShadeParams[4].ppTextures = &pRenderTargetShadow->pTexture;
             vbShadeParams[5].pName = "meshConstantsBuffer";
@@ -2426,13 +2431,10 @@ public:
         pParticleSystemConstantData[currentFrameIdx].Time = gCurrTime;
         pParticleSystemConstantData[currentFrameIdx].ParticleSetCount = MAX_PARTICLE_SET_COUNT;
         pParticleSystemConstantData[currentFrameIdx].SeekPosition = float3(firefliesX, firefliesY, firefliesZ);
-#if defined(AUTOMATED_TESTING)
+        pParticleSystemConstantData[currentFrameIdx].ReferencePreset = gReferencePreset;
+        pParticleSystemConstantData[currentFrameIdx].ReferencePreset = gReferencePreset;
         pParticleSystemConstantData[currentFrameIdx].Seed = INT_MAX / 2;
-        pParticleSystemConstantData[currentFrameIdx].TimeDelta = 1.0f / 30.0f;
-#else
-        pParticleSystemConstantData[currentFrameIdx].TimeDelta = deltaTime;
-        pParticleSystemConstantData[currentFrameIdx].Seed = randomInt(0, INT_MAX);
-#endif
+        pParticleSystemConstantData[currentFrameIdx].TimeDelta = 0.033333f;
 
         /***********************************/
         // Update visibility buffer uniforms
@@ -2566,7 +2568,10 @@ public:
         uint32_t view = cubeIndex == 0 ? VIEW_SHADOW : VIEW_POINT_SHADOW + particleIndex;
         uint64_t indirectBufferByteOffset = GET_INDIRECT_DRAW_ELEM_INDEX(view, geomSets[resourceIndex], 0) * sizeof(uint32_t);
         Buffer*  pIndirectDrawBuffer = pVisibilityBuffer->ppIndirectDrawArgBuffer[0];
-        cmdExecuteIndirect(cmd, pCmdSignatureVBPass, 1, pIndirectDrawBuffer, indirectBufferByteOffset, NULL, 0);
+        if (!gParticleOnlyReference)
+        {
+            cmdExecuteIndirect(cmd, pCmdSignatureVBPass, 1, pIndirectDrawBuffer, indirectBufferByteOffset, NULL, 0);
+        }
     }
 
     /************************************************************************/
@@ -2666,7 +2671,10 @@ public:
 
             uint64_t indirectBufferByteOffset = GET_INDIRECT_DRAW_ELEM_INDEX(VIEW_CAMERA, i, 0) * sizeof(uint32_t);
             Buffer*  pIndirectDrawBuffer = pVisibilityBuffer->ppIndirectDrawArgBuffer[0];
-            cmdExecuteIndirect(cmd, pCmdSignatureVBPass, 1, pIndirectDrawBuffer, indirectBufferByteOffset, NULL, 0);
+            if (!gParticleOnlyReference)
+            {
+                cmdExecuteIndirect(cmd, pCmdSignatureVBPass, 1, pIndirectDrawBuffer, indirectBufferByteOffset, NULL, 0);
+            }
         }
         cmdBindRenderTargets(cmd, NULL);
     }

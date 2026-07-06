@@ -28,7 +28,7 @@
 #include "particle_defs.h.fsl"
 #include "../../../Graphics/ShaderUtilities.h.fsl"
 
-ParticleSet GetParticleSet(uint idx)
+ParticleSet GetParticleSetWithPreset(uint idx, uint preset)
 {
 	const float gSteeringStrength = 0.4f;
 	const float gBoidsSeek = 4.0f;
@@ -37,6 +37,160 @@ ParticleSet GetParticleSet(uint idx)
 	const float gBoidsSeparation = 0.001f;
 	const float gBoidsCohesion = 5.0f;
 	const float gBoidsAlignment = 2.0f;
+
+
+	if (preset == 1 || preset == 2 || preset == 3)
+	{
+		// 1 = EmberOnly, 2 = FogOnly, 3 = Combined
+		ParticleSet refSet;
+		refSet.Position = float3(0, 5, 5);
+		refSet.LightBitfield = PARTICLE_BITFIELD_LIGHTING_MODE_NONE;
+		refSet.BoidsAvoidSeekStrength = pack2Floats(gBoidsAvoid, gBoidsSeek);
+		refSet.BoidsCohesionAlignmentStrength = pack2Floats(gBoidsCohesion, gBoidsAlignment);
+		refSet.BoidsSeparationFleeStrength = pack2Floats(gBoidsSeparation, gBoidsFlee);
+		refSet.SteeringStrengthMaxSpeed = pack2Floats(0.1, 1.0f);
+		refSet.LightRadius = 0;
+		refSet.MaxParticles = 0;
+		refSet.ParticlesPerSecond = 0;
+		refSet.InitialAge = 10.0;
+		refSet.Size = float4(10, 10, 10, 0.1);
+		refSet.ParticleType = PARTICLE_BITFIELD_TYPE_FIREFLIES;
+		refSet.Color = float3(1,1,1);
+		
+		if (preset == 1) // EmberOnly
+		{
+			if (idx == 0) {
+				refSet.Color = float3(1.0, 0.6, 0.1);
+				refSet.MaxParticles = 10000;
+				refSet.ParticlesPerSecond = 5000;
+				refSet.Size = float4(10, 5, 10, 0.015);
+				refSet.SteeringStrengthMaxSpeed = pack2Floats(0.4, 3.0f);
+			}
+		}
+		else if (preset == 2) // FogOnly
+		{
+			if (idx == 0) { // Yellow-green
+				refSet.Color = float3(0.6, 0.8, 0.2);
+				refSet.MaxParticles = 500;
+				refSet.ParticlesPerSecond = 50;
+				refSet.Size = float4(15, 2, 15, 1.5);
+				refSet.InitialAge = 15.0;
+				refSet.SteeringStrengthMaxSpeed = pack2Floats(0.1, 0.2f);
+			}
+			else if (idx == 1) { // Blue-gray
+				refSet.Color = float3(0.2, 0.3, 0.5);
+				refSet.MaxParticles = 500;
+				refSet.ParticlesPerSecond = 50;
+				refSet.Size = float4(15, 2, 15, 1.5);
+				refSet.InitialAge = 15.0;
+				refSet.SteeringStrengthMaxSpeed = pack2Floats(0.1, 0.2f);
+			}
+		}
+		else // Combined
+		{
+			if (idx == 0) {
+				refSet.Color = float3(1.0, 0.6, 0.1);
+				refSet.MaxParticles = 10000;
+				refSet.ParticlesPerSecond = 5000;
+				refSet.Size = float4(10, 5, 10, 0.015);
+				refSet.SteeringStrengthMaxSpeed = pack2Floats(0.4, 3.0f);
+			}
+			else if (idx == 1) {
+				refSet.Color = float3(0.6, 0.8, 0.2);
+				refSet.MaxParticles = 500;
+				refSet.ParticlesPerSecond = 50;
+				refSet.Size = float4(15, 2, 15, 1.5);
+				refSet.InitialAge = 15.0;
+				refSet.SteeringStrengthMaxSpeed = pack2Floats(0.1, 0.2f);
+			}
+			else if (idx == 2) {
+				refSet.Color = float3(0.2, 0.3, 0.5);
+				refSet.MaxParticles = 500;
+				refSet.ParticlesPerSecond = 50;
+				refSet.Size = float4(15, 2, 15, 1.5);
+				refSet.InitialAge = 15.0;
+				refSet.SteeringStrengthMaxSpeed = pack2Floats(0.1, 0.2f);
+			}
+		}
+		return refSet;
+	}
+
+
+	if (preset == 1 || preset == 2 || preset == 3)
+	{
+		// 1 = EmberOnly, 2 = FogOnly, 3 = Combined
+		ParticleSet refSet;
+		refSet.Position = float3(0, 5, 5);
+		refSet.LightBitfield = PARTICLE_BITFIELD_LIGHTING_MODE_NONE;
+		refSet.BoidsAvoidSeekStrength = pack2Floats(gBoidsAvoid, gBoidsSeek);
+		refSet.BoidsCohesionAlignmentStrength = pack2Floats(gBoidsCohesion, gBoidsAlignment);
+		refSet.BoidsSeparationFleeStrength = pack2Floats(gBoidsSeparation, gBoidsFlee);
+		refSet.SteeringStrengthMaxSpeed = pack2Floats(0.1, 1.0f);
+		refSet.LightRadius = 0;
+		refSet.MaxParticles = 0;
+		refSet.ParticlesPerSecond = 0;
+		refSet.InitialAge = 10.0;
+		refSet.Size = float4(10, 10, 10, 0.1);
+		refSet.ParticleType = PARTICLE_BITFIELD_TYPE_FIREFLIES;
+		refSet.Color = float3(1,1,1);
+		
+		if (preset == 1) // EmberOnly
+		{
+			if (idx == 0) {
+				refSet.Color = float3(1.0, 0.6, 0.1);
+				refSet.MaxParticles = 10000;
+				refSet.ParticlesPerSecond = 5000;
+				refSet.Size = float4(10, 5, 10, 0.015);
+				refSet.SteeringStrengthMaxSpeed = pack2Floats(0.4, 3.0f);
+			}
+		}
+		else if (preset == 2) // FogOnly
+		{
+			if (idx == 0) { // Yellow-green
+				refSet.Color = float3(0.6, 0.8, 0.2);
+				refSet.MaxParticles = 500;
+				refSet.ParticlesPerSecond = 50;
+				refSet.Size = float4(15, 2, 15, 1.5);
+				refSet.InitialAge = 15.0;
+				refSet.SteeringStrengthMaxSpeed = pack2Floats(0.1, 0.2f);
+			}
+			else if (idx == 1) { // Blue-gray
+				refSet.Color = float3(0.2, 0.3, 0.5);
+				refSet.MaxParticles = 500;
+				refSet.ParticlesPerSecond = 50;
+				refSet.Size = float4(15, 2, 15, 1.5);
+				refSet.InitialAge = 15.0;
+				refSet.SteeringStrengthMaxSpeed = pack2Floats(0.1, 0.2f);
+			}
+		}
+		else // Combined
+		{
+			if (idx == 0) {
+				refSet.Color = float3(1.0, 0.6, 0.1);
+				refSet.MaxParticles = 10000;
+				refSet.ParticlesPerSecond = 5000;
+				refSet.Size = float4(10, 5, 10, 0.015);
+				refSet.SteeringStrengthMaxSpeed = pack2Floats(0.4, 3.0f);
+			}
+			else if (idx == 1) {
+				refSet.Color = float3(0.6, 0.8, 0.2);
+				refSet.MaxParticles = 500;
+				refSet.ParticlesPerSecond = 50;
+				refSet.Size = float4(15, 2, 15, 1.5);
+				refSet.InitialAge = 15.0;
+				refSet.SteeringStrengthMaxSpeed = pack2Floats(0.1, 0.2f);
+			}
+			else if (idx == 2) {
+				refSet.Color = float3(0.2, 0.3, 0.5);
+				refSet.MaxParticles = 500;
+				refSet.ParticlesPerSecond = 50;
+				refSet.Size = float4(15, 2, 15, 1.5);
+				refSet.InitialAge = 15.0;
+				refSet.SteeringStrengthMaxSpeed = pack2Floats(0.1, 0.2f);
+			}
+		}
+		return refSet;
+	}
 
 	ParticleSet swarm;
 	swarm.Position = float3(8,6,11);
@@ -152,5 +306,9 @@ ParticleSet GetParticleSet(uint idx)
 	}
 }
 
+ParticleSet GetParticleSet(uint idx)
+{
+	return GetParticleSetWithPreset(idx, 0);
+}
 
 #endif
