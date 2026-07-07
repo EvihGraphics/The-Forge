@@ -54,6 +54,9 @@
 
 #include "Shaders/FSL/shader_defs.h.fsl"
 
+#include <cstdlib>
+#include <cstring>
+
 #include "../../../../Common_3/Utilities/Interfaces/IMemory.h" // Must be the last include in a cpp file
 
 #define RETINA_SCALING 1.0f
@@ -342,8 +345,78 @@ float        gTotalElpasedTime;
 bool         gCameraWalking = false;
 float        gCameraWalkingSpeed = 1.0;
 
-bool gParticleOnlyReference = false;
-int gReferencePreset = 3;
+bool     gParticleOnlyReference = false;
+bool     gReferenceCommandLineParsed = false;
+bool     gReferenceNoUi = false;
+bool     gReferenceNoProfiler = false;
+int      gReferencePreset = 0;
+uint32_t gReferenceFixedFrame = 500;
+float    gReferenceFixedDelta = 0.033333f;
+uint32_t gReferenceWidth = 1920;
+uint32_t gReferenceHeight = 1080;
+uint32_t gReferenceSeed = 1073741823u;
+
+static bool parseUIntArg(const char* commandLine, const char* key, uint32_t* value)
+{
+    const char* arg = commandLine ? strstr(commandLine, key) : NULL;
+    if (!arg)
+        return false;
+
+    arg += strlen(key);
+    char*         end = NULL;
+    unsigned long parsed = strtoul(arg, &end, 10);
+    if (end == arg)
+        return false;
+
+    *value = (uint32_t)parsed;
+    return true;
+}
+
+static bool parseFloatArg(const char* commandLine, const char* key, float* value)
+{
+    const char* arg = commandLine ? strstr(commandLine, key) : NULL;
+    if (!arg)
+        return false;
+
+    arg += strlen(key);
+    char* parsedEnd = NULL;
+    float parsed = strtof(arg, &parsedEnd);
+    if (parsedEnd == arg)
+        return false;
+
+    *value = parsed;
+    return true;
+}
+
+static void parseParticleOnlyReferenceCommandLine(const char* commandLine)
+{
+    if (gReferenceCommandLineParsed || !commandLine)
+        return;
+
+    gReferenceCommandLineParsed = true;
+    gReferenceNoUi = strstr(commandLine, "--no-ui") != NULL;
+    gReferenceNoProfiler = strstr(commandLine, "--no-profiler") != NULL;
+
+    if (strstr(commandLine, "--particle-only-reference"))
+    {
+        gParticleOnlyReference = true;
+
+        if (strstr(commandLine, "--preset=EmberOnly"))
+            gReferencePreset = 1;
+        else if (strstr(commandLine, "--preset=FogOnly"))
+            gReferencePreset = 2;
+        else if (strstr(commandLine, "--preset=Combined"))
+            gReferencePreset = 3;
+        else
+            gReferencePreset = 0;
+    }
+
+    parseUIntArg(commandLine, "--fixed-frame=", &gReferenceFixedFrame);
+    parseFloatArg(commandLine, "--fixed-delta=", &gReferenceFixedDelta);
+    parseUIntArg(commandLine, "--width=", &gReferenceWidth);
+    parseUIntArg(commandLine, "--height=", &gReferenceHeight);
+    parseUIntArg(commandLine, "--seed=", &gReferenceSeed);
+}
 
 
 class Particle_System: public IApp
@@ -353,6 +426,13 @@ public:
 
     bool Init()
     {
+        parseParticleOnlyReferenceCommandLine(pCommandLine);
+        if (gParticleOnlyReference)
+        {
+            mSettings.mWidth = gReferenceWidth;
+            mSettings.mHeight = gReferenceHeight;
+        }
+
         // FILE PATHS
         fsSetPathForResourceDir(pSystemFileIO, RM_CONTENT, RD_SHADER_BINARIES, "CompiledShaders");
         fsSetPathForResourceDir(pSystemFileIO, RM_DEBUG, RD_PIPELINE_CACHE, "PipelineCaches");
@@ -569,22 +649,21 @@ public:
         /************************************************************************/
         // Load the scene
         /************************************************************************/
-        if (pCommandLine && strstr(pCommandLine, "--particle-only-reference"))
+        Scene* loadedScene = NULL;
+        if (gParticleOnlyReference)
         {
-            gParticleOnlyReference = true;
-            if (strstr(pCommandLine, "--preset=EmberOnly"))
-                gReferencePreset = 1;
-            else if (strstr(pCommandLine, "--preset=FogOnly"))
-                gReferencePreset = 2;
-            else if (strstr(pCommandLine, "--preset=Original"))
-                gReferencePreset = 0;
-            else
-                gReferencePreset = 3;
+            gMeshCount = 0;
+            gMaterialCount = 0;
+            LOGF(LogLevel::eINFO,
+                 "AVBOITParticleOnlyReference enabled preset=%d fixedFrame=%u fixedDelta=%f seed=%u size=%ux%u SanMiguelLoad=0 MeshSceneDrawCount=0",
+                 gReferencePreset, gReferenceFixedFrame, gReferenceFixedDelta, gReferenceSeed, gReferenceWidth, gReferenceHeight);
         }
-        
-        Scene* loadedScene = LoadGeometry();
-        waitForAllResourceLoads();
-        exitSanMiguel(loadedScene);
+        else
+        {
+            loadedScene = LoadGeometry();
+            waitForAllResourceLoads();
+            exitSanMiguel(loadedScene);
+        }
 
         HiresTimer setupBuffersTimer;
         initHiresTimer(&setupBuffersTimer);
@@ -872,7 +951,8 @@ public:
         removeSampler(pRenderer, pSamplerBilinearClamp);
         removeSampler(pRenderer, pPointClampSampler);
 
-        exitVisibilityBuffer(pVisibilityBuffer);
+        if (pVisibilityBuffer)
+            exitVisibilityBuffer(pVisibilityBuffer);
 
         exitResourceLoaderInterface(pRenderer);
         exitRenderer(pRenderer);
@@ -1068,12 +1148,12 @@ public:
     void Update(float deltaTime)
     {
         // Make screenshot testing deterministic and simulate at a stable 30 FPS
-        deltaTime = 0.033333f;
+        deltaTime = gParticleOnlyReference ? gReferenceFixedDelta : 0.033333f;
 
         updateInputSystem(deltaTime, mSettings.mWidth, mSettings.mHeight);
         if (gCameraWalking)
         {
-            if (gTotalElpasedTime - (0.033333f * gCameraWalkingSpeed) <= gCameraWalkingTime)
+            if (gTotalElpasedTime - (deltaTime * gCameraWalkingSpeed) <= gCameraWalkingTime)
             {
                 gCameraWalkingTime = 0.0f;
             }
@@ -1119,20 +1199,23 @@ public:
         uint32_t          frameIdx = gFrameCount % gDataBufferCount;
         GpuCmdRingElement graphicsElem = getNextGpuCmdRingElement(&gGraphicsCmdRing, true, 2);
 
-        BufferUpdateDesc update = { pPerFrameVBUniformBuffers[VB_UB_COMPUTE][frameIdx] };
-        beginUpdateResource(&update);
-        memcpy(update.pMappedData, &gPerFrame[frameIdx].gPerFrameVBUniformData, sizeof(gPerFrame[frameIdx].gPerFrameVBUniformData));
-        endUpdateResource(&update);
+        if (!gParticleOnlyReference)
+        {
+            BufferUpdateDesc update = { pPerFrameVBUniformBuffers[VB_UB_COMPUTE][frameIdx] };
+            beginUpdateResource(&update);
+            memcpy(update.pMappedData, &gPerFrame[frameIdx].gPerFrameVBUniformData, sizeof(gPerFrame[frameIdx].gPerFrameVBUniformData));
+            endUpdateResource(&update);
 
-        update = { pPerFrameVBUniformBuffers[VB_UB_GRAPHICS][frameIdx] };
-        beginUpdateResource(&update);
-        memcpy(update.pMappedData, &gPerFrame[frameIdx].gPerFrameVBUniformData, sizeof(gPerFrame[frameIdx].gPerFrameVBUniformData));
-        endUpdateResource(&update);
+            update = { pPerFrameVBUniformBuffers[VB_UB_GRAPHICS][frameIdx] };
+            beginUpdateResource(&update);
+            memcpy(update.pMappedData, &gPerFrame[frameIdx].gPerFrameVBUniformData, sizeof(gPerFrame[frameIdx].gPerFrameVBUniformData));
+            endUpdateResource(&update);
 
-        update = { pPerFrameUniformBuffers[frameIdx] };
-        beginUpdateResource(&update);
-        memcpy(update.pMappedData, &gPerFrame[frameIdx].gPerFrameUniformData, sizeof(gPerFrame[frameIdx].gPerFrameUniformData));
-        endUpdateResource(&update);
+            update = { pPerFrameUniformBuffers[frameIdx] };
+            beginUpdateResource(&update);
+            memcpy(update.pMappedData, &gPerFrame[frameIdx].gPerFrameUniformData, sizeof(gPerFrame[frameIdx].gPerFrameUniformData));
+            endUpdateResource(&update);
+        }
 
         particleSystemUpdateConstantBuffers(frameIdx, &pParticleSystemConstantData[frameIdx]);
 
@@ -1156,15 +1239,18 @@ public:
             // Triangle filtering pass
             /************************************************************************/
             TriangleFilteringPassDesc triangleFilteringDesc = {};
-            triangleFilteringDesc.pPipelineClearBuffers = pPipelineClearBuffers;
-            triangleFilteringDesc.pPipelineTriangleFiltering = pPipelineTriangleFiltering;
-            triangleFilteringDesc.pDescriptorSetClearBuffers = pDescriptorSetClearBuffers;
-            triangleFilteringDesc.pDescriptorSetTriangleFiltering = pDescriptorSetTriangleFiltering[0];
-            triangleFilteringDesc.pDescriptorSetTriangleFilteringPerFrame = pDescriptorSetTriangleFiltering[1];
-            triangleFilteringDesc.mFrameIndex = frameIdx;
-            triangleFilteringDesc.mBuffersIndex = 0;
-            triangleFilteringDesc.mGpuProfileToken = gGraphicsProfileToken;
-            triangleFilteringDesc.mVBPreFilterStats = gVBPreFilterStats[frameIdx];
+            if (!gParticleOnlyReference)
+            {
+                triangleFilteringDesc.pPipelineClearBuffers = pPipelineClearBuffers;
+                triangleFilteringDesc.pPipelineTriangleFiltering = pPipelineTriangleFiltering;
+                triangleFilteringDesc.pDescriptorSetClearBuffers = pDescriptorSetClearBuffers;
+                triangleFilteringDesc.pDescriptorSetTriangleFiltering = pDescriptorSetTriangleFiltering[0];
+                triangleFilteringDesc.pDescriptorSetTriangleFilteringPerFrame = pDescriptorSetTriangleFiltering[1];
+                triangleFilteringDesc.mFrameIndex = frameIdx;
+                triangleFilteringDesc.mBuffersIndex = 0;
+                triangleFilteringDesc.mGpuProfileToken = gGraphicsProfileToken;
+                triangleFilteringDesc.mVBPreFilterStats = gVBPreFilterStats[frameIdx];
+            }
 
             TextureBarrier texBarriers[] = { { pShadowCollector, RESOURCE_STATE_PIXEL_SHADER_RESOURCE, RESOURCE_STATE_UNORDERED_ACCESS } };
             BufferBarrier  bufBarriers[] = {
@@ -1187,54 +1273,80 @@ public:
         // Draw Pass
         /************************/
         {
-            // Transition swapchain buffer to be used as a render target
-            const uint32_t      rtBarriersCount = 5;
-            RenderTargetBarrier rtBarriers[rtBarriersCount] = {
-                { pScreenRenderTarget, RESOURCE_STATE_PIXEL_SHADER_RESOURCE, RESOURCE_STATE_RENDER_TARGET },
-                { pDepthBuffer, RESOURCE_STATE_SHADER_RESOURCE, RESOURCE_STATE_DEPTH_WRITE },
-                { pRenderTargetVBPass, RESOURCE_STATE_PIXEL_SHADER_RESOURCE, RESOURCE_STATE_RENDER_TARGET },
-                { pRenderTargetShadow, RESOURCE_STATE_PIXEL_SHADER_RESOURCE, RESOURCE_STATE_DEPTH_WRITE },
-                { pDepthCube, RESOURCE_STATE_PIXEL_SHADER_RESOURCE, RESOURCE_STATE_DEPTH_WRITE }
-            };
-
-            // Sync resources
-            const uint32_t maxNumBarriers = NUM_UNIQUE_GEOMETRIES + 3;
-            uint32_t       barrierCount = 0;
-            BufferBarrier  barriers2[maxNumBarriers] = {};
+            if (gParticleOnlyReference)
             {
-                // VB barriers
-                barriers2[barrierCount++] = { pVisibilityBuffer->ppIndirectDrawArgBuffer[0], RESOURCE_STATE_UNORDERED_ACCESS,
-                                              RESOURCE_STATE_INDIRECT_ARGUMENT | RESOURCE_STATE_SHADER_RESOURCE };
-                barriers2[barrierCount++] = { pVisibilityBuffer->ppIndirectDataBuffer[frameIdx], RESOURCE_STATE_UNORDERED_ACCESS,
-                                              RESOURCE_STATE_SHADER_RESOURCE };
-                for (uint32_t i = 0; i < NUM_UNIQUE_GEOMETRIES; i++)
-                {
-                    barriers2[barrierCount++] = { pVisibilityBuffer->ppFilteredIndexBuffer[i], RESOURCE_STATE_UNORDERED_ACCESS,
-                                                  RESOURCE_STATE_INDEX_BUFFER | RESOURCE_STATE_SHADER_RESOURCE };
-                }
+                RenderTargetBarrier rtBarriers[] = {
+                    { pScreenRenderTarget, RESOURCE_STATE_PIXEL_SHADER_RESOURCE, RESOURCE_STATE_RENDER_TARGET },
+                    { pDepthBuffer, RESOURCE_STATE_SHADER_RESOURCE, RESOURCE_STATE_DEPTH_WRITE },
+                };
+                cmdResourceBarrier(graphicsCmd, 0, NULL, 0, NULL, 2, rtBarriers);
+
+                BindRenderTargetsDesc bindDesc = {};
+                bindDesc.mRenderTargetCount = 1;
+                bindDesc.mRenderTargets[0].pRenderTarget = pScreenRenderTarget;
+                bindDesc.mRenderTargets[0].mClearValue = pScreenRenderTarget->mClearValue;
+                bindDesc.mRenderTargets[0].mLoadAction = LOAD_ACTION_CLEAR;
+                bindDesc.mDepthStencil.pDepthStencil = pDepthBuffer;
+                bindDesc.mDepthStencil.mClearValue = pDepthBuffer->mClearValue;
+                bindDesc.mDepthStencil.mLoadAction = LOAD_ACTION_CLEAR;
+
+                cmdBindRenderTargets(graphicsCmd, &bindDesc);
+                cmdSetViewport(graphicsCmd, 0.0f, 0.0f, (float)pScreenRenderTarget->mWidth, (float)pScreenRenderTarget->mHeight, 0.0f,
+                               1.0f);
+                cmdSetScissor(graphicsCmd, 0, 0, pScreenRenderTarget->mWidth, pScreenRenderTarget->mHeight);
+                cmdBindRenderTargets(graphicsCmd, NULL);
             }
-            cmdResourceBarrier(graphicsCmd, barrierCount, barriers2, 0, NULL, rtBarriersCount, rtBarriers);
-
-            drawScene(graphicsCmd, frameIdx);
-            cmdBindRenderTargets(graphicsCmd, NULL);
-
+            else
             {
-                // VB barriers
-                barrierCount = 0;
-                barriers2[barrierCount++] = { pVisibilityBuffer->ppIndirectDrawArgBuffer[0],
-                                              RESOURCE_STATE_INDIRECT_ARGUMENT | RESOURCE_STATE_SHADER_RESOURCE,
-                                              RESOURCE_STATE_UNORDERED_ACCESS };
-                barriers2[barrierCount++] = { pVisibilityBuffer->ppIndirectDataBuffer[frameIdx], RESOURCE_STATE_SHADER_RESOURCE,
-                                              RESOURCE_STATE_UNORDERED_ACCESS };
-                for (uint32_t i = 0; i < NUM_UNIQUE_GEOMETRIES; ++i)
-                {
-                    barriers2[barrierCount++] = { pVisibilityBuffer->ppFilteredIndexBuffer[i],
-                                                  RESOURCE_STATE_INDEX_BUFFER | RESOURCE_STATE_SHADER_RESOURCE,
-                                                  RESOURCE_STATE_UNORDERED_ACCESS };
-                }
+                // Transition swapchain buffer to be used as a render target
+                const uint32_t      rtBarriersCount = 5;
+                RenderTargetBarrier rtBarriers[rtBarriersCount] = {
+                    { pScreenRenderTarget, RESOURCE_STATE_PIXEL_SHADER_RESOURCE, RESOURCE_STATE_RENDER_TARGET },
+                    { pDepthBuffer, RESOURCE_STATE_SHADER_RESOURCE, RESOURCE_STATE_DEPTH_WRITE },
+                    { pRenderTargetVBPass, RESOURCE_STATE_PIXEL_SHADER_RESOURCE, RESOURCE_STATE_RENDER_TARGET },
+                    { pRenderTargetShadow, RESOURCE_STATE_PIXEL_SHADER_RESOURCE, RESOURCE_STATE_DEPTH_WRITE },
+                    { pDepthCube, RESOURCE_STATE_PIXEL_SHADER_RESOURCE, RESOURCE_STATE_DEPTH_WRITE }
+                };
 
-                RenderTargetBarrier rtBarrier = { pDepthBuffer, RESOURCE_STATE_SHADER_RESOURCE, RESOURCE_STATE_DEPTH_WRITE };
-                cmdResourceBarrier(graphicsCmd, barrierCount, barriers2, 0, NULL, 1, &rtBarrier);
+                // Sync resources
+                const uint32_t maxNumBarriers = NUM_UNIQUE_GEOMETRIES + 3;
+                uint32_t       barrierCount = 0;
+                BufferBarrier  barriers2[maxNumBarriers] = {};
+                {
+                    // VB barriers
+                    barriers2[barrierCount++] = { pVisibilityBuffer->ppIndirectDrawArgBuffer[0], RESOURCE_STATE_UNORDERED_ACCESS,
+                                                  RESOURCE_STATE_INDIRECT_ARGUMENT | RESOURCE_STATE_SHADER_RESOURCE };
+                    barriers2[barrierCount++] = { pVisibilityBuffer->ppIndirectDataBuffer[frameIdx], RESOURCE_STATE_UNORDERED_ACCESS,
+                                                  RESOURCE_STATE_SHADER_RESOURCE };
+                    for (uint32_t i = 0; i < NUM_UNIQUE_GEOMETRIES; i++)
+                    {
+                        barriers2[barrierCount++] = { pVisibilityBuffer->ppFilteredIndexBuffer[i], RESOURCE_STATE_UNORDERED_ACCESS,
+                                                      RESOURCE_STATE_INDEX_BUFFER | RESOURCE_STATE_SHADER_RESOURCE };
+                    }
+                }
+                cmdResourceBarrier(graphicsCmd, barrierCount, barriers2, 0, NULL, rtBarriersCount, rtBarriers);
+
+                drawScene(graphicsCmd, frameIdx);
+                cmdBindRenderTargets(graphicsCmd, NULL);
+
+                {
+                    // VB barriers
+                    barrierCount = 0;
+                    barriers2[barrierCount++] = { pVisibilityBuffer->ppIndirectDrawArgBuffer[0],
+                                                  RESOURCE_STATE_INDIRECT_ARGUMENT | RESOURCE_STATE_SHADER_RESOURCE,
+                                                  RESOURCE_STATE_UNORDERED_ACCESS };
+                    barriers2[barrierCount++] = { pVisibilityBuffer->ppIndirectDataBuffer[frameIdx], RESOURCE_STATE_SHADER_RESOURCE,
+                                                  RESOURCE_STATE_UNORDERED_ACCESS };
+                    for (uint32_t i = 0; i < NUM_UNIQUE_GEOMETRIES; ++i)
+                    {
+                        barriers2[barrierCount++] = { pVisibilityBuffer->ppFilteredIndexBuffer[i],
+                                                      RESOURCE_STATE_INDEX_BUFFER | RESOURCE_STATE_SHADER_RESOURCE,
+                                                      RESOURCE_STATE_UNORDERED_ACCESS };
+                    }
+
+                    RenderTargetBarrier rtBarrier = { pDepthBuffer, RESOURCE_STATE_SHADER_RESOURCE, RESOURCE_STATE_DEPTH_WRITE };
+                    cmdResourceBarrier(graphicsCmd, barrierCount, barriers2, 0, NULL, 1, &rtBarrier);
+                }
             }
 
             endCmd(graphicsCmd);
@@ -1387,19 +1499,22 @@ public:
             static uint32_t sCaptureFrameCount = 0;
             if (gParticleOnlyReference) sCaptureFrameCount++;
 
-            if (gParticleOnlyReference && sCaptureFrameCount == 500)
+            if (gParticleOnlyReference && sCaptureFrameCount == gReferenceFixedFrame)
             {
                 char screenshotName[128];
                 sprintf(screenshotName, "ParticleOnly_Ref_Preset%d", gReferencePreset);
                 setCaptureScreenshot(screenshotName);
+                LOGF(LogLevel::eINFO,
+                     "AVBOITParticleOnlyReference capture frame=%u screenshot=%s MeshSceneDrawCount=0 ParticleSystemRender=1 ParticleSystemSimulate=1",
+                     sCaptureFrameCount, screenshotName);
             }
 
-            if (gParticleOnlyReference && sCaptureFrameCount > 505)
+            if (gParticleOnlyReference && sCaptureFrameCount > gReferenceFixedFrame + 5)
             {
                 mSettings.mQuit = true;
             }
 
-            if (gTakeScreenshot || (gParticleOnlyReference && sCaptureFrameCount == 500))
+            if (gTakeScreenshot || (gParticleOnlyReference && sCaptureFrameCount == gReferenceFixedFrame))
             {
                 gTakeScreenshot = false;
                 captureScreenshot(pSwapChain, presentIndex, false, false);
@@ -1486,6 +1601,37 @@ public:
 
         DescriptorDataRange bitfieldShadowRange = { 0, sizeof(uint) * SHADOW_COUNT, sizeof(uint) };
         DescriptorDataRange particleShadowRange = { 0, sizeof(ParticleData) * SHADOW_COUNT, sizeof(ParticleData) };
+
+        if (gParticleOnlyReference)
+        {
+            {
+                DescriptorData params[3] = {};
+                params[0].pName = "shadowCollector";
+                params[0].ppTextures = &pShadowCollector;
+                params[1].pName = "transparencyListHeads";
+                params[1].ppBuffers = &pTransparencyListHeadBuffer;
+                updateDescriptorSet(pRenderer, 0, pDescriptorSetCleanTexture, 2, params);
+            }
+
+            {
+                DescriptorData params[6] = {};
+                params[0].pName = "bilinearSampler";
+                params[0].ppSamplers = &pSamplerBilinearClamp;
+                params[1].pName = "g_inputTexture";
+                params[1].ppTextures = &pScreenRenderTarget->pTexture;
+                params[2].pName = "shadowCollector";
+                params[2].ppTextures = &pShadowCollector;
+                params[3].pName = "transparencyListHeads";
+                params[3].ppBuffers = &pTransparencyListHeadBuffer;
+                params[4].pName = "transparencyList";
+                params[4].ppBuffers = &pTransparencyListBuffer;
+                params[5].pName = "pointClampSampler";
+                params[5].ppSamplers = &pPointClampSampler;
+                updateDescriptorSet(pRenderer, 0, pDescriptorSetPresent, 6, params);
+            }
+
+            return;
+        }
 
         // Clear Buffers
         {
@@ -2281,25 +2427,33 @@ public:
         /************************************************************************/
         uint32_t visibilityBufferFilteredIndexCount[NUM_GEOMETRY_SETS] = {};
 
-        MeshConstants* meshConstants = (MeshConstants*)tf_malloc(gMeshCount * sizeof(MeshConstants));
+        MeshConstants* meshConstants = (MeshConstants*)tf_calloc(gMeshCount ? gMeshCount : 1, sizeof(MeshConstants));
         // Calculate mesh constants and filter containers
-        for (uint32_t i = 0; i < gMeshCount; ++i)
+        if (pScene && pScene->geom)
         {
-            MaterialFlags materialFlag = pScene->materialFlags[i];
-            uint32_t      geomSet = materialFlag & MATERIAL_FLAG_ALPHA_TESTED ? GEOMSET_ALPHA_CUTOUT : GEOMSET_OPAQUE;
-            visibilityBufferFilteredIndexCount[geomSet] += (pScene->geom->pDrawArgs + i)->mIndexCount;
-            pVBMeshInstances[i].mGeometrySet = geomSet;
-            pVBMeshInstances[i].mMeshIndex = i;
-            pVBMeshInstances[i].mTriangleCount = (pScene->geom->pDrawArgs + i)->mIndexCount / 3;
-            pVBMeshInstances[i].mInstanceIndex = INSTANCE_INDEX_NONE;
+            for (uint32_t i = 0; i < gMeshCount; ++i)
+            {
+                MaterialFlags materialFlag = pScene->materialFlags[i];
+                uint32_t      geomSet = materialFlag & MATERIAL_FLAG_ALPHA_TESTED ? GEOMSET_ALPHA_CUTOUT : GEOMSET_OPAQUE;
+                visibilityBufferFilteredIndexCount[geomSet] += (pScene->geom->pDrawArgs + i)->mIndexCount;
+                pVBMeshInstances[i].mGeometrySet = geomSet;
+                pVBMeshInstances[i].mMeshIndex = i;
+                pVBMeshInstances[i].mTriangleCount = (pScene->geom->pDrawArgs + i)->mIndexCount / 3;
+                pVBMeshInstances[i].mInstanceIndex = INSTANCE_INDEX_NONE;
 
-            meshConstants[i].indexOffset = pGeom->pDrawArgs[i].mStartIndex;
-            meshConstants[i].vertexOffset = pGeom->pDrawArgs[i].mVertexOffset;
-            meshConstants[i].materialID = i;
-            meshConstants[i].twoSided = (pScene->materialFlags[i] & MATERIAL_FLAG_TWO_SIDED) ? 1 : 0;
+                meshConstants[i].indexOffset = pGeom->pDrawArgs[i].mStartIndex;
+                meshConstants[i].vertexOffset = pGeom->pDrawArgs[i].mVertexOffset;
+                meshConstants[i].materialID = i;
+                meshConstants[i].twoSided = (pScene->materialFlags[i] & MATERIAL_FLAG_TWO_SIDED) ? 1 : 0;
+            }
+
+            removeResource(pScene->geomData);
         }
-
-        removeResource(pScene->geomData);
+        else
+        {
+            for (uint32_t i = 0; i < NUM_GEOMETRY_SETS; ++i)
+                visibilityBufferFilteredIndexCount[i] = 3;
+        }
 
         // Init visibility buffer
         VisibilityBufferDesc vbDesc = {};
@@ -2314,7 +2468,7 @@ public:
         BufferLoadDesc meshConstantDesc = {};
         meshConstantDesc.mDesc.mDescriptors = DESCRIPTOR_TYPE_BUFFER;
         meshConstantDesc.mDesc.mMemoryUsage = RESOURCE_MEMORY_USAGE_GPU_ONLY;
-        meshConstantDesc.mDesc.mElementCount = gMeshCount;
+        meshConstantDesc.mDesc.mElementCount = gMeshCount ? gMeshCount : 1;
         meshConstantDesc.mDesc.mStructStride = sizeof(MeshConstants);
         meshConstantDesc.mDesc.mSize = meshConstantDesc.mDesc.mElementCount * meshConstantDesc.mDesc.mStructStride;
         meshConstantDesc.pData = meshConstants;
@@ -2374,20 +2528,24 @@ public:
         /************************************************************************/
         // Mesh constants
         /************************************************************************/
-        removeResource(pMeshConstantsBuffer);
+        if (pMeshConstantsBuffer)
+            removeResource(pMeshConstantsBuffer);
 
         /************************************************************************/
         // Per Frame Constant Buffers
         /************************************************************************/
         for (uint32_t i = 0; i < gDataBufferCount; ++i)
         {
-            removeResource(pPerFrameUniformBuffers[i]);
+            if (pPerFrameUniformBuffers[i])
+                removeResource(pPerFrameUniformBuffers[i]);
         }
 
         for (uint32_t i = 0; i < gDataBufferCount; ++i)
         {
-            removeResource(pPerFrameVBUniformBuffers[VB_UB_COMPUTE][i]);
-            removeResource(pPerFrameVBUniformBuffers[VB_UB_GRAPHICS][i]);
+            if (pPerFrameVBUniformBuffers[VB_UB_COMPUTE][i])
+                removeResource(pPerFrameVBUniformBuffers[VB_UB_COMPUTE][i]);
+            if (pPerFrameVBUniformBuffers[VB_UB_GRAPHICS][i])
+                removeResource(pPerFrameVBUniformBuffers[VB_UB_GRAPHICS][i]);
         }
     }
 
@@ -2432,9 +2590,8 @@ public:
         pParticleSystemConstantData[currentFrameIdx].ParticleSetCount = MAX_PARTICLE_SET_COUNT;
         pParticleSystemConstantData[currentFrameIdx].SeekPosition = float3(firefliesX, firefliesY, firefliesZ);
         pParticleSystemConstantData[currentFrameIdx].ReferencePreset = gReferencePreset;
-        pParticleSystemConstantData[currentFrameIdx].ReferencePreset = gReferencePreset;
-        pParticleSystemConstantData[currentFrameIdx].Seed = INT_MAX / 2;
-        pParticleSystemConstantData[currentFrameIdx].TimeDelta = 0.033333f;
+        pParticleSystemConstantData[currentFrameIdx].Seed = gReferenceSeed;
+        pParticleSystemConstantData[currentFrameIdx].TimeDelta = gParticleOnlyReference ? gReferenceFixedDelta : 0.033333f;
 
         /***********************************/
         // Update visibility buffer uniforms

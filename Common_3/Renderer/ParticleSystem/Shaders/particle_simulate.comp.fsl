@@ -111,7 +111,7 @@ void CS_MAIN(SV_GroupThreadID(uint3) inGroupThreadId, SV_DispatchThreadID(uint3)
 			UNROLL_N(MAX_PARTICLE_SET_COUNT)
 			for (uint j=0; j<MAX_PARTICLE_SET_COUNT; j++)
 			{
-				particleSet = GetParticleSet(j);
+				particleSet = GetParticleSetWithPreset(j, Get(ReferencePreset));
 				particleCount = particleSet.MaxParticles;
 				particlesPerSecond = particleSet.ParticlesPerSecond;
 				
@@ -197,19 +197,19 @@ void CS_MAIN(SV_GroupThreadID(uint3) inGroupThreadId, SV_DispatchThreadID(uint3)
 	if (isInInactiveSection && bool(Get(ParticleSetVisibility)[setIndex*2+CURR_VALUE]))
 	{
 		isActive = true;
-        swapped = TrySwappingActivity(isActive, currBufferSection, PARTICLE_SWAP_ATTEMPTS_COUNT, particleIdx, GetParticleSet(inactiveSetIndex).MaxParticles, Bitfield, particleData);
+        swapped = TrySwappingActivity(isActive, currBufferSection, PARTICLE_SWAP_ATTEMPTS_COUNT, particleIdx, GetParticleSetWithPreset(inactiveSetIndex, Get(ReferencePreset)).MaxParticles, Bitfield, particleData);
 		
 		RETURN();
 	}
 	
 	// If a set became inactive, the inactive area expands: swap particles in the same lighting region
-	if (activityChanged == -1 && (Bitfield & PARTICLE_BITFIELD_LIGHTING_MODE_BITS_MASK) == GetParticleSet(inactiveSetIndex).LightBitfield)
+	if (activityChanged == -1 && (Bitfield & PARTICLE_BITFIELD_LIGHTING_MODE_BITS_MASK) == GetParticleSetWithPreset(inactiveSetIndex, Get(ReferencePreset)).LightBitfield)
 	{
 		// Check if the particle belongs to the set that just became inactive
 		if (!bool(Get(ParticleSetVisibility)[setIndex*2+CURR_VALUE]))
 		{
 			isActive = false;
-            swapped = TrySwappingActivity(isActive, currBufferSection, PARTICLE_SWAP_ATTEMPTS_COUNT, particleIdx, GetParticleSet(inactiveSetIndex).MaxParticles, Bitfield, particleData);
+            swapped = TrySwappingActivity(isActive, currBufferSection, PARTICLE_SWAP_ATTEMPTS_COUNT, particleIdx, GetParticleSetWithPreset(inactiveSetIndex, Get(ReferencePreset)).MaxParticles, Bitfield, particleData);
 		}
 		else
 		{
@@ -233,7 +233,7 @@ void CS_MAIN(SV_GroupThreadID(uint3) inGroupThreadId, SV_DispatchThreadID(uint3)
 		// We have enough threads to finalize the swap on our own
 		if (SwappedCount > PARTICLE_SWAP_SELF_RESOLVE_THRESHOLD)
 		{
-			swapped = TrySwappingActivity(isActive, currBufferSection, PARTICLE_COUNT, particleIdx, GetParticleSet(inactiveSetIndex).MaxParticles, Bitfield, particleData);
+			swapped = TrySwappingActivity(isActive, currBufferSection, PARTICLE_COUNT, particleIdx, GetParticleSetWithPreset(inactiveSetIndex, Get(ReferencePreset)).MaxParticles, Bitfield, particleData);
 		}
 		// Otherwise we need to rely on other threads for some help
 		else
@@ -244,7 +244,7 @@ void CS_MAIN(SV_GroupThreadID(uint3) inGroupThreadId, SV_DispatchThreadID(uint3)
 
 			while (!swapped)
 			{
-				swapped = TrySwappingActivity(isActive, currBufferSection, PARTICLE_SWAP_FAILURE_ATTEMPTS_COUNT, particleIdx, GetParticleSet(inactiveSetIndex).MaxParticles, Bitfield, particleData);
+				swapped = TrySwappingActivity(isActive, currBufferSection, PARTICLE_SWAP_FAILURE_ATTEMPTS_COUNT, particleIdx, GetParticleSetWithPreset(inactiveSetIndex, Get(ReferencePreset)).MaxParticles, Bitfield, particleData);
 
 				if (!swapped && SwappedCount <= PARTICLE_SWAP_HELP_THRESHOLD)
 				{
@@ -306,7 +306,7 @@ void CS_MAIN(SV_GroupThreadID(uint3) inGroupThreadId, SV_DispatchThreadID(uint3)
 	setIndex = Bitfield & PARTICLE_BITFIELD_SET_INDEX_MASK;
 
 	// Particle set attributes
-	particleSet = GetParticleSet(setIndex);
+	particleSet = GetParticleSetWithPreset(setIndex, Get(ReferencePreset));
 	particleCount = particleSet.MaxParticles;
 	particlesPerSecond = particleSet.ParticlesPerSecond;
 

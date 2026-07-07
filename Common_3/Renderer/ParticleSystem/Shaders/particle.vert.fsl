@@ -61,10 +61,12 @@ VSOutput VS_MAIN( SV_VertexID(uint) vertexId )
 
 	float4 VelocityAge;
 	float3 position;
+	uint setIndex = Bitfield & PARTICLE_BITFIELD_SET_INDEX_MASK;
+	ParticleSet particleSet = GetParticleSetWithPreset(setIndex, Get(ReferencePreset));
 
-	UnpackParticle(GetParticleSet(Bitfield & PARTICLE_BITFIELD_SET_INDEX_MASK), particleData, position, VelocityAge);
+	UnpackParticle(particleSet, particleData, position, VelocityAge);
 
-	float scale = GetParticleSet(Bitfield & PARTICLE_BITFIELD_SET_INDEX_MASK).Size.w;
+	float scale = particleSet.Size.w;
 	const float3 vertexPosCache_indexed[4] =
 	{
 		float3(-scale, -scale, 0.0f),
@@ -141,7 +143,7 @@ VSOutput VS_MAIN( SV_VertexID(uint) vertexId )
 	result.Position = mul(Get(ProjTransform), result.Position);
 	result.TexCoord = vertexTexCache[instanceVertexId];
 	result.InstanceId = instanceId;
-	result.ParticleSetIndex = Bitfield & PARTICLE_BITFIELD_SET_INDEX_MASK;
+	result.ParticleSetIndex = setIndex;
 
 	RETURN(result);
 }

@@ -58,7 +58,7 @@ void PS_MAIN( VSOutput In )
 	{
 		clip(-1);
 	}
-	texColor = float4(texColor.xyz * GetParticleSet(In.ParticleSetIndex).Color, texColor.w);
+	texColor = float4(texColor.xyz * GetParticleSetWithPreset(In.ParticleSetIndex, Get(ReferencePreset)).Color, texColor.w);
 
 	SaveTransparencyEntry(Get(ScreenSize), uint2(In.Position.xy), texColor, In.Position.z);
 	clip(-1);
